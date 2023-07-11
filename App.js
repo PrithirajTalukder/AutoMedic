@@ -2,7 +2,7 @@ import React from 'react';
 //import { StatusBar } from 'expo-status-bar';
 //import { View } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from "@react-navigation/stack"
+import {createNativeStackNavigator} from "@react-navigation/native-stack"
 //import {TailwindProvider} from 'nativewind';
 
 import Home from './Screen/Home';

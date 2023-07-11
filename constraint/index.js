@@ -1,9 +1,8 @@
 import { AppRegistry } from 'react-native';
-import App from '../App';
+import App from './App';
+import { auto_medic } from './app.json';
 
-AppRegistry.registerComponent('main', () => App);
-
-export default  App;
+AppRegistry.registerComponent(auto_medic, () => App);
 
 
 
