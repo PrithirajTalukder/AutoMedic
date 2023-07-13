@@ -16,13 +16,13 @@ export default function Welcome() {
       <View style={{
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 70,
+        marginTop: 35,
       }}>
         <Text
-          style={{ fontSize: 24, color: "black", fontWeight: "bold" }}>
+          style={{ fontSize: 28, color: "black", fontWeight: "bold", width:216 }}>
           Let's Get Started!
         </Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", marginTop:18}}>
           <Image source={require("../images/splashimg.png")}
             style={{ width: 350, height: 350 }} />
         </View>
@@ -34,10 +34,12 @@ export default function Welcome() {
             onPress={() => navigation.navigate('SignIn')}
             style={{
               backgroundColor: "transparent",
-              width: 250,
+              width: 300,
+              marginTop:80,
+              
             }}>
             <Text style={{
-              fontSize: 15,
+              fontSize: 18,
               backgroundColor: 'black',
               borderWidth: 5,
               borderRadius: 9,
@@ -51,26 +53,27 @@ export default function Welcome() {
               Are you looking for a mechanic?
             </Text>
           </TouchableOpacity>
-          <View style={{ marginTop: 20, }}><Text style={{ fontSize: 18, color: "white", fontWeight: "800", }}>Or</Text></View>
+          <View style={{ marginTop: 20, }}><Text style={{ fontSize: 22, color: "black", fontWeight: "800", }}>Or</Text></View>
 
           <View style={{ marginTop: 20, }}>
             <TouchableOpacity
               onPress={() => navigation.navigate('SignIn')}
               style={{
                 backgroundColor: "transparent",
-                width: 200,
+                width: 230,
               }}>
               <Text
-                style={{ fontSize: 15,
+                style={{ fontSize: 18,
                   backgroundColor: 'black',
                   borderWidth: 5,
                   borderRadius: 9,
-                  padding: 8,
+                  padding: 9,
                   alignItems: 'center',
                   justifyContent: 'center',
                   textAlign: 'center',
                   color: 'white',
-                  fontWeight: '900',}}
+                  fontWeight: '900',
+                  }}
               >
                 Are you a mechanic?
               </Text>
