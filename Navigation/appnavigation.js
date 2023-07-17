@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import useAuth from './hooks/useAuth'; // Import the useAuth hook from the correct file
 import SignIn from "../Screen/SignIn";
-import Home from "../Screen/home";
+import Home from "../Screen/Home";
 import Welcome from "../Screen/Welcome";
 import SignUp from "../Screen/SignUp";
 
