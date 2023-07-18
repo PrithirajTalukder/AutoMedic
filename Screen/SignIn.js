@@ -112,9 +112,11 @@ const SignIn = () => {
                 }}
               />
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Pressable onPress={() => navigation.navigate("ForgotPassword")} >
+            <View  style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={{ paddingLeft: 32, color: "peru", fontSize: 14, fontWeight: "500" }}> Forgot password?</Text>
             </View>
+            </Pressable>
 
 
             <Pressable
