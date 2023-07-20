@@ -9,7 +9,7 @@ export default function Welcome() {
   return (
     <SafeAreaView style={{
       flex: 1,
-      backgroundColor: "peru",
+      backgroundColor: "lightblue",
       alignItems: "center",
       padding: 100,
     }}>

@@ -60,7 +60,7 @@ const SignIn = () => {
             alignItems: "center",
             marginTop: 100,
           }}>
-            <Text style={{ fontSize: 25, color: "peru", fontWeight: "bold" }}>
+            <Text style={{ fontSize: 25, color: "lightblue", fontWeight: "bold" }}>
               Sign In
             </Text>
 
@@ -114,7 +114,7 @@ const SignIn = () => {
             </View>
             <Pressable onPress={() => navigation.navigate("ForgotPassword")} >
             <View  style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ paddingLeft: 32, color: "peru", fontSize: 14, fontWeight: "500" }}> Forgot password?</Text>
+              <Text style={{ paddingLeft: 32, color: "lightblue", fontSize: 14, fontWeight: "500" }}> Forgot password?</Text>
             </View>
             </Pressable>
 
@@ -123,7 +123,7 @@ const SignIn = () => {
               onPress={handleSubmit}
               style={{
                 width: 150,
-                backgroundColor: "peru",
+                backgroundColor: "lightblue",
                 padding: 15,
                 borderRadius: 7,
                 marginTop: 50,
@@ -161,7 +161,7 @@ const SignIn = () => {
                 marginTop: 15
 
               }}>
-                Don't have an account?<Text style={{ color: "peru", fontSize: 17, fontWeight: "500" }}> Sign Up</Text>
+                Don't have an account?<Text style={{ color: "lightblue", fontSize: 17, fontWeight: "500" }}> Sign Up</Text>
               </Text>
             </Pressable>
 

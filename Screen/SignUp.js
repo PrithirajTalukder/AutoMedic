@@ -48,7 +48,7 @@ export default function SignUp() {
       <SafeAreaView style={{ flex: 1, backgroundColor: "black", alignItems: "center", padding: 10 }}>
         <KeyboardAvoidingView>
           <View style={{ justifyContent: "center", alignItems: "center", marginTop: 100 }}>
-            <Text style={{ fontSize: 20, color: "peru", fontWeight: "bold" }}>
+            <Text style={{ fontSize: 20, color: "lightblue", fontWeight: "bold" }}>
               Sign Up
             </Text>
             <Text style={{ fontSize: 18, marginTop: 8, fontWeight: "600", color: "white" }}>
@@ -133,7 +133,7 @@ export default function SignUp() {
             <Pressable
               style={{
                 width: 200,
-                backgroundColor: "peru",
+                backgroundColor: "lightblue",
                 padding: 15,
                 borderRadius: 7,
                 marginTop: 50,
@@ -155,7 +155,7 @@ export default function SignUp() {
                   fontWeight: "500",
                 }}
               >
-                Already have an account? <Text style={{ color: 'peru' }}>Sign In</Text>
+                Already have an account? <Text style={{ color: 'lightblue' }}>Sign In</Text>
               </Text>
             </Pressable>
           </View>
