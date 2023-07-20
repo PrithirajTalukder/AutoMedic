@@ -1,11 +1,17 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View } from 'react-native';
+import HomeMap from '../HireMechanic/HomeMap';
+import CovidMessage from '../HireMechanic/CovidMeessage';
+import HomeSearch from '../HireMechanic/HomeSearch';
 
 const Mechanic =()=>{
     return (
         <View>
-            <Text style={{ color: "blue",fontSize:25,}}>you are welcome</Text>
+            <HomeMap/>
+            <CovidMessage/>
+            <HomeSearch/>
         </View>
+        
     )
 }
 
