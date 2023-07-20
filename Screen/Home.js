@@ -33,7 +33,7 @@ const Home=() => {
              alignItems:"center"}}
         >
         <TouchableOpacity><FontAwesome name="search" size={24} color="black" /></TouchableOpacity>  
-        <TextInput style={{fontSize:15, paddingLeft:10,}} placeholder='Search'/>  
+        <TextInput style={{fontSize:19, paddingLeft:10, width:'80%'}} placeholder='Search'/>  
         </View>
 
         <View style={{marginLeft:28, marginTop:40}}>

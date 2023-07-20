@@ -18,7 +18,7 @@ const SignIn = () => {
       try {
         await signInWithEmailAndPassword(auth, email, password);
         console.log('You have successfully logged in!');
-        navigation.navigate('Home');
+        navigation.navigate('Main');
       } catch (err) {
         if (err.code === 'auth/invalid-email') {
           setErrorMessage('Invalid Email!');
