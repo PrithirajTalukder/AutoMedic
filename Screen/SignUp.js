@@ -146,7 +146,7 @@ export default function SignUp() {
                 Register
               </Text>
             </Pressable>
-            <Pressable onPress={() => navigation.goBack("Signin")} style={{ marginTop: 20 }}>
+            <Pressable onPress={() => navigation.goBack("SignIn")} style={{ marginTop: 20 }}>
               <Text
                 style={{
                   textAlign: "center",
