@@ -20,8 +20,8 @@ const SignIn = () => {
         const user = userCredential.user;
   
         if (user && user.emailVerified) {
-          console.log('You have successfully logged in!');
-          navigation.navigate('Mechanic');
+          setErrorMessage('You have successfully logged in!');
+          navigation.navigate('Mechanic',);
         } else if (user) {
           setErrorMessage('Please verify your email before logging in.');
           bottomSheetModalRef.current?.present();

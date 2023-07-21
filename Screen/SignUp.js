@@ -6,36 +6,47 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { sendEmailVerification } from "firebase/auth";
-import { isEmailVerified } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import React, { useRef } from 'react';
 
+
+
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [firstMessage, setFirstMessage] = useState(null);
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
 
   const handleSubmit = async () => {
     if (email && password) {
+      if (password !== confirmPassword) {
+        setErrorMessage("Passwords do not match.");
+        bottomSheetModalRef.current?.present();
+        return; 
+      }
+
+
       try {
-        
+
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-  
-        
+
+
         if (user) {
           await sendEmailVerification(user);
-  
-          
-          console.log("Email registration successful! A verification email has been sent.");
-  
-          
-          navigation.goBack('SignIn');
+
+          setFirstMessage("A verification link has been sent to your email. Please verify your email before signing in!");
+
+          bottomSheetModalRef.current?.present();
+
         }
+
+
       } catch (err) {
         if (err.code === 'auth/invalid-email') {
           setErrorMessage("Invalid Email!");
@@ -48,7 +59,8 @@ export default function SignUp() {
       }
     }
   };
-  
+
+
 
   const handleSheetDismiss = () => {
     navigation.navigate('SignUp');
@@ -56,6 +68,17 @@ export default function SignUp() {
       bottomSheetModalRef.current.dismiss();
     }
   };
+
+  const handleBackToSignIn = () => {
+    navigation.navigate('SignIn');
+    if (bottomSheetModalRef && bottomSheetModalRef.current) {
+      bottomSheetModalRef.current.dismiss();
+    }
+  };
+
+
+
+
 
   return (
     <BottomSheetModalProvider>
@@ -128,8 +151,8 @@ export default function SignUp() {
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Ionicons name="key-outline" size={24} color="white" />
               <TextInput
-                value={password}
-                onChangeText={value => setPassword(value)}
+                value={confirmPassword}
+                onChangeText={value => setConfirmPassword(value)}
                 secureTextEntry={true}
                 placeholder="Confirm Password"
                 placeholderTextColor="white"
@@ -174,7 +197,13 @@ export default function SignUp() {
             </Pressable>
           </View>
         </KeyboardAvoidingView>
-        
+
+
+
+
+
+
+
         <BottomSheetModal
           ref={bottomSheetModalRef}
           snapPoints={["40%"]}
@@ -182,22 +211,39 @@ export default function SignUp() {
           dismissOnPanDown={true}
           dismissOnTouchOutside={true}
           onDismiss={handleSheetDismiss}
-          
-
         >
-          <View style={styles.bottomSheetContent}>
-            <Text style={styles.errorMessage}>{errorMessage}</Text>
-            <Pressable onPress={handleSheetDismiss} style={styles.dismissButton}>
-              <Text style={styles.dismissButtonText}>Dismiss</Text>
-            </Pressable>
-          </View>
+         <View style={styles.bottomSheetContent}>
+  {(() => {
+    if (errorMessage) {
+      return (
+        <>
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+          <Pressable onPress={handleSheetDismiss} style={styles.dismissButton}>
+            <Text style={styles.dismissButtonText}>Dismiss</Text>
+          </Pressable>
+        </>
+      );
+    } else if (firstMessage) {
+      return (
+        <>
+          <Text style={styles.firstMessage}>{firstMessage}</Text>
+        <Pressable onPress={handleBackToSignIn} style={styles.dismissButton1}>
+          <Text style={styles.dismissButtonText}>Back to signin</Text>
+        </Pressable>
+        </>
+      );
+    }
+  })()}
+</View>
+          
         </BottomSheetModal>
-
       </SafeAreaView>
     </BottomSheetModalProvider>
   );
 };
-  
+
+
+
 
 const styles = StyleSheet.create({
   bottomSheetContent: {
@@ -206,6 +252,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
+
   errorMessage: {
     fontSize: 25,
     fontWeight: 'bold',
@@ -213,6 +260,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'lightblue',
   },
+
+  firstMessage: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 'auto',
+    textAlign: 'center',
+    color: 'lightblue',
+  },
+
+ 
 
   dismissButton: {
     backgroundColor: 'white',
@@ -222,6 +279,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
+  dismissButton1: {
+    backgroundColor: 'white',
+    padding: 15,
+    marginBottom: 5,
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+
+
 
   dismissButtonText: {
     fontSize: 20,
@@ -229,6 +295,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
+ 
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',

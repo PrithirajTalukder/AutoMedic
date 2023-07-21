@@ -6,6 +6,7 @@ const ErrorBottomSheet = ({ errorMessage, dismiss }) => {
     <View style={styles.bottomSheetContent}>
       <Text>{errorMessage}</Text>
       <Button title="Dismiss" onPress={dismiss} />
+      <Button title="Back to signin" onPress={dismiss} />
     </View>
   );
 };

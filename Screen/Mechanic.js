@@ -3,6 +3,8 @@ import { Text, View } from 'react-native';
 import HomeMap from '../HireMechanic/HomeMap';
 import CovidMessage from '../HireMechanic/CovidMeessage';
 import HomeSearch from '../HireMechanic/HomeSearch';
+import React, { useEffect, useState } from 'react';
+
 
 const Mechanic =()=>{
     return (
