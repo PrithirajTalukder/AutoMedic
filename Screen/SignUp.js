@@ -5,6 +5,8 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
+import { isEmailVerified } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import React, { useRef } from 'react';
@@ -20,9 +22,20 @@ export default function SignUp() {
   const handleSubmit = async () => {
     if (email && password) {
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        console.log("Email registration successful!");
-        navigation.goBack('SignIn');
+        
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+  
+        
+        if (user) {
+          await sendEmailVerification(user);
+  
+          
+          console.log("Email registration successful! A verification email has been sent.");
+  
+          
+          navigation.goBack('SignIn');
+        }
       } catch (err) {
         if (err.code === 'auth/invalid-email') {
           setErrorMessage("Invalid Email!");
@@ -34,7 +47,8 @@ export default function SignUp() {
         bottomSheetModalRef.current?.present();
       }
     }
-  }
+  };
+  
 
   const handleSheetDismiss = () => {
     navigation.navigate('SignUp');

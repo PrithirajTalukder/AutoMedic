@@ -16,9 +16,16 @@ const SignIn = () => {
   const handleSubmit = async () => {
     if (email && password) {
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        console.log('You have successfully logged in!');
-        navigation.navigate('Main');
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+  
+        if (user && user.emailVerified) {
+          console.log('You have successfully logged in!');
+          navigation.navigate('Mechanic');
+        } else if (user) {
+          setErrorMessage('Please verify your email before logging in.');
+          bottomSheetModalRef.current?.present();
+        }
       } catch (err) {
         if (err.code === 'auth/invalid-email') {
           setErrorMessage('Invalid Email!');
@@ -33,6 +40,7 @@ const SignIn = () => {
       }
     }
   };
+  
 
   const handleSheetDismiss = () => {
     navigation.navigate('SignIn');
@@ -113,9 +121,9 @@ const SignIn = () => {
               />
             </View>
             <Pressable onPress={() => navigation.navigate("ForgotPassword")} >
-            <View  style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={{ paddingLeft: 32, color: "lightblue", fontSize: 14, fontWeight: "500" }}> Forgot password?</Text>
-            </View>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={{ paddingLeft: 32, color: "lightblue", fontSize: 14, fontWeight: "500" }}> Forgot password?</Text>
+              </View>
             </Pressable>
 
 
@@ -140,13 +148,13 @@ const SignIn = () => {
 
             <View style={{ marginTop: 15, justifyContent: "center", alignItems: "center", }}><Text style={{ fontSize: 17, color: "white", fontWeight: "800", }}>Or</Text></View>
             <View style={{ marginTop: 15, justifyContent: "center", alignItems: "center", flexDirection: "row", paddingBottom: 10, }}>
-          <TouchableOpacity>
-            <AntDesign name="google" size={30} color="white" style={{ paddingRight: 40 }} />
-           </TouchableOpacity>
+              <TouchableOpacity>
+                <AntDesign name="google" size={30} color="white" style={{ paddingRight: 40 }} />
+              </TouchableOpacity>
 
-          <TouchableOpacity>
-            <Entypo name="facebook-with-circle" size={30} color="white" />
-            </TouchableOpacity> 
+              <TouchableOpacity>
+                <Entypo name="facebook-with-circle" size={30} color="white" />
+              </TouchableOpacity>
             </View>
 
 
@@ -181,7 +189,7 @@ const SignIn = () => {
           dismissOnPanDown={true}
           dismissOnTouchOutside={true}
           onDismiss={handleSheetDismiss}
-          
+
 
         >
           <View style={styles.bottomSheetContent}>
