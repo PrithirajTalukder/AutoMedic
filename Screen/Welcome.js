@@ -57,7 +57,7 @@ export default function Welcome() {
 
           <View style={{ marginTop: 20, }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('SignIn')}
+              onPress={() => navigation.navigate('SignInM')}
               style={{
                 backgroundColor: "transparent",
                 width: 230,
