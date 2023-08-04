@@ -1,77 +1,93 @@
-import React, { useEffect, useState } from 'react';
-import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import React from 'react';
+import { View, Text } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const HomeMap = () => {
-  const [location, setLocation] = useState(null);
-  const [mapReady, setMapReady] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Permission to access location was denied');
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }, []);
-
-  const onMapLayout = () => {
-    setMapReady(true);
-  };
-
-  if (!location) {
-    // Render a loading indicator while fetching the location
+const HomeSearch = () => {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="black" />
-      </View>
-    );
-  }
+        <View>
+            {/* Input Box  */}
+            <View style={{
+                backgroundColor: '#e7e7e7',
+                margin: 10,
+                padding: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center'
 
-  return (
-    <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        onLayout={onMapLayout}
-      >
-        <Marker
-          coordinate={{
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          }}
-          title="Your Location"
-          description="You are here!"
-        />
-      </MapView>
-    </View>
-  );
-};
+            }}>
+                <Text style={{
+                    fontSize: 20,
+                    fontWeight: '600',
+                    color: '#434343'
+                }}>Search Meachanic</Text>
+                <View style={{
+                    flexDirection: 'row',
+                    width: 100,
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: '#fff',
+                    padding: 10,
+                    borderRadius: 50
+                }}>
+                <AntDesign name={'clockcircle'} size={16} color={'#535353'}/>
+                <Text>Now</Text>
+                <MaterialIcons name={'keyboard-arrow-down'} size={16} />
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-});
+                </View>
+            </View>
+            {/* Previous destination  */}
 
-export default HomeMap;
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: 20,
+                borderBottomWidth: 1,
+                borderColor: '#b3b3b3'
+            }}>
+                <View style={{
+                    backgroundColor: 'red',
+                    padding: 10,
+                    borderRadius: 25
+                }}>
+                    <MaterialIcons name={'engineering'} size={16} color={'#ffffff'}/>
+                </View>
+                <Text style={{
+                    marginLeft: 10,
+                    fontWeight: '500',
+                    fontSize: 16
+                }}>
+                    Spin Mechanic
+                </Text>
+            </View>
+            {/* Home Destination  */}
+
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: 20,
+                borderBottomWidth: 1,
+                borderColor: '#b3b3b3'
+            }}>
+                <View style={{
+                    backgroundColor: '#218cff',
+                    padding: 10,
+                    borderRadius: 25
+                }}>
+                    <FontAwesome name={'gear'} size={16} color={'#ffffff'}/>
+                </View>
+                <Text style={{
+                    marginLeft: 10,
+                    fontWeight: '500',
+                    fontSize: 16
+                }}>
+                    Nearest Workshop
+                </Text>
+            </View>
+        </View>
+    )
+}
+
+export default HomeSearch;
