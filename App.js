@@ -13,8 +13,7 @@ import ForgotPassword from './Screen/ForgotPassword';
 import Periodic from './Options/Periodic';
 import MainContainer from './Navigation/MainContainer';
 import Mechanic from './Screen/Mechanic';
-import SignInM from './Screen/SignInM';
-import SignUpM from './Screen/SignUpM';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -26,10 +25,8 @@ export default function App(){
               <Stack.Screen name="Main" options={{headerShown: false}} component={MainContainer}/>
               <Stack.Screen name="Home" options={{headerShown: false}} component={Home}/>
               <Stack.Screen name="Welcome" options={{headerShown: false}} component={Welcome}/>
-              <Stack.Screen name="SignIn" options={{headerShown: false}} component={SignIn}/>
-              <Stack.Screen name="SignInM" options={{headerShown: false}} component={SignInM}/>
+              <Stack.Screen name="SignIn" options={{headerShown: false}} component={SignIn}/>  
               <Stack.Screen name="SignUp" options={{headerShown: false}} component={SignUp}/>
-              <Stack.Screen name="SignUpM" options={{headerShown: false}} component={SignUpM}/>
               <Stack.Screen name="ForgotPassword" options={{headerShown: false}} component={ForgotPassword}/>
               <Stack.Screen name="Periodic" options={{headerShown: false}} component={Periodic}/>
               <Stack.Screen name="Mechanic" options={{headerShown: false}} component={Mechanic}/>
