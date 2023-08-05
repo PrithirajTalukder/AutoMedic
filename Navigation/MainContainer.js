@@ -28,6 +28,9 @@ export default function MainContainer(){
             screenOptions={({route}) => ({
                 tabBarIcon: ({ focused, color, size}) => {
                     let iconName;
+                    let iconSize = size;
+                    let iconStyle = {};
+                    let iconColor = focused ? color : 'white';
                     let rn= route.name;
 
                     if (rn === homeName){
@@ -37,6 +40,21 @@ export default function MainContainer(){
                     }
                     else if (rn=== mechanicName) {
                         iconName = focused ? 'build' : 'build-outline';
+                        if (focused) {
+                            iconStyle.backgroundColor = 'orange'; // Change the background color
+                            iconStyle.borderRadius = 10;
+                            iconSize = focused ? size + 11 : size + 2; 
+                            iconStyle.borderWidth = 1;
+                        }
+                        else{
+                            iconStyle.backgroundColor = "teal";
+                            iconStyle.borderRadius = 7;
+                            iconSize = focused ? size + 11 : size + 10; 
+                            iconStyle.borderWidth = 1;
+                            
+                            
+
+                        }
                     } else if (rn=== marketName) {
                         iconName = focused ? 'cart' : 'cart-outline';
                     } else if (rn=== accountName) {
@@ -44,14 +62,15 @@ export default function MainContainer(){
                     }
                     
 
-                    return <Ionicons name={iconName} size={size} color={color}/>
+                    return <Ionicons name={iconName} size={iconSize} color={iconColor} style={iconStyle}/>
                 },
-                tabBarStyle: {position: 'absolute',paddingTop: 10, height: 70, backgroundColor: "lightblue", borderRadius:10 },
+                tabBarStyle: {position: 'absolute',paddingTop: 10, height: 70, backgroundColor: "lightblue", borderRadius:20 },
                 
             })}
             tabBarOptions={{
                 labelStyle: { paddingBottom: 8,fontWeight:500, fontSize: 12, color: "black" },
                 activeTintColor: 'black',
+                
                 
                 
               }}

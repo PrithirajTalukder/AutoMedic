@@ -14,6 +14,7 @@ import Periodic from './Options/Periodic';
 import MainContainer from './Navigation/MainContainer';
 import LocationSearch from './Screen/LocationSearch';
 import Mechanic from './Screen/Mechanic';
+import Account from './Screen/Account';
 
 
 const Stack = createNativeStackNavigator();
@@ -22,7 +23,7 @@ export default function App(){
   return (
       
       <NavigationContainer>
-          <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Navigator initialRouteName="Main">
               <Stack.Screen name="Main" options={{headerShown: false}} component={MainContainer}/>
               <Stack.Screen name="Home" options={{headerShown: false}} component={Home}/>
               <Stack.Screen name="Welcome" options={{headerShown: false}} component={Welcome}/>
@@ -31,6 +32,7 @@ export default function App(){
               <Stack.Screen name="ForgotPassword" options={{headerShown: false}} component={ForgotPassword}/>
               <Stack.Screen name="Periodic" options={{headerShown: false}} component={Periodic}/>
               <Stack.Screen name="LocationSearch" options={{headerShown: false}} component={LocationSearch}/>
+              <Stack.Screen name="Account" options={{headerShown: false}} component={Account}/>
               <Stack.Screen name="Mechanic" options={{headerShown: false}} component={Mechanic}/>
           </Stack.Navigator>
       </NavigationContainer>
