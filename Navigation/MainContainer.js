@@ -69,7 +69,7 @@ export default function MainContainer(){
             })}
             tabBarOptions={{
                 labelStyle: { paddingBottom: 8,fontWeight:500, fontSize: 12, color: "black" },
-                activeTintColor: 'black',
+                activeTintColor : "black"
                 
                 
                 

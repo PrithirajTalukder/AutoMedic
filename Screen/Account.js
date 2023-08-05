@@ -11,6 +11,8 @@ import{
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';  
 import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from '@expo/vector-icons';
+
 
 
 const Account =()=>{
@@ -32,7 +34,7 @@ const Account =()=>{
             <Title style={{color:"black", left:12, top:10 , fontWeight:700}}>Musaddek Ahmed</Title>
             <View style={{top:20,left:10 ,flexDirection:"row" }}>   
         <FontAwesome name="phone" size={19} color="black" />
-        <Text style={{color:"black", left:10, fontSize:16}}>+880-1820896472</Text>
+        <Text style={{color:"black", left:6,top:-2, fontSize:16}}>+880-1820896472</Text>
         </View>
         </View>
         </View>
@@ -86,6 +88,35 @@ const Account =()=>{
             <Text style={{color:"black",fontWeight:700, fontSize:14,marginTop:8, marginLeft:-15}}>Help & Support</Text>
             </Pressable>
         </View>
+
+        <Pressable onPress={() => navigation.navigate("Periodic")}>
+          <View style={{flexDirection:"row", paddingTop:50, paddingLeft:20}}>
+          <AntDesign name="profile" size={36} color="black" />
+          <Text style={{marginLeft:30, marginTop:8, fontSize:16, fontWeight:800}}>Profile</Text>
+          <View style={{marginLeft:200, marginTop:8}}><MaterialIcons name="navigate-next" size={24} color="black" /></View>
+          
+
+        </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate("Periodic")}>
+          <View style={{flexDirection:"row", paddingTop:50, paddingLeft:20}}>
+          <MaterialIcons name="dashboard-customize" size={36} color="black" />
+          <Text style={{marginLeft:30, marginTop:8, fontSize:16, fontWeight:800}}>Set Preferences</Text>
+          <View style={{marginLeft:130, marginTop:8}}><MaterialIcons name="navigate-next" size={24} color="black" /></View>
+          
+
+        </View>
+        </Pressable>
+
+        <Pressable onPress={() => navigation.navigate("Periodic")}>
+          <View style={{flexDirection:"row", paddingTop:50, paddingLeft:20}}>
+          <AntDesign name="gift" size={36} color="black" />
+          <Text style={{marginLeft:30, marginTop:8, fontSize:16, fontWeight:800}}>Refer and Earn</Text>
+          <View style={{marginLeft:140, marginTop:8}}><MaterialIcons name="navigate-next" size={24} color="black" /></View>
+          
+
+        </View>
+        </Pressable>
         </SafeAreaView>
     )
 }
