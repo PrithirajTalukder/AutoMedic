@@ -1,93 +1,82 @@
+
 import React from 'react';
-import { View, Text } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { View, Text, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import { useNavigation } from '@react-navigation/native';
 
 const HomeSearch = () => {
-    return (
-        <View>
-            {/* Input Box  */}
-            <View style={{
-                backgroundColor: '#e7e7e7',
-                margin: 10,
-                padding: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center'
+  const navigation = useNavigation(); 
 
-            }}>
-                <Text style={{
-                    fontSize: 20,
-                    fontWeight: '600',
-                    color: '#434343'
-                }}>Search Meachanic</Text>
-                <View style={{
-                    flexDirection: 'row',
-                    width: 100,
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    backgroundColor: '#fff',
-                    padding: 10,
-                    borderRadius: 50
-                }}>
-                <AntDesign name={'clockcircle'} size={16} color={'#535353'}/>
-                <Text>Now</Text>
-                <MaterialIcons name={'keyboard-arrow-down'} size={16} />
+  
 
-                </View>
-            </View>
-            {/* Previous destination  */}
-
-            <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: 20,
-                borderBottomWidth: 1,
-                borderColor: '#b3b3b3'
-            }}>
-                <View style={{
-                    backgroundColor: 'red',
-                    padding: 10,
-                    borderRadius: 25
-                }}>
-                    <MaterialIcons name={'engineering'} size={16} color={'#ffffff'}/>
-                </View>
-                <Text style={{
-                    marginLeft: 10,
-                    fontWeight: '500',
-                    fontSize: 16
-                }}>
-                    Spin Mechanic
-                </Text>
-            </View>
-            {/* Home Destination  */}
-
-            <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: 20,
-                borderBottomWidth: 1,
-                borderColor: '#b3b3b3'
-            }}>
-                <View style={{
-                    backgroundColor: '#218cff',
-                    padding: 10,
-                    borderRadius: 25
-                }}>
-                    <FontAwesome name={'gear'} size={16} color={'#ffffff'}/>
-                </View>
-                <Text style={{
-                    marginLeft: 10,
-                    fontWeight: '500',
-                    fontSize: 16
-                }}>
-                    Nearest Workshop
-                </Text>
-            </View>
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'lightblue' }}>
+      {/* Search Mechanic */}
+      <TouchableOpacity onPress={() => navigation.navigate("LocationSearch")} >
+        <View style={{
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: 30,
+          width: 150,
+          height: 200,
+          borderWidth: 1,
+          borderColor: '#b3b3b3',
+          borderRadius: 10,
+          marginBottom: 10,
+          backgroundColor: 'black',
+        }}>
+          <View style={{
+            backgroundColor: '#ffffff',
+            padding: 10,
+            borderRadius: 25,
+          }}>
+            <MaterialIcons name={'engineering'} size={16} color={'red'} />
+          </View>
+          <Text style={{
+            marginLeft: 10,
+            fontWeight: '500',
+            fontSize: 16,
+            color: '#ffffff',
+          }}>
+            Search Mechanic
+          </Text>
         </View>
-    )
+      </TouchableOpacity>
+
+      {/* Nearest Workshop */}
+      <TouchableOpacity onPress={() => navigation.navigate("LocationSearch")} >
+        <View style={{
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: 30,
+          width: 150,
+          height: 200,
+          borderWidth: 1,
+          borderColor: '#b3b3b3',
+          marginTop: 100,
+          borderRadius: 10,
+          backgroundColor: 'black',
+        }}>
+          <View style={{
+            backgroundColor: '#ffffff',
+            padding: 10,
+            borderRadius: 25,
+          }}>
+            <FontAwesome name={'gear'} size={16} color={'#218cff'} />
+          </View>
+          <Text style={{
+            marginLeft: 10,
+            fontWeight: '500',
+            fontSize: 16,
+            color: '#ffffff',
+          }}>
+            Nearest Workshop
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 export default HomeSearch;
