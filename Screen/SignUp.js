@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { sendEmailVerification } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -13,6 +13,7 @@ import React, { useRef } from 'react';
 
 
 export default function SignUp() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -23,7 +24,7 @@ export default function SignUp() {
   const bottomSheetModalRef = useRef(null);
 
   const handleSubmit = async () => {
-    if (email && password) {
+    if (email && password && name) {
       if (password !== confirmPassword) {
         setErrorMessage("Passwords do not match.");
         bottomSheetModalRef.current?.present();
@@ -34,29 +35,29 @@ export default function SignUp() {
       try {
 
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCredential.user, { displayName: name });
         const user = userCredential.user;
-
-
+        
         if (user) {
-          await sendEmailVerification(user);
-
-          setFirstMessage("A verification link has been sent to your email. Please verify your email before signing in!");
-
-          bottomSheetModalRef.current?.present();
-
+        await updateProfile(user, { displayName: name });
+        await sendEmailVerification(user);
+        
+        setFirstMessage("A verification link has been sent to your email. Please verify your email before signing in!");
+        bottomSheetModalRef.current?.present();
+        
+        
         }
-
-
-      } catch (err) {
+        
+        } catch (err) {
         if (err.code === 'auth/invalid-email') {
-          setErrorMessage("Invalid Email!");
+        setErrorMessage("Invalid Email!");
         } else if (err.code === 'auth/email-already-in-use') {
-          setErrorMessage("Email address is already registered. Please use a different email.");
+        setErrorMessage("Email address is already registered. Please use a different email.");
         } else {
-          setErrorMessage('Error:', err.message);
+        setErrorMessage("Please fill in all the fields.");
         }
         bottomSheetModalRef.current?.present();
-      }
+        }
     }
   };
 
@@ -92,7 +93,28 @@ export default function SignUp() {
               Create a new account
             </Text>
           </View>
+
           <View style={{ marginTop: 50 }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <Ionicons name="person-outline" size={24} color="white" />
+    <TextInput
+      value={name}
+      onChangeText={value => setName(value)}
+      placeholder="Name"
+      placeholderTextColor="white"
+      style={{
+        fontSize: 18,
+        borderBottomWidth: 1,
+        borderBottomColor: "gray",
+        marginLeft: 13,
+        width: 300,
+        marginVertical: 10,
+        color: "white",
+      }}
+    />
+  </View>
+
+         
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <MaterialCommunityIcons name="email-outline" size={24} color="white" />
               <TextInput
@@ -106,7 +128,7 @@ export default function SignUp() {
                   borderBottomColor: "gray",
                   marginLeft: 13,
                   width: 300,
-                  marginVertical: 10,
+                  marginVertical: 15,
                   color: "white",
                 }}
               />
@@ -196,6 +218,7 @@ export default function SignUp() {
               </Text>
             </Pressable>
           </View>
+          
         </KeyboardAvoidingView>
 
 

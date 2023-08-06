@@ -1,44 +1,49 @@
-import * as React from 'react';
-import { View, SafeAreaView, Image,Pressable } from 'react-native';
-import{
-    Avatar,
-    Title,
-    Caption,
-    Text,
-    TouchableOpacity,
-    
+import { View, SafeAreaView, Image, Pressable } from 'react-native';
+import {
+  Avatar,
+  Title,
+  Caption,
+  Text,
+  TouchableOpacity,
 } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';  
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from '@expo/vector-icons';
+import { auth } from '../config/firebase'; 
 
+const Account = () => {
+  const navigation = useNavigation();
+  const currentUser = auth.currentUser; // Access the current user from the auth object
 
+  // Check if the user is logged in before rendering the component
+  if (!currentUser) {
+    return <Text>Loading...</Text>;
+  }
 
-const Account =()=>{
-    const navigation = useNavigation();
-    return (
-        <SafeAreaView style={{
-            flex: 1,
-            backgroundColor:"white"
-          }}>
-        <View style={{paddingTop:100,
-        paddingLeft:20,
+  const { displayName, email } = currentUser;
+
+  return (
+    <SafeAreaView style={{
+      flex: 1,
+      backgroundColor: "white"
+    }}>
+      <View style={{
+        paddingTop: 100,
+        paddingLeft: 20,
         flexDirection: "row",
-
-        }}>
-            <Avatar.Image source={require("../images/user.png")}
-            size={80}
-            />
-           <View style={{flexDirection:"column" }}>
-            <Title style={{color:"black", left:12, top:10 , fontWeight:700}}>Musaddek Ahmed</Title>
-            <View style={{top:20,left:10 ,flexDirection:"row" }}>   
-        <FontAwesome name="phone" size={19} color="black" />
-        <Text style={{color:"black", left:6,top:-2, fontSize:16}}>+880-1820896472</Text>
+      }}>
+       <Avatar.Image source={require("../images/user.png")}
+          size={80}
+        />
+        <View style={{ flexDirection: "column" }}>
+          <Title style={{ color: "black", left: 12, top: 10, fontWeight: "700" }}>{displayName}</Title>
+          <View style={{ top: 20, left: 10, flexDirection: "row" }}>
+            <FontAwesome name="envelope" size={19} color="black" />
+            <Text style={{ color: "black", left: 6, top: -2, fontSize: 16 }}>{email}</Text>
+          </View>
         </View>
-        </View>
-        </View>
-        
+      </View>
         
         
 
