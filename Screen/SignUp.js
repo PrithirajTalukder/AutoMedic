@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable, Modal } from "react-native";
+import { Text, View, StyleSheet, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable, Modal, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from '@expo/vector-icons';
@@ -189,6 +189,8 @@ export default function SignUp() {
                 }}
               />
             </View>
+
+            
             <Pressable
               style={{
                 width: 200,
@@ -205,7 +207,7 @@ export default function SignUp() {
                 Register
               </Text>
             </Pressable>
-            <Pressable onPress={() => navigation.goBack("SignIn")} style={{ marginTop: 20 }}>
+            <Pressable onPress={() => navigation.navigate("SignIn")} style={{ marginTop: 20 }}>
               <Text
                 style={{
                   textAlign: "center",
@@ -251,7 +253,7 @@ export default function SignUp() {
         <>
           <Text style={styles.firstMessage}>{firstMessage}</Text>
         <Pressable onPress={handleBackToSignIn} style={styles.dismissButton1}>
-          <Text style={styles.dismissButtonText}>Back to signin</Text>
+          <Text style={styles.dismissButtonText}>SignIn</Text>
         </Pressable>
         </>
       );
@@ -304,7 +306,7 @@ const styles = StyleSheet.create({
 
   dismissButton1: {
     backgroundColor: 'white',
-    padding: 15,
+    padding: 18,
     marginBottom: 5,
     borderRadius: 10,
     alignSelf: 'center',
