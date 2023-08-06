@@ -11,6 +11,7 @@ import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
+    const [firstMessage, setFirstMessage] = useState(null);
     const navigation = useNavigation();
     const bottomSheetModalRef = useRef(null);
 
@@ -18,13 +19,14 @@ const SignIn = () => {
         if (email) {
             try {
                 await sendPasswordResetEmail(auth, email);
-                console.log('Link Send!');
-                navigation.navigate('SignIn');
+                setErrorMessage('Link send to your email!');
+
+                bottomSheetModalRef.current?.present();
             } catch (err) {
                 if (err.code === 'auth/invalid-email') {
                     setErrorMessage('Invalid Email!');
                 } else if (err.code === 'auth/user-not-found') {
-                    setErrorMessage('Email address is not registered. Please Signup!');
+                    setFirstMessage('Email address is not registered. Please Signup!');
                 } else {
                     setErrorMessage('Error: ' + err.message);
                 }
@@ -35,12 +37,11 @@ const SignIn = () => {
 
 
     const handleSheetDismiss = () => {
-        navigation.navigate('ForgotPassword');
+        navigation.navigate('SignIn');
         if (bottomSheetModalRef && bottomSheetModalRef.current) {
             bottomSheetModalRef.current.dismiss();
         }
     };
-
 
 
     return (
@@ -131,7 +132,7 @@ const SignIn = () => {
                             </Text>
                         </Pressable>
 
-                        
+
 
                     </View>
                 </KeyboardAvoidingView>
@@ -141,22 +142,39 @@ const SignIn = () => {
 
 
                 <BottomSheetModal
-                    ref={bottomSheetModalRef}
-                    snapPoints={["40%"]}
-                    backdropComponent={() => <View style={styles.backdrop} />}
-                    dismissOnPanDown={true}
-                    dismissOnTouchOutside={true}
-                    onDismiss={handleSheetDismiss}
+          ref={bottomSheetModalRef}
+          snapPoints={["40%"]}
+          backdropComponent={() => <View style={styles.backdrop} />}
+          dismissOnPanDown={true}
+          dismissOnTouchOutside={true}
+          onDismiss={handleSheetDismiss}
+        >
+         <View style={styles.bottomSheetContent}>
+  {(() => {
+    if (errorMessage) {
+      return (
+        <>
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+          <Pressable onPress={() => navigation.goBack("SignIn")} style={styles.dismissButton}>
+            <Text style={styles.dismissButtonText}>Dismiss</Text>
+          </Pressable>
+        </>
+      );
+    } else if (firstMessage) {
+      return (
+        <>
+          <Text style={styles.firstMessage}>{firstMessage}</Text>
+        <Pressable  onPress={() => navigation.navigate("SignUp")}  style={styles.dismissButton}>
+          <Text style={styles.dismissButtonText}>SignUp</Text>
+        </Pressable>
+        </>
+      );
+    }
+  })()}
+</View>
+          
+        </BottomSheetModal>
 
-
-                >
-                    <View style={styles.bottomSheetContent}>
-                        <Text style={styles.errorMessage}>{errorMessage}</Text>
-                        <Pressable onPress={handleSheetDismiss} style={styles.dismissButton}>
-                            <Text style={styles.dismissButtonText}>Dismiss</Text>
-                        </Pressable>
-                    </View>
-                </BottomSheetModal>
 
             </SafeAreaView>
         </BottomSheetModalProvider>
@@ -186,6 +204,17 @@ const styles = StyleSheet.create({
         color: 'lightblue',
     },
 
+    firstMessage: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        marginBottom: 'auto',
+        textAlign: 'center',
+        color: 'lightblue',
+    },
+
+
+
+
     dismissButton: {
         backgroundColor: 'white',
         padding: 15,
@@ -194,12 +223,15 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
 
+   
 
     dismissButtonText: {
         fontSize: 20,
         color: 'black',
         fontWeight: 'bold',
     },
+
+    
 
     backdrop: {
         ...StyleSheet.absoluteFillObject,
