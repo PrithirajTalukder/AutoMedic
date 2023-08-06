@@ -15,6 +15,7 @@ import MainContainer from './Navigation/MainContainer';
 import LocationSearch from './Screen/LocationSearch';
 import Mechanic from './Screen/Mechanic';
 import Account from './Screen/Account';
+import Profile from './Screen/Profile';
 
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +24,7 @@ export default function App(){
   return (
       
       <NavigationContainer>
-          <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Navigator initialRouteName="Profile">
               <Stack.Screen name="Main" options={{headerShown: false}} component={MainContainer}/>
               <Stack.Screen name="Home" options={{headerShown: false}} component={Home}/>
               <Stack.Screen name="Welcome" options={{headerShown: false}} component={Welcome}/>
@@ -31,6 +32,7 @@ export default function App(){
               <Stack.Screen name="SignUp" options={{headerShown: false}} component={SignUp}/>
               <Stack.Screen name="ForgotPassword" options={{headerShown: false}} component={ForgotPassword}/>
               <Stack.Screen name="Periodic" options={{headerShown: false}} component={Periodic}/>
+              <Stack.Screen name="Profile" options={{headerShown: false}} component={Profile}/>
               <Stack.Screen name="LocationSearch" options={{headerShown: false}} component={LocationSearch}/>
               <Stack.Screen name="Account" options={{headerShown: false}} component={Account}/>
               <Stack.Screen name="Mechanic" options={{headerShown: false}} component={Mechanic}/>

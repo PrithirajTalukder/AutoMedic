@@ -21,7 +21,7 @@ const Home=() => {
         backgroundColor:"white",
         }}>
           <ScrollView>
-        <View style={{paddingTop:100,paddingLeft:25,}}>
+        <View style={{paddingTop:60,paddingLeft:25,}}>
             <Text style={{color:"black", fontSize:20,}}>What are you looking for?</Text>
         </View>
         <View style={{padding:10,

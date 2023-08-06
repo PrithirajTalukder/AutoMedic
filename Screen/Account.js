@@ -93,8 +93,10 @@ const Account = () => {
             <Text style={{color:"black",fontWeight:700, fontSize:14,marginTop:8, marginLeft:-15}}>Help & Support</Text>
             </Pressable>
         </View>
+        
 
-        <Pressable onPress={() => navigation.navigate("Periodic")}>
+        <View style={{borderBottomWidth:2,borderBottomColor:"lightblue", paddingBottom:40}}>
+        <Pressable onPress={() => navigation.navigate("Profile")}>
           <View style={{flexDirection:"row", paddingTop:50, paddingLeft:20}}>
           <AntDesign name="profile" size={36} color="black" />
           <Text style={{marginLeft:30, marginTop:8, fontSize:16, fontWeight:800}}>Profile</Text>
@@ -122,6 +124,27 @@ const Account = () => {
 
         </View>
         </Pressable>
+        </View>
+
+        <View>
+        <Pressable onPress={() => navigation.navigate("SignIn")} 
+                style={{
+                width: 250,
+                backgroundColor: "lightblue",
+                padding: 12,
+                borderRadius: 7,
+                marginTop:5,
+                marginLeft: "auto",
+                marginRight: "auto",
+                elevation:4,
+              }}
+            >
+              <Text style={{ fontSize: 20, textAlign: "center", color: "black", fontWeight: "600" }}>
+                Logout
+              </Text>
+
+            </Pressable>
+        </View>
         </SafeAreaView>
     )
 }
