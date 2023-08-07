@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
+import { CurrentRenderContext, useNavigation } from '@react-navigation/native';
 
 const HomeSearch = () => {
   const navigation = useNavigation(); 
@@ -70,6 +70,7 @@ const HomeSearch = () => {
             fontWeight: '500',
             fontSize: 16,
             color: '#ffffff',
+            alignItems: 'center'
           }}>
             Nearest Workshop
           </Text>
