@@ -98,13 +98,13 @@ export default function SignUp() {
             paddingRight:20,
             marginLeft:10,
             marginRight:10,
-            height:670,
+            height:690,
             position: "absolute",
             backgroundColor:"black",
             elevation:6,
               }}>
         <KeyboardAvoidingView>
-          <View style={{ justifyContent: "center", alignItems: "center", marginTop: 100 }}>
+          <View style={{ justifyContent: "center", alignItems: "center", marginTop: 60 }}>
             <Text style={{ fontSize: 20, color: "lightblue", fontWeight: "bold" }}>
               Sign Up
             </Text>
