@@ -151,16 +151,7 @@ const SignIn = () => {
             </Pressable>
 
 
-            <View style={{ marginTop: 15, justifyContent: "center", alignItems: "center", }}><Text style={{ fontSize: 17, color: "white", fontWeight: "800", }}>Or</Text></View>
-            <View style={{ marginTop: 15, justifyContent: "center", alignItems: "center", flexDirection: "row", paddingBottom: 10, }}>
-              <TouchableOpacity>
-                <AntDesign name="google" size={30} color="white" style={{ paddingRight: 40 }} />
-              </TouchableOpacity>
 
-              <TouchableOpacity>
-                <Entypo name="facebook-with-circle" size={30} color="white" />
-              </TouchableOpacity>
-            </View>
 
 
             <Pressable onPress={() => navigation.navigate("SignUp")} >
@@ -257,3 +248,25 @@ const styles = StyleSheet.create({
 
 export default SignIn;
 
+
+
+
+
+
+
+
+
+
+
+
+
+/*          <View style={{ marginTop: 15, justifyContent: "center", alignItems: "center", }}><Text style={{ fontSize: 17, color: "white", fontWeight: "800", }}>Or</Text></View>
+            <View style={{ marginTop: 15, justifyContent: "center", alignItems: "center", flexDirection: "row", paddingBottom: 10, }}>
+              <TouchableOpacity>
+                <AntDesign name="google" size={30} color="white" style={{ paddingRight: 40 }} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <Entypo name="facebook-with-circle" size={30} color="white" />
+              </TouchableOpacity>
+            </View> */
