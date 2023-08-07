@@ -14,32 +14,37 @@ const SignIn = () => {
   const bottomSheetModalRef = useRef(null);
 
   const handleSubmit = async () => {
-    if (email && password) {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+    if (!email || !password) {
+      setErrorMessage("Please fill up all the fields.");
+      bottomSheetModalRef.current?.present();
+      return;
+    }
   
-        if (user && user.emailVerified) {
-          setErrorMessage('You have successfully logged in!');
-          navigation.navigate('Main',);
-        } else if (user) {
-          setErrorMessage('Please verify your email before logging in.');
-          bottomSheetModalRef.current?.present();
-        }
-      } catch (err) {
-        if (err.code === 'auth/invalid-email') {
-          setErrorMessage('Invalid Email!');
-        } else if (err.code === 'auth/user-not-found') {
-          setErrorMessage('Email address is not registered. Please Signup!.');
-        } else if (err.code === 'auth/wrong-password') {
-          setErrorMessage("Password doesn't Match. Please enter a valid Password!.");
-        } else {
-          setErrorMessage('Error: ' + err.message);
-        }
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+  
+      if (user && user.emailVerified) {
+        setErrorMessage('You have successfully logged in!');
+        navigation.navigate('Main');
+      } else if (user) {
+        setErrorMessage('Please verify your email before logging in.');
         bottomSheetModalRef.current?.present();
       }
+    } catch (err) {
+      if (err.code === 'auth/invalid-email') {
+        setErrorMessage('Invalid Email!');
+      } else if (err.code === 'auth/user-not-found') {
+        setErrorMessage('Email address is not registered. Please Signup!.');
+      } else if (err.code === 'auth/wrong-password') {
+        setErrorMessage("Wrong password. Please enter a valid Password.");
+      } else {
+        setErrorMessage('Error: ' + err.message);
+      }
+      bottomSheetModalRef.current?.present();
     }
   };
+  
   
 
   const handleSheetDismiss = () => {

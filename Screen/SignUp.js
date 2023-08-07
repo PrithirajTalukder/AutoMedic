@@ -18,68 +18,74 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const phoneNumberRegex = /^\+\d{1,4}\d{10}$/;
   const [errorMessage, setErrorMessage] = useState(null);
   const [firstMessage, setFirstMessage] = useState(null);
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
 
   const handleSubmit = async () => {
-    if (email && password && name) {
-      if (password !== confirmPassword) {
-        setErrorMessage("Passwords do not match.");
-        bottomSheetModalRef.current?.present();
-        return; 
-      }
-
-
-      try {
-
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(userCredential.user, { displayName: name });
-        const user = userCredential.user;
-        
-        if (user) {
+    if (!email || !password || !name || !phone) {
+      setErrorMessage("Please fill up all the fields.");
+      bottomSheetModalRef.current?.present();
+      return;
+    }
+  
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      bottomSheetModalRef.current?.present();
+      return;
+    }
+  
+    if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long.");
+      bottomSheetModalRef.current?.present();
+      return;
+    }
+  
+    if (!phoneNumberRegex.test(phone)) {
+      setErrorMessage("Invalid phone number. Please enter a valid phone number.");
+      bottomSheetModalRef.current?.present();
+      return;
+    }
+  
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+  
+      if (user) {
         await updateProfile(user, { displayName: name });
         await sendEmailVerification(user);
-        
+  
         setFirstMessage("A verification link has been sent to your email. Please verify your email before signing in!");
         bottomSheetModalRef.current?.present();
-        
-        
-        }
-        
-        } catch (err) {
-        if (err.code === 'auth/invalid-email') {
+      }
+    } catch (err) {
+      if (err.code === 'auth/invalid-email') {
         setErrorMessage("Invalid Email!");
-        } else if (err.code === 'auth/email-already-in-use') {
+      } else if (err.code === 'auth/email-already-in-use') {
         setErrorMessage("Email address is already registered. Please use a different email.");
-        } else {
-        setErrorMessage("Please fill in all the fields.");
-        }
-        bottomSheetModalRef.current?.present();
-        }
+      } else {
+        setErrorMessage("An error occurred. Please try again later.");
+      }
+      bottomSheetModalRef.current?.present();
     }
   };
-
-
-
+  
   const handleSheetDismiss = () => {
     navigation.navigate('SignUp');
     if (bottomSheetModalRef && bottomSheetModalRef.current) {
       bottomSheetModalRef.current.dismiss();
     }
   };
-
+  
   const handleBackToSignIn = () => {
     navigation.navigate('SignIn');
     if (bottomSheetModalRef && bottomSheetModalRef.current) {
       bottomSheetModalRef.current.dismiss();
     }
   };
-
-
-
-
+  
 
   return (
     <BottomSheetModalProvider>
