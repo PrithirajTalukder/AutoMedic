@@ -89,7 +89,20 @@ export default function SignUp() {
 
   return (
     <BottomSheetModalProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor: "black", alignItems: "center", padding: 10 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "lightblue", alignItems: "center", padding: 10 }}>
+      <View style={{backgroundColor:"white",
+            borderRadius:20,
+            top:80,
+            width:380,
+            paddingLeft:20,
+            paddingRight:20,
+            marginLeft:10,
+            marginRight:10,
+            height:670,
+            position: "absolute",
+            backgroundColor:"black",
+            elevation:6,
+              }}>
         <KeyboardAvoidingView>
           <View style={{ justifyContent: "center", alignItems: "center", marginTop: 100 }}>
             <Text style={{ fontSize: 20, color: "lightblue", fontWeight: "bold" }}>
@@ -107,7 +120,7 @@ export default function SignUp() {
       value={name}
       onChangeText={value => setName(value)}
       placeholder="Name"
-      placeholderTextColor="white"
+      placeholderTextColor="gray"
       style={{
         fontSize: 18,
         borderBottomWidth: 1,
@@ -127,7 +140,7 @@ export default function SignUp() {
                 placeholder="Email"
                 value={email}
                 onChangeText={value => setEmail(value)}
-                placeholderTextColor="white"
+                placeholderTextColor="gray"
                 style={{
                   fontSize: 18,
                   borderBottomWidth: 1,
@@ -139,13 +152,14 @@ export default function SignUp() {
                 }}
               />
             </View>
+            <View style={{flexDirection: "column"}}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Feather name="phone" size={24} color="white" />
               <TextInput
                 value={phone}
                 onChangeText={value => setPhone(value)}
                 placeholder="Phone Number"
-                placeholderTextColor="white"
+                placeholderTextColor="gray"
                 style={{
                   fontSize: 18,
                   borderBottomWidth: 1,
@@ -157,6 +171,9 @@ export default function SignUp() {
                 }}
               />
             </View>
+            <Text style={{color:"gray", marginLeft:35, marginTop:-5,fontSize:13}}>* include +880 </Text>
+            </View>
+            <View style={{flexDirection: "column"}}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Ionicons name="key-outline" size={24} color="white" />
               <TextInput
@@ -164,7 +181,7 @@ export default function SignUp() {
                 onChangeText={value => setPassword(value)}
                 secureTextEntry={true}
                 placeholder="Password"
-                placeholderTextColor="white"
+                placeholderTextColor="gray"
                 style={{
                   fontSize: 18,
                   borderBottomWidth: 1,
@@ -175,6 +192,9 @@ export default function SignUp() {
                   color: "white",
                 }}
               />
+              
+            </View>
+            <Text style={{color:"gray", marginLeft:35, marginTop:-14,fontSize:13}}>* at least 6 characters</Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Ionicons name="key-outline" size={24} color="white" />
@@ -183,7 +203,7 @@ export default function SignUp() {
                 onChangeText={value => setConfirmPassword(value)}
                 secureTextEntry={true}
                 placeholder="Confirm Password"
-                placeholderTextColor="white"
+                placeholderTextColor="gray"
                 style={{
                   fontSize: 18,
                   borderBottomWidth: 1,
@@ -209,7 +229,7 @@ export default function SignUp() {
               }}
               onPress={handleSubmit}
             >
-              <Text style={{ fontSize: 18, textAlign: "center", color: "white" }}>
+              <Text style={{ fontSize: 18, textAlign: "center", color: "black" }}>
                 Register
               </Text>
             </Pressable>
@@ -229,7 +249,7 @@ export default function SignUp() {
           
         </KeyboardAvoidingView>
 
-
+      </View>
 
 
 

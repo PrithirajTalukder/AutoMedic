@@ -61,10 +61,23 @@ const SignIn = () => {
     <BottomSheetModalProvider>
       <SafeAreaView style={{
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: "lightblue",
         alignItems: "center",
         padding: 100,
       }}>
+        <View style={{backgroundColor:"white",
+            borderRadius:20,
+            top:80,
+            width:380,
+            paddingLeft:20,
+            paddingRight:20,
+            marginLeft:10,
+            marginRight:10,
+            height:670,
+            position: "absolute",
+            backgroundColor:"black",
+            elevation:6,
+              }}>
 
 
         <KeyboardAvoidingView>
@@ -144,7 +157,7 @@ const SignIn = () => {
                 marginRight: "auto",
               }}
             >
-              <Text style={{ fontSize: 20, textAlign: "center", color: "white", fontWeight: "900" }}>
+              <Text style={{ fontSize: 20, textAlign: "center", color: "black", fontWeight: "900" }}>
                 Login
               </Text>
 
@@ -173,7 +186,7 @@ const SignIn = () => {
 
           </View>
         </KeyboardAvoidingView>
-
+        </View>
 
 
 
