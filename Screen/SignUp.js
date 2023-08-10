@@ -18,7 +18,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const phoneNumberRegex = /^\+\d{1,4}\d{10}$/;
+  const phoneNumberRegex = /^\+880\d{10}$/;
   const [errorMessage, setErrorMessage] = useState(null);
   const [firstMessage, setFirstMessage] = useState(null);
   const navigation = useNavigation();
