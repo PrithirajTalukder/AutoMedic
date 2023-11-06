@@ -24,7 +24,7 @@ export default function App(){
   return (
       
       <NavigationContainer>
-          <Stack.Navigator initialRouteName="Market">
+          <Stack.Navigator initialRouteName="Main">
               <Stack.Screen name="Main" options={{headerShown: false}} component={MainContainer}/>
               <Stack.Screen name="Home" options={{headerShown: false}} component={Home}/>
               <Stack.Screen name="Welcome" options={{headerShown: false}} component={Welcome}/>

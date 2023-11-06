@@ -43,7 +43,8 @@ const Home=() => {
           </Text>
           </View>
 
-        <View style={{flexDirection:"row"}}>
+        <View style={{flexDirection:"row", margin:2}}>
+          <ScrollView horizontal={true}>
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
@@ -52,7 +53,9 @@ const Home=() => {
               borderRightColor: "black",
               paddingHorizontal: 18,
               marginTop: 20,
-              borderRightWidth: 1,
+              borderRadius:5,
+              marginLeft:3,
+              marginRight:3
             
             }}>
             <Image source={require("../images/maintenance.png")}
@@ -64,12 +67,12 @@ const Home=() => {
               
               backgroundColor: "lightblue",
               padding: 5,
-              borderLeftColor: "black",
-              borderRightColor: "black",
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
               paddingHorizontal: 15,
               marginTop: 20,
-              borderRightWidth: 1,
-              borderLeftWidth: 1,
+              
             }}>
             <Image source={require("../images/air-conditioner.png")}
             style={{ width: 60, height: 60 }} />
@@ -80,12 +83,12 @@ const Home=() => {
               
               backgroundColor: "lightblue",
               padding: 5,
-              borderLeftColor: "black",
-              borderRightColor: "black",
+              
               paddingHorizontal: 14,
               marginTop: 20,
-              borderRightWidth: 1,
-              borderLeftWidth:1
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
             }}>
             <Image source={require("../images/wheel.png")}
             style={{ width: 60, height: 60 }} />
@@ -97,18 +100,18 @@ const Home=() => {
               
               backgroundColor: "lightblue",
               padding: 5,
-              borderLeftColor: "black",
-              
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
               paddingHorizontal: 18,
               marginTop: 20,
-              borderRightWidth: 1,
-              borderLeftWidth: 1,
+              
             }}>
             <Image source={require("../images/accumulator.png")}
             style={{ width: 60, height: 60 }} />
             <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Batteries</Text>
             </Pressable>
-            
+            </ScrollView>  
         </View>
 
       <View style={{marginLeft:10, marginTop:20}}>
@@ -119,16 +122,19 @@ const Home=() => {
 
         <View>
             <View style={{flexDirection:"row"}}>
+            <ScrollView horizontal={true}>
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
               padding: 5,
-              
-              borderRightColor: "black",
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
+
               paddingHorizontal: 18,
               marginTop: 20,
-              borderRightWidth: 1,
+
             
             }}>
             <Image source={require("../images/spray-gun.png")}
@@ -140,12 +146,12 @@ const Home=() => {
               
               backgroundColor: "lightblue",
               padding: 5,
-              borderLeftColor: "black",
-              borderRightColor: "black",
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
               paddingHorizontal: 17,
               marginTop: 20,
-              borderRightWidth: 1,
-              borderLeftWidth: 1,
+
             }}>
             <Image source={require("../images/wiper.png")}
             style={{ width: 60, height: 60 }} />
@@ -156,12 +162,12 @@ const Home=() => {
               
               backgroundColor: "lightblue",
               padding: 5,
-              borderLeftColor: "black",
-              borderRightColor: "black",
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
               paddingHorizontal: 17,
               marginTop: 20,
-              borderRightWidth: 1,
-              borderLeftWidth: 1,
+
             }}>
             <Image source={require("../images/thermometer.png")}
             style={{ width: 60, height: 60 }} />
@@ -173,17 +179,18 @@ const Home=() => {
               
               backgroundColor: "lightblue",
               padding: 5,
-              borderLeftColor: "black",
-              
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
               paddingHorizontal: 15,
               marginTop: 20,
-              borderLeftWidth: 1,
+
             }}>
             <Image source={require("../images/car-inspection.png")}
             style={{ width: 60, height: 60 }} />
             <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Car {'\n'}Inspections</Text>
             </Pressable>
-            
+            </ScrollView>
             </View>
 
            <View style={{marginLeft:10, marginTop:20}}>
@@ -194,16 +201,18 @@ const Home=() => {
 
             <View>
             <View style={{flexDirection:"row"}}>
+            <ScrollView horizontal={true}>
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
               padding: 5,
-              
-              borderRightColor: "black",
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
               paddingHorizontal: 16,
               marginTop: 20,
-              borderRightWidth: 1,
+
             
             }}>
             <Image source={require("../images/accelerator.png")}
@@ -215,12 +224,12 @@ const Home=() => {
               
               backgroundColor: "lightblue",
               padding: 5,
-              borderLeftColor: "black",
-              borderRightColor: "black",
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
               paddingHorizontal: 12,
               marginTop: 20,
-              borderRightWidth: 1,
-              borderLeftWidth: 1,
+
             }}>
             <Image source={require("../images/car-light.png")}
             style={{ width: 60, height: 60 }} />
@@ -231,12 +240,12 @@ const Home=() => {
               
               backgroundColor: "lightblue",
               padding: 5,
-              borderLeftColor: "black",
-              borderRightColor: "black",
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
               paddingHorizontal: 12,
               marginTop: 20,
-              borderRightWidth: 1,
-              borderLeftWidth:1
+
             }}>
             <Image source={require("../images/suspension.png")}
             style={{ width: 60, height: 60 }} />
@@ -248,17 +257,18 @@ const Home=() => {
               
               backgroundColor: "lightblue",
               padding: 5,
-              borderLeftColor: "black",
-              
+              marginLeft:3,
+              marginRight:3,
+              borderRadius:5,
               paddingHorizontal: 13,
               marginTop: 20,
-              borderLeftWidth: 1,
+
             }}>
             <Image source={require("../images/car-insurance.png")}
             style={{ width: 60, height: 60 }} />
             <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Insurance {'\n'}Claims</Text>
             </Pressable>
-            
+            </ScrollView>
             </View>
 
             
