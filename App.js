@@ -16,6 +16,8 @@ import LocationSearch from './Screen/LocationSearch';
 import Mechanic from './Screen/Mechanic';
 import Account from './Screen/Account';
 import Profile from './Screen/Profile';
+import Batteries from './Products/Batteries';
+import Battery1 from './Products/Battery1';
 
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +38,8 @@ export default function App(){
               <Stack.Screen name="LocationSearch" options={{headerShown: false}} component={LocationSearch}/>
               <Stack.Screen name="Account" options={{headerShown: false}} component={Account}/>
               <Stack.Screen name="Mechanic" options={{headerShown: false}} component={Mechanic}/>
+              <Stack.Screen name="Batteries" options={{headerShown: false}} component={Batteries}/>
+              <Stack.Screen name="Battery1" options={{headerShown: false}} component={Battery1}/>
           </Stack.Navigator>
       </NavigationContainer>
       
