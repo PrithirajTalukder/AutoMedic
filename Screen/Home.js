@@ -49,7 +49,7 @@ const Home=() => {
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               borderRightColor: "black",
               paddingHorizontal: 18,
               marginTop: 20,
@@ -60,13 +60,13 @@ const Home=() => {
             }}>
             <Image source={require("../images/maintenance.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Periodic {'\n'}Services</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Periodic {'\n'}Services</Text>
             </Pressable>
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -76,13 +76,13 @@ const Home=() => {
             }}>
             <Image source={require("../images/air-conditioner.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,}}>AC Service{'\n'}& Repair</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>AC Service{'\n'}& Repair</Text>
             </Pressable>
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               
               paddingHorizontal: 14,
               marginTop: 20,
@@ -92,14 +92,14 @@ const Home=() => {
             }}>
             <Image source={require("../images/wheel.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Tyres & {'\n'}Wheel Care</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Tyres & {'\n'}Wheel Care</Text>
             </Pressable>
 
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -109,7 +109,7 @@ const Home=() => {
             }}>
             <Image source={require("../images/accumulator.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Batteries</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5,marginTop:10}}>Batteries</Text>
             </Pressable>
             </ScrollView>  
         </View>
@@ -127,7 +127,7 @@ const Home=() => {
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -139,13 +139,13 @@ const Home=() => {
             }}>
             <Image source={require("../images/spray-gun.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Denting &{'\n'}Painting</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Denting &{'\n'}Painting</Text>
             </Pressable>
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -155,13 +155,13 @@ const Home=() => {
             }}>
             <Image source={require("../images/wiper.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Car Spa &{'\n'}Cleaning</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Car Spa &{'\n'}Cleaning</Text>
             </Pressable>
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -171,14 +171,14 @@ const Home=() => {
             }}>
             <Image source={require("../images/thermometer.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Detailing {'\n'}Services</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Detailing {'\n'}Services</Text>
             </Pressable>
 
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -188,7 +188,7 @@ const Home=() => {
             }}>
             <Image source={require("../images/car-inspection.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Car {'\n'}Inspections</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Car {'\n'}Inspections</Text>
             </Pressable>
             </ScrollView>
             </View>
@@ -206,7 +206,7 @@ const Home=() => {
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -217,13 +217,13 @@ const Home=() => {
             }}>
             <Image source={require("../images/accelerator.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Clutch & {'\n'}Body Parts</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Clutch & {'\n'}Body Parts</Text>
             </Pressable>
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -233,13 +233,13 @@ const Home=() => {
             }}>
             <Image source={require("../images/car-light.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Windshield {'\n'}& Lights</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Windshield {'\n'}& Lights</Text>
             </Pressable>
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -249,14 +249,14 @@ const Home=() => {
             }}>
             <Image source={require("../images/suspension.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Suspension{'\n'}& Fitments</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Suspension{'\n'}& Fitments</Text>
             </Pressable>
 
             <Pressable onPress={() => navigation.navigate("Periodic")} 
             style={{
               
               backgroundColor: "lightblue",
-              padding: 5,
+              padding: 10,
               marginLeft:3,
               marginRight:3,
               borderRadius:5,
@@ -266,7 +266,7 @@ const Home=() => {
             }}>
             <Image source={require("../images/car-insurance.png")}
             style={{ width: 60, height: 60 }} />
-            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5}}>Insurance {'\n'}Claims</Text>
+            <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Insurance {'\n'}Claims</Text>
             </Pressable>
             </ScrollView>
             </View>
