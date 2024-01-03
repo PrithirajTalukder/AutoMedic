@@ -1,9 +1,8 @@
 import React from 'react';
-//import { StatusBar } from 'expo-status-bar';
-//import { View } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from "@react-navigation/native-stack"
-//import {TailwindProvider} from 'nativewind';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Provider } from 'react-redux'; // Import the Provider component
+import { mystore } from './redux/MyStore'; // Import your Redux store
 
 import Home from './Screen/Home';
 import Welcome from './Screen/Welcome';
@@ -18,30 +17,34 @@ import Account from './Screen/Account';
 import Profile from './Screen/Profile';
 import Batteries from './Products/Batteries';
 import Battery1 from './Products/Battery1';
-
+import MyCart from './Screen/MyCart';
 
 const Stack = createNativeStackNavigator();
 
-export default function App(){
+export default function App() {
   return (
-      
+    <Provider store={mystore}> 
+
       <NavigationContainer>
-          <Stack.Navigator initialRouteName="Main">
-              <Stack.Screen name="Main" options={{headerShown: false}} component={MainContainer}/>
-              <Stack.Screen name="Home" options={{headerShown: false}} component={Home}/>
-              <Stack.Screen name="Welcome" options={{headerShown: false}} component={Welcome}/>
-              <Stack.Screen name="SignIn" options={{headerShown: false}} component={SignIn}/>  
-              <Stack.Screen name="SignUp" options={{headerShown: false}} component={SignUp}/>
-              <Stack.Screen name="ForgotPassword" options={{headerShown: false}} component={ForgotPassword}/>
-              <Stack.Screen name="Periodic" options={{headerShown: false}} component={Periodic}/>
-              <Stack.Screen name="Profile" options={{headerShown: false}} component={Profile}/>
-              <Stack.Screen name="LocationSearch" options={{headerShown: false}} component={LocationSearch}/>
-              <Stack.Screen name="Account" options={{headerShown: false}} component={Account}/>
-              <Stack.Screen name="Mechanic" options={{headerShown: false}} component={Mechanic}/>
-              <Stack.Screen name="Batteries" options={{headerShown: false}} component={Batteries}/>
-              <Stack.Screen name="Battery1" options={{headerShown: false}} component={Battery1}/>
-          </Stack.Navigator>
+
+        <Stack.Navigator initialRouteName="Batteries">
+        
+          <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
+          <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
+          <Stack.Screen name="Welcome" options={{ headerShown: false }} component={Welcome} />
+          <Stack.Screen name="SignIn" options={{ headerShown: false }} component={SignIn} />
+          <Stack.Screen name="SignUp" options={{ headerShown: false }} component={SignUp} />
+          <Stack.Screen name="ForgotPassword" options={{ headerShown: false }} component={ForgotPassword} />
+          <Stack.Screen name="Periodic" options={{ headerShown: false }} component={Periodic} />
+          <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
+          <Stack.Screen name="LocationSearch" options={{ headerShown: false }} component={LocationSearch} />
+          <Stack.Screen name="Account" options={{ headerShown: false }} component={Account} />
+          <Stack.Screen name="Mechanic" options={{ headerShown: false }} component={Mechanic} />
+          <Stack.Screen name="Batteries" options={{ headerShown: false }} component={Batteries} />
+          <Stack.Screen name="Battery1" options={{ headerShown: false }} component={Battery1} />
+          <Stack.Screen name="MyCart" options={{ headerShown: false }} component={MyCart} />
+        </Stack.Navigator>
       </NavigationContainer>
-      
-      );
-};
+    </Provider>
+  );
+}
