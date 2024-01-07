@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Image, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, TextInput, Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from "@react-navigation/native";
 import { Button } from 'react-native-paper';
 import { removeProductFromCart, updateProductQuantity } from '../redux/MyCartSlice';
+import { useStripe } from '@stripe/stripe-react-native';
 
 const MyCart = () => {
   const navigation = useNavigation();
@@ -12,6 +13,7 @@ const MyCart = () => {
   const myCart = useSelector((state) => state.cart);
   const [couponCode, setCouponCode] = useState('');
   const [itemTotal, setItemTotal] = useState(0);
+  const Stripe = useStripe();
 
   // Calculate item total whenever myCart changes
   useEffect(() => {
@@ -29,9 +31,65 @@ const MyCart = () => {
     const updatedItem = { ...item, qty: Math.max(0, newQty) };
 
     if (newQty === 0) {
-      dispatch(removeProductFromCart(updatedItem)); // Remove item from cart if quantity is zero
+      dispatch(removeProductFromCart(updatedItem));
     } else {
-      dispatch(updateProductQuantity(updatedItem)); // Update cart item with new quantity
+      dispatch(updateProductQuantity(updatedItem));
+    }
+  };
+
+  const onCheckout = async () => {
+    try {
+      // Check if the cart is empty
+      if (myCart.length === 0) {
+        Alert.alert('Your cart is empty. Add items before proceeding to payment.');
+        return;
+      }
+
+      // Calculate the total amount
+      const totalAmount = myCart.reduce((acc, item) => acc + item.qty * item.price, 0);
+
+      // Check if the total amount is valid
+      if (totalAmount <= 0) {
+        Alert.alert('Invalid total amount. Add items with valid prices to proceed.');
+        return;
+      }
+
+      // sending request
+      const response = await fetch("http://192.168.0.3:8080/pay", {
+        method: "POST",
+        body: JSON.stringify({
+          name: 'Your customer name',
+          amount: totalAmount,
+           // Include this line
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      
+
+      const data = await response.json();
+      if (!response.ok) return Alert.alert(data.message);
+
+      const clientSecret = data.clientSecret;
+      const initSheet = await Stripe.initPaymentSheet({
+        paymentIntentClientSecret: clientSecret,
+        merchantDisplayName: "Prithiraj"
+      });
+
+      if (initSheet.error) return Alert.alert(initSheet.error.message);
+
+      const presentSheet = await Stripe.presentPaymentSheet({
+        clientSecret,
+      });
+
+      if (presentSheet.error) return Alert.alert(presentSheet.error.message);
+
+      Alert.alert("Payment completed, thank you for being with Auto Medic!");
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Something went wrong, try again later!");
     }
   };
 
@@ -166,7 +224,7 @@ const MyCart = () => {
           margin: 15,
           paddingVertical: 10,
         }}
-        onPress={() => console.log('Proceed to Checkout button pressed')}
+        onPress={(onCheckout) }
       >
         Proceed To Checkout
       </Button>

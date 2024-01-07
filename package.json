@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "dev" : "nodemon Server"
+    
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.4.7",
@@ -15,10 +17,14 @@
     "@react-navigation/native-stack": "^6.9.13",
     "@react-navigation/stack": "^6.3.17",
     "@reduxjs/toolkit": "^2.0.1",
+    "@stripe/stripe-react-native": "0.23.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "expo": "~48.0.18",
     "expo-location": "~15.1.1",
     "expo-sharing": "~11.2.2",
     "expo-status-bar": "~1.4.4",
+    "express": "^4.18.2",
     "firebase": "^10.1.0",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
@@ -33,7 +39,8 @@
     "react-native-video": "^5.2.1",
     "react-redux": "^9.0.4",
     "reanimated": "^0.0.1-alpha",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "stripe": "^14.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

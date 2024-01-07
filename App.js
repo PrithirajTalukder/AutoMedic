@@ -18,12 +18,15 @@ import Profile from './Screen/Profile';
 import Batteries from './Products/Batteries';
 import Battery1 from './Products/Battery1';
 import MyCart from './Screen/MyCart';
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <Provider store={mystore}> 
+
+    <StripeProvider publishableKey="pk_test_51ORWrgBWfBrJrHZ12RNAI1gfoqIfCrabKnoZrm8jOzA8U3jOV6aZxQCCGr3NXbTvo76EqAHcUhGqHpd07FdupYBz00Z4uWPKaY">
 
       <NavigationContainer>
 
@@ -45,6 +48,7 @@ export default function App() {
           <Stack.Screen name="MyCart" options={{ headerShown: false }} component={MyCart} />
         </Stack.Navigator>
       </NavigationContainer>
+      </StripeProvider>
     </Provider>
   );
 }
