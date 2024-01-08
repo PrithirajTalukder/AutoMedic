@@ -55,7 +55,7 @@ const MyCart = () => {
       }
 
       // sending request
-      const response = await fetch("http://192.168.0.3:8080/pay", {
+      const response = await fetch("http://192.168.0.4:8080/pay", {
         method: "POST",
         body: JSON.stringify({
           name: 'Your customer name',
