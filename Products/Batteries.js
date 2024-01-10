@@ -6,10 +6,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addProductToMyCart } from '../redux/MyCartSlice';
 import { removeProductFromCart, updateProductQuantity } from '../redux/MyCartSlice';
 
+
+
 const Batteries = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
+ 
+
+  
 
   const [Items, setItems] = useState([
     {
@@ -36,6 +41,8 @@ const Batteries = () => {
     },
     // Add more products as needed
   ]);
+
+
 
   // Synchronize the product quantity with the cart
   useEffect(() => {
