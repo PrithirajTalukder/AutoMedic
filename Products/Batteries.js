@@ -12,13 +12,13 @@ const Batteries = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
- 
 
-  
+
+
 
   const [Items, setItems] = useState([
     {
-      id: 0,
+      id: 1,
       name: 'Amron',
       image: require('../images/batteries/amron.jpg'),
       price: 2000,
@@ -29,7 +29,7 @@ const Batteries = () => {
       services: 'Includes 15 Services',
     },
     {
-      id: 1,
+      id: 2,
       name: 'Exide',
       image: require('../images/batteries/exide.jpg'),
       price: 1500,
@@ -48,44 +48,41 @@ const Batteries = () => {
   useEffect(() => {
     const updatedItems = [...Items];
     const updatedCart = [...myCart];
-  
-    // Reset qty to 0 if item is not in the cart
+
     updatedItems.forEach((item) => {
       const cartIndex = updatedCart.findIndex((cartItem) => item.id === cartItem.id);
-      if (cartIndex === -1) {
-        item.qty = 0;
+      if (cartIndex !== -1) {
+        item.qty = updatedCart[cartIndex].qty;
       }
     });
-  
+
     setItems(updatedItems);
-    dispatch(updateProductQuantity(updatedCart));
   }, [myCart]);
-  
 
   const handleQuantityChange = (index, newQty) => {
     const updatedItems = [...Items];
     updatedItems[index].qty = Math.max(0, newQty);
     setItems(updatedItems);
-
-    if (newQty === 0) {
-      // Explicitly set qty to 0 in the Items state
-      setItems((prevItems) => prevItems.map((item, i) => i === index ? { ...item, qty: 0 } : item));
+  
+    if (updatedItems[index].qty === 0) {
+      // If quantity becomes zero, remove the product from the cart
+      dispatch(removeProductFromCart(updatedItems[index]));
+    } else {
+      // If quantity is greater than zero, update the quantity in the cart
+      dispatch(updateProductQuantity(updatedItems[index]));
     }
   };
   const handleAddToCartPress = (index) => {
     const updatedItems = [...Items];
     const existingProductIndex = myCart.findIndex(cartItem => cartItem.id === updatedItems[index].id);
 
-    if (existingProductIndex !== -1) {
-      return;
+    if (existingProductIndex === -1 || myCart[existingProductIndex].qty === 0) {
+      updatedItems[index] = { ...updatedItems[index], qty: 1 };
+      setItems(updatedItems);
+
+      dispatch(addProductToMyCart(updatedItems[index]));
     }
-
-    updatedItems[index] = { ...updatedItems[index], qty: 1 };
-    setItems(updatedItems);
-
-    dispatch(addProductToMyCart(updatedItems[index]));
   };
-
   const totalProducts = myCart.length;
   const totalPrice = myCart.reduce((total, item) => total + item.qty * item.price, 0);
 
@@ -139,8 +136,7 @@ const Batteries = () => {
               </View>
               <View>
                 <Image source={item.image} style={{ width: 80, height: 80, marginRight: 30 }} />
-
-                {!item.qty ? (
+                {!myCart.find(cartItem => cartItem.id === item.id) || myCart.find(cartItem => cartItem.id === item.id).qty === 0 ? (
                   <TouchableOpacity
                     onPress={() => handleAddToCartPress(index)}
                     style={{
@@ -154,7 +150,8 @@ const Batteries = () => {
                       marginRight: 20,
                       marginLeft: -15,
                       marginTop: 10
-                    }}>
+                    }}
+                  >
                     <Text style={{ color: 'black', fontWeight: 600 }}>Add To Cart</Text>
                   </TouchableOpacity>
                 ) : (

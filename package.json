@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.4.7",
+    "@npmcli/move-file": "^3.0.0",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
@@ -44,7 +45,10 @@
     "reanimated": "^0.0.1-alpha",
     "redux": "^5.0.1",
     "rxjs": "^7.8.1",
-    "stripe": "^14.11.0"
+    "shaka-player": "^4.7.6",
+    "stripe": "^14.11.0",
+    "uglify-js": "^3.17.4",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
