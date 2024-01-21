@@ -51,6 +51,8 @@ const Market = () => {
 
     // Extract the image URL using the urlFor function
    
+    
+    
 
     return (
       <TouchableOpacity key={product._id} onPress={onProductPress}>

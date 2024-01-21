@@ -5,42 +5,55 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from 'react-redux';
 import { addProductToMyCart } from '../redux/MyCartSlice';
 import { removeProductFromCart, updateProductQuantity } from '../redux/MyCartSlice';
-
-
+import createClient, {urlFor} from '../sanity';
 
 const Batteries = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
 
+  const [Items, setItems] = useState([]);
 
+  useEffect(() => {
+    const fetchBatteriesProducts = async () => {
+      try {
+        const query = `
+          *[_type == 'product' && references(*[_type == 'category' && name == 'Batteries']._id)] {
+            _id,
+            name,
+            image,
+            price,
+            frequency,
+            duration,
+            warranty,
+            services,
+            rating,
+            reviews
+          }
+        `;
 
+        const data = await createClient.fetch(query);
 
-  const [Items, setItems] = useState([
-    {
-      id: 1,
-      name: 'Amron',
-      image: require('../images/batteries/amron.jpg'),
-      price: 2000,
-      qty: 0,
-      frequency: 'Every 10000 kms/ 6 Months',
-      duration: 'Takes 6 Hours',
-      warranty: '1 Month warranty',
-      services: 'Includes 15 Services',
-    },
-    {
-      id: 2,
-      name: 'Exide',
-      image: require('../images/batteries/exide.jpg'),
-      price: 1500,
-      qty: 0,
-      frequency: 'Every 10000 kms/ 6 Months',
-      duration: 'Takes 6 Hours',
-      warranty: '1 Month warranty',
-      services: 'Includes 15 Services',
-    },
-    // Add more products as needed
-  ]);
+        const itemsData = data.map((product) => ({
+          id: product._id,
+          name: product.name,
+          image: { uri: urlFor(product.image).url() }, // assuming you have a urlFor function
+          price: product.price,
+          qty: 0,
+          frequency: product.frequency,
+          duration: product.duration,
+          warranty: product.warranty,
+          services: product.services,
+        }));
+
+        setItems(itemsData);
+      } catch (error) {
+        console.error('Error fetching Batteries products:', error);
+      }
+    };
+
+    fetchBatteriesProducts();
+  }, []);
 
 
 
