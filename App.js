@@ -20,6 +20,8 @@ import Battery1 from './Products/Battery1';
 import MyCart from './Screen/MyCart';
 import Preparingorder from './Screen/Preparingorder';
 import DeliveryScreen from './Screen/DeliveryScreen';
+import Market from './Screen/Market';
+import Payment from './Screen/Payment';
 import { StripeProvider } from '@stripe/stripe-react-native';
 
 const Stack = createNativeStackNavigator();
@@ -32,7 +34,7 @@ export default function App() {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="DeliveryScreen">
+        <Stack.Navigator initialRouteName="Revieworder">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -50,6 +52,8 @@ export default function App() {
           <Stack.Screen name="MyCart" options={{ headerShown: false }} component={MyCart} />
           <Stack.Screen name="Preparingorder" options={{ headerShown: false }} component={Preparingorder} />
           <Stack.Screen name="DeliveryScreen" options={{ headerShown: false }} component={DeliveryScreen} />
+          <Stack.Screen name="Market" options={{ headerShown: false }} component={Market} />
+          <Stack.Screen name="Payment" options={{ headerShown: false }} component={Payment} />
         </Stack.Navigator>
       </NavigationContainer>
       </StripeProvider>

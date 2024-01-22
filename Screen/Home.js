@@ -45,7 +45,7 @@ const Home=() => {
 
         <View style={{flexDirection:"row", margin:2}}>
           <ScrollView horizontal={true}>
-            <Pressable onPress={() => navigation.navigate("Periodic")} 
+            <Pressable onPress={() => navigation.navigate("Batteries")} 
             style={{
               
               backgroundColor: "lightblue",

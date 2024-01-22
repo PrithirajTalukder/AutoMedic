@@ -5,27 +5,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from "@react-navigation/native";
 import { Button } from 'react-native-paper';
 import { removeProductFromCart, updateProductQuantity } from '../redux/MyCartSlice';
-import { useStripe } from '@stripe/stripe-react-native';
 
 const MyCart = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
-  const [couponCode, setCouponCode] = useState('');
   const [itemTotal, setItemTotal] = useState(0);
-  const Stripe = useStripe();
 
   // Calculate item total whenever myCart changes
   useEffect(() => {
     const total = myCart.reduce((acc, item) => acc + item.qty * item.price, 0);
     setItemTotal(total);
   }, [myCart]);
-
-  const handleApplyCoupon = () => {
-    // Add logic to handle applying the coupon
-    console.log(`Applying coupon code: ${couponCode}`);
-    // You can implement coupon logic here, e.g., validate the coupon, apply discounts, etc.
-  };
 
   const handleQuantityChange = (item, newQty) => {
     const updatedItem = { ...item, qty: Math.max(0, newQty) };
@@ -37,61 +28,51 @@ const MyCart = () => {
     }
   };
 
-  const onCheckout = async () => {
+  const onCheckout = () => {
     try {
       // Check if the cart is empty
       if (myCart.length === 0) {
         Alert.alert('Your cart is empty. Add items before proceeding to payment.');
         return;
       }
-
+  
       // Calculate the total amount
       const totalAmount = myCart.reduce((acc, item) => acc + item.qty * item.price, 0);
-
+  
       // Check if the total amount is valid
       if (totalAmount <= 0) {
         Alert.alert('Invalid total amount. Add items with valid prices to proceed.');
         return;
       }
-
-      // sending request
-      const response = await fetch("http://192.168.0.2:8082/pay", {
-        method: "POST",
-        body: JSON.stringify({
-          name: 'Your customer name',
-          amount: totalAmount,
-           // Include this line
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      
-
-      const data = await response.json();
-      if (!response.ok) return Alert.alert(data.message);
-
-      const clientSecret = data.clientSecret;
-      const initSheet = await Stripe.initPaymentSheet({
-        paymentIntentClientSecret: clientSecret,
-        merchantDisplayName: "Prithiraj"
-      });
-
-      if (initSheet.error) return Alert.alert(initSheet.error.message);
-
-      const presentSheet = await Stripe.presentPaymentSheet({
-        clientSecret,
-      });
-
-      if (presentSheet.error) return Alert.alert(presentSheet.error.message);
-
-      Alert.alert("Payment completed, thank you for being with Auto Medic!");
+  
+      // Display payment completion message
+      Alert.alert(
+        `This is your total: ৳${totalAmount}. Taking you to Payment Screen`,
+        undefined,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {
+              // Navigate to the "MyCart" screen after the user clicks "Cancel"
+              navigation.navigate("MyCart");
+            },
+          },
+          {
+            text: 'OK',
+            onPress: () => {
+              // Navigate to the "Payment" screen after the user clicks "OK"
+              navigation.navigate("Payment");
+            },
+          },
+        ]
+      );
     } catch (err) {
       console.error(err);
       Alert.alert("Something went wrong, try again later!");
     }
   };
+    
+      
 
   return (
     <View style={{ flex: 1 }}>
@@ -184,30 +165,6 @@ const MyCart = () => {
         </View>
       )}
 
-      <View style={{ marginBottom: 120, paddingHorizontal: 20 }}>
-        <TextInput
-          placeholder="Enter Coupon Code"
-          value={couponCode}
-          onChangeText={(text) => setCouponCode(text)}
-          style={{
-            borderBottomWidth: 1,
-            borderColor: 'gray',
-            marginBottom: 10,
-            paddingVertical: 5,
-          }}
-        />
-        <Button
-          mode="contained"
-          style={{
-            backgroundColor: 'purple',
-            paddingVertical: 10,
-          }}
-          onPress={handleApplyCoupon}
-        >
-          Apply Coupon
-        </Button>
-      </View>
-
       {/* Item Total and You Pay */}
       <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
         <View style={{ marginBottom: 20 }}>
@@ -224,9 +181,9 @@ const MyCart = () => {
           margin: 15,
           paddingVertical: 10,
         }}
-        onPress={(onCheckout) }
+        onPress={onCheckout}
       >
-        Proceed To Checkout
+        Proceed To Payment
       </Button>
     </View>
   );
