@@ -13,7 +13,7 @@ const HomeSearch = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'lightblue' }}>
       {/* Search Mechanic */}
-      <TouchableOpacity onPress={() => navigation.navigate("LocationSearch")} >
+      <TouchableOpacity onPress={() => navigation.navigate("Mechaniclocation")} >
         <View style={{
           flexDirection: 'column',
           alignItems: 'center',
@@ -45,7 +45,7 @@ const HomeSearch = () => {
       </TouchableOpacity>
 
       {/* Nearest Workshop */}
-      <TouchableOpacity onPress={() => navigation.navigate("LocationSearch")} >
+      <TouchableOpacity onPress={() => navigation.navigate("Workshoplocation")} >
         <View style={{
           flexDirection: 'column',
           alignItems: 'center',

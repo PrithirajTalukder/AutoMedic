@@ -11,7 +11,8 @@ import SignUp from './Screen/SignUp';
 import ForgotPassword from './Screen/ForgotPassword';
 import Periodic from './Options/Periodic';
 import MainContainer from './Navigation/MainContainer';
-import LocationSearch from './Screen/LocationSearch';
+import Workshoplocation from './Screen/Workshoplocation';
+import Mechaniclocation from './Screen/Mechaniclocation';
 import Mechanic from './Screen/Mechanic';
 import Account from './Screen/Account';
 import Profile from './Screen/Profile';
@@ -22,6 +23,7 @@ import Preparingorder from './Screen/Preparingorder';
 import DeliveryScreen from './Screen/DeliveryScreen';
 import Market from './Screen/Market';
 import Payment from './Screen/Payment';
+import Chat from './Screen/Chat';
 import { StripeProvider } from '@stripe/stripe-react-native';
 
 const Stack = createNativeStackNavigator();
@@ -34,7 +36,7 @@ export default function App() {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="Revieworder">
+        <Stack.Navigator initialRouteName="Chat">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -44,7 +46,8 @@ export default function App() {
           <Stack.Screen name="ForgotPassword" options={{ headerShown: false }} component={ForgotPassword} />
           <Stack.Screen name="Periodic" options={{ headerShown: false }} component={Periodic} />
           <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
-          <Stack.Screen name="LocationSearch" options={{ headerShown: false }} component={LocationSearch} />
+          <Stack.Screen name="Workshoplocation" options={{ headerShown: false }} component={Workshoplocation} />
+          <Stack.Screen name="Mechaniclocation" options={{ headerShown: false }} component={Mechaniclocation} />
           <Stack.Screen name="Account" options={{ headerShown: false }} component={Account} />
           <Stack.Screen name="Mechanic" options={{ headerShown: false }} component={Mechanic} />
           <Stack.Screen name="Batteries" options={{ headerShown: false }} component={Batteries} />
@@ -54,6 +57,7 @@ export default function App() {
           <Stack.Screen name="DeliveryScreen" options={{ headerShown: false }} component={DeliveryScreen} />
           <Stack.Screen name="Market" options={{ headerShown: false }} component={Market} />
           <Stack.Screen name="Payment" options={{ headerShown: false }} component={Payment} />
+          <Stack.Screen name="Chat" options={{ headerShown: false }} component={Chat} />
         </Stack.Navigator>
       </NavigationContainer>
       </StripeProvider>
