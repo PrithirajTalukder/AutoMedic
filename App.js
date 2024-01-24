@@ -25,6 +25,7 @@ import Market from './Screen/Market';
 import Payment from './Screen/Payment';
 import Chat from './Screen/Chat';
 import { StripeProvider } from '@stripe/stripe-react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,9 +35,11 @@ export default function App() {
 
     <StripeProvider publishableKey="pk_test_51ORWrgBWfBrJrHZ12RNAI1gfoqIfCrabKnoZrm8jOzA8U3jOV6aZxQCCGr3NXbTvo76EqAHcUhGqHpd07FdupYBz00Z4uWPKaY">
 
+    <GestureHandlerRootView>
+
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="Chat">
+        <Stack.Navigator initialRouteName="Welcome">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -60,6 +63,7 @@ export default function App() {
           <Stack.Screen name="Chat" options={{ headerShown: false }} component={Chat} />
         </Stack.Navigator>
       </NavigationContainer>
+      </GestureHandlerRootView>
       </StripeProvider>
     </Provider>
   );
