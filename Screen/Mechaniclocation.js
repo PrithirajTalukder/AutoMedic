@@ -3,8 +3,10 @@ import MapView, { Marker, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity, } from 'react-native';
 import Modal from 'react-native-modal';
+import { useNavigation } from "@react-navigation/native";
 
 const Mechaniclocation = () => {
+  const navigation = useNavigation();
   const [location, setLocation] = useState(null);
   const [workshops, setWorkshops] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -39,9 +41,10 @@ const Mechaniclocation = () => {
   };
 
   const handleMarkerPress = (mechanic) => {
-    setSelectedPlace(mechanic);
-    setModalVisible(true);
+    // Navigate to the Chat screen with the selected mechanic's name as a parameter
+    navigation.navigate('Chat', { mechanicName: mechanic.mechanic });
   };
+  
 
   const closeModal = () => {
     setModalVisible(false);
@@ -103,11 +106,12 @@ const Mechaniclocation = () => {
             pinColor={mechanic.id === 4 ? 'lightblue' : 'green'} // Customize the workshop marker color
           >
             <Callout onPress={() => handleMarkerPress(mechanic.mechanic)}>
-              <View>
-                <Text>{mechanic.mechanic}</Text>
-                <Text>Tap to chat or call</Text>
-              </View>
-            </Callout>
+  <View>
+    <Text>{mechanic.mechanic}</Text>
+    <Text>Tap to chat or call</Text>
+  </View>
+</Callout>
+
           </Marker>
         ))}
       </MapView>

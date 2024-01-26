@@ -26,7 +26,7 @@ const SignIn = () => {
   
       if (user && user.emailVerified) {
         setErrorMessage('You have successfully logged in!');
-        navigation.navigate('Main');
+        navigation.navigate('Chat');
       } else if (user) {
         setErrorMessage('Please verify your email before logging in.');
         bottomSheetModalRef.current?.present();
