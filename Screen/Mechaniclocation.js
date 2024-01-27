@@ -39,11 +39,17 @@ const Mechaniclocation = () => {
   const onMapLayout = () => {
     // Set any necessary actions on map layout
   };
-
   const handleMarkerPress = (mechanic) => {
-    // Navigate to the Chat screen with the selected mechanic's name as a parameter
-    navigation.navigate('Chat', { mechanicName: mechanic.mechanic });
+    console.log('Marker pressed. Mechanic data:', mechanic);
+  
+    if (mechanic) {
+      console.log('Selected mechanic name:', mechanic);
+      navigation.navigate('Chat', { mechanicName: mechanic });
+    } else {
+      console.log('Mechanic data is undefined:', mechanic);
+    }
   };
+  
   
 
   const closeModal = () => {

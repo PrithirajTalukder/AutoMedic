@@ -1,24 +1,26 @@
-import React, { useState, useEffect, useLayoutEffect, useCallback } from 'react';
-import { TouchableOpacity, Text, View, TextInput, FlatList } from 'react-native';
-import { collection, addDoc, orderBy, query, onSnapshot } from 'firebase/firestore';
+import React, { useState, useLayoutEffect } from 'react';
+import { TouchableOpacity, Text, View, TextInput, FlatList, Image, StyleSheet } from 'react-native';
+import { collection, addDoc, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { auth, database } from '../config/firebase';
 import { useNavigation } from '@react-navigation/native';
-
+import { AntDesign, MaterialIcons, Feather } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import colors from '../assets/themes/colors';
 
-import { AntDesign, MaterialIcons, Feather } from '@expo/vector-icons';
-import * as ImagePicker from 'react-native-image-picker';
-import { launchImageLibrary} from 'react-native-image-picker';
 
 const Chat = ({ route }) => {
+
   const { mechanicName } = route.params;
   const navigation = useNavigation();
 
+
   useLayoutEffect(() => {
+    console.log('Received mechanic name:', mechanicName);
     if (mechanicName) {
       navigation.setOptions({
         headerTitle: mechanicName,
+        
         headerRight: () => (
           <TouchableOpacity
             style={{
@@ -33,129 +35,118 @@ const Chat = ({ route }) => {
     }
   }, [navigation, mechanicName]);
 
+
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
 
+
+  let selectedImageUri = null;
   const onSignOut = () => {
     signOut(auth).catch(error => console.log('Error logging out: ', error));
   };
 
+
   useLayoutEffect(() => {
-    const collectionRef = collection(database, 'chats');
-    const q = query(collectionRef, orderBy('createdAt', 'desc'));
+    const chatsCollection = collection(database, 'chats');
+    const q = query(chatsCollection, orderBy("createdAt", "asc"));
 
     const unsubscribe = onSnapshot(q, querySnapshot => {
-      setMessages(
-        querySnapshot.docs.map(doc => ({
-          _id: doc.data()._id,
-          createdAt: doc.data().createdAt.toDate(),
-          text: doc.data().text,
+      const updatedMessages = [];
+      querySnapshot.docs.forEach(doc => {
+        const { _id, createdAt, text, image } = doc.data();
+        updatedMessages.push({
+          _id,
+          createdAt: createdAt.toDate(),
+          text,
           user: doc.data().user,
-          image: doc.data().image, // Retrieve image from Firebase
-        }))
-      );
+          image, // Include image field
+        });
+      });
+      setMessages(updatedMessages);
     });
-
     return unsubscribe;
   }, []);
 
-  const onSend = useCallback(() => {
-    const user = {
-      _id: auth?.currentUser?.uid,
-      avatar: 'https://i.pravatar.cc/300'
-    };
 
-    const newMessage = {
-      _id: new Date().toISOString(),
-      createdAt: new Date(),
-      text: inputText,
-      user
-    };
-
-    setMessages(previousMessages => [...previousMessages, newMessage]);
-
-    // Save to Firebase
-    addDoc(collection(database, 'chats'), {
-      _id: newMessage._id,
-      createdAt: newMessage.createdAt,
-      text: newMessage.text,
-      user: newMessage.user,
-    });
-
-    // Clear input
-    setInputText('');
-  }, [auth, inputText]);
-
-  const onAddImage = () => {
+  const onAddImage = async () => {
     const options = {
       title: 'Select Image',
       storageOptions: {
         skipBackup: true,
         path: 'images',
-      },
+      }
     };
-
-    // Correct usage of launchImageLibrary
-    ImagePicker.launchImageLibrary(options, response => {
-      if (!response.didCancel && !response.error) {
-        const selectedImage = {
-          uri: response.uri,
-          type: response.type,
-          name: response.fileName,
-        };
-
-        // Handle the selected image, e.g., upload to Firebase Storage
-        console.log('Selected image:', selectedImage);
-
-        // Save to Firebase
-        const user = {
-          _id: auth?.currentUser?.uid,
-          avatar: 'https://i.pravatar.cc/300',
-        };
-
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync(options);
+      console.log('ImagePicker result:', result);
+      if (!result.cancelled && result.uri) {
+        selectedImageUri = result.uri;
         const newMessage = {
           _id: new Date().toISOString(),
           createdAt: new Date(),
           text: '',
-          user,
-          image: selectedImage,
+          image: selectedImageUri,
         };
-
         setMessages(previousMessages => [...previousMessages, newMessage]);
+      }
+    } catch (error) {
+      console.error('ImagePicker error:', error);
+    }
+  };
 
-        addDoc(collection(database, 'chats'), {
+
+  const onSend = async () => {
+    if (inputText || selectedImageUri) {
+      const newMessage = {
+        _id: new Date().toISOString(),
+        createdAt: new Date(),
+        text: inputText,
+        image: selectedImageUri
+      };
+      setMessages(previousMessages => [...previousMessages, newMessage]);
+      if (inputText) {
+        await addDoc(collection(database, 'chats'), {
           _id: newMessage._id,
           createdAt: newMessage.createdAt,
           text: newMessage.text,
-          user: newMessage.user,
-          image: newMessage.image,
         });
       }
-    });
+      setInputText('');
+      selectedImageUri = null;
+    }
   };
 
-  const onTakePhoto = () => {
-    // Implement logic to open device camera and capture a photo
-    console.log('Take photo clicked');
-  };
 
   const onCall = () => {
-    // Implement logic for initiating a call
     console.log('Call initiated');
   };
-
   const onVideoCall = () => {
-    // Implement logic for initiating a video call
     console.log('Video call initiated');
   };
+
+
+  const messageBoxStyle = StyleSheet.create({
+    messageBox: {
+      backgroundColor: 'lightblue', // Adjust color as needed
+      padding: 10,
+      borderRadius: 10,
+      marginVertical: 5,
+      maxWidth: '80%', // Prevent overly wide boxes
+    },
+    text: {
+      color: 'black',
+      fontSize: 16,
+    },
+  });
+
 
   return (
     <View style={{ flex: 1, backgroundColor: 'black' }}>
       {/* Header with Call and Video Call Icons */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 30 }}>
         <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>{mechanicName}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <TouchableOpacity onPress={onCall} style={{ marginRight: 10 }}>
+          <TouchableOpacity onPress={onCall} style={{ marginRight: 40 }}>
             <Feather name="phone" size={24} color="lightblue" />
           </TouchableOpacity>
           <TouchableOpacity onPress={onVideoCall}>
@@ -164,24 +155,27 @@ const Chat = ({ route }) => {
         </View>
       </View>
 
-      {/* Chat Messages */}
+   
       <FlatList
-        data={messages}
-        keyExtractor={item => item._id}
-        renderItem={({ item }) => (
-          <View style={{ padding: 10 }}>
-            {item.text && <Text style={{ color: 'white' }}>{item.text}</Text>}
-            {item.image && <Image source={{ uri: item.image.uri }} style={{ width: 200, height: 200 }} />}
-          </View>
-        )}
-        inverted
-      />
+      data={messages.slice().reverse()}
+      keyExtractor={item => item._id}
+      inverted={true}
+      renderItem={({ item }) => (
+        <View style={[messageBoxStyle.messageBox, item.user === 'user' ? { backgroundColor: 'lightblue', alignSelf: 'flex-start' } : { alignSelf: 'flex-end' }]}>
+          {item.text && <Text style={messageBoxStyle.text}>{item.text}</Text>}
+          {item.image && <Image source={{ uri: item.image }} style={{ width: 200, height: 200 }} />}
+        </View>
+      )}
+    />
+
+
+
+
+
+
 
       {/* Message Input and Icons */}
       <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-        <TouchableOpacity onPress={onTakePhoto} style={{ marginRight: 10 }}>
-          <Feather name="camera" size={24} color="lightblue" />
-        </TouchableOpacity>
         <TouchableOpacity onPress={onAddImage} style={{ marginRight: 10 }}>
           <MaterialIcons name="add-a-photo" size={24} color="lightblue" />
         </TouchableOpacity>
@@ -192,12 +186,12 @@ const Chat = ({ route }) => {
             borderRadius: 20,
             paddingHorizontal: 20,
             marginRight: 10,
-            color: 'black', // Text color
+            color: 'black',
           }}
           placeholder="Type a message..."
           value={inputText}
           onChangeText={text => setInputText(text)}
-          placeholderTextColor="grey" // Placeholder text color
+          placeholderTextColor="grey"
         />
         <TouchableOpacity onPress={onSend}>
           <Text style={{ color: 'lightblue', fontSize: 16 }}>Send</Text>
@@ -206,5 +200,4 @@ const Chat = ({ route }) => {
     </View>
   );
 };
-
 export default Chat;
