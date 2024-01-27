@@ -151,8 +151,8 @@ const Periodic = () => {
               )}
             </View>
 
-            <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 0 }}>
-              <FontAwesome name="filter" size={24} color="black" />
+            <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginTop: 50 }}>
+              <FontAwesome name="sort-down" size={28} color="black" />
             </TouchableOpacity>
           </View>
 
@@ -164,25 +164,31 @@ const Periodic = () => {
           >
                 <View style={styles.modalContainer}>
             <View style={styles.modalBox}>
-              <Text style={styles.modalTitle}>Filter Modal</Text>
-              <TouchableOpacity onPress={closeModal}>
-                <Text>Close Modal</Text>
+            <TouchableOpacity onPress={closeModal} style={{marginLeft:270}}>
+                <FontAwesome name="times-circle" size={28} color="black" />
               </TouchableOpacity>
+              <Text style={styles.modalTitle}>Filter Modal</Text>
+              
               <View style={styles.modalOptions}>
-                <TouchableOpacity onPress={() => applyFilter('name')}>
-                  <Text>Sort By Name</Text>
+                <TouchableOpacity onPress={() => applyFilter('name')} 
+                style={{ marginTop:25, backgroundColor:'white', width:'90%',height:'10%',justifyContent:'center', borderRadius:5, alignItems:'center'}}>
+                  <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Sort By Name</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => applyFilter('lowToHighPrice')}>
-                  <Text>Low to High Price</Text>
+                <TouchableOpacity onPress={() => applyFilter('lowToHighPrice')} 
+                style={{ marginTop:25, backgroundColor:'white', width:'90%',height:'10%',justifyContent:'center', borderRadius:5, alignItems:'center'}}>
+                  <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Low to High Price</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => applyFilter('highToLowPrice')}>
-                  <Text>High to Low Price</Text>
+                <TouchableOpacity onPress={() => applyFilter('highToLowPrice')} 
+                style={{ marginTop:25, backgroundColor:'white', width:'90%',height:'10%',justifyContent:'center', borderRadius:5, alignItems:'center'}}>
+                  <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>High to Low Price</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => applyFilter('rating')}>
-                  <Text>Sort By Rating</Text>
+                <TouchableOpacity onPress={() => applyFilter('rating')} 
+                style={{ marginTop:25, backgroundColor:'white', width:'90%',height:'10%',justifyContent:'center', borderRadius:5, alignItems:'center'}}>
+                  <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Sort By Rating</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => applyFilter(null)}>
-                  <Text>Clear Filter</Text>
+                <TouchableOpacity onPress={() => applyFilter(null)} 
+                style={{ marginTop:60,width:'40%', backgroundColor:'white',height:'7%',justifyContent:'center', alignItems:'center', borderRadius:4,}}>
+                  <Text style={{ fontSize: 14, fontWeight: 600, }}>Clear Filter</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -234,23 +240,37 @@ const Periodic = () => {
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'start',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // semi-transparent background
   },
   modalBox: {
-    backgroundColor: '#f5f5f5',
-    borderRadius: 5,
-    padding: 10,
-    width: '80%', // adjust the width as needed
+    backgroundColor: 'lightblue',
+    borderRadius: 15,
+    marginLeft:10,
+    paddingTop:20,
+    paddingLeft:10,
+    paddingRight: 5,
+    paddingBottom:30,
+    marginTop: 78,
+    width: '80%',
+    height:'54%', // adjust the width as needed
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    marginLeft: 95,
+
   },
   modalOptions: {
     marginTop: 10,
+    backgroundColor:'lightblue',
+    width:'90%',
+    height:'80%',
+    borderRadius:15,
+    alignItems:'center',
+    marginLeft:12,
   },
 });
 

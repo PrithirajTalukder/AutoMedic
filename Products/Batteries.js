@@ -216,23 +216,22 @@ const Batteries = () => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          backgroundColor: 'blue',
+          backgroundColor: 'lightblue',
           borderRadius: 7,
-          height: 40,
-          justifyContent: 'center',
-          alignItems: 'center',
+          borderWidth:2,
+          height: 60,
           margin: 20,
         }}
         onPress={() => {
           navigation.navigate("MyCart");
         }}>
         <View style={{ marginLeft: 20 }}>
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>{`${totalProducts} Product${totalProducts !== 1 ? 's' : ''} Added`}</Text>
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>{`Total: ৳${totalPrice}`}</Text>
+          <Text style={{ color: 'black', fontSize: 16, fontWeight: '600',marginBottom:4 }}>{`${totalProducts} Product${totalProducts !== 1 ? 's' : ''} Added`}</Text>
+          <Text style={{ color: 'black', fontSize: 16, fontWeight: '600' }}>{`Total: ৳${totalPrice}`}</Text>
         </View>
 
         <View style={{ marginRight: 20 }}>
-          <Text style={{ color: 'white', fontSize: 18, fontWeight: '600' }}>View Cart</Text>
+          <Text style={{ color: 'black', fontSize: 18, fontWeight: '600' }}>View Cart</Text>
         </View>
       </TouchableOpacity>
     </View>
