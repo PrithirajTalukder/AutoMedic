@@ -33,8 +33,8 @@ const Chat = ({ route }) => {
 
   const [filteredMessages, setFilteredMessages] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [selectedImageUri, setSelectedImageUri] = useState(null); // New state for image URI
 
-  let selectedImageUri = null;
   const onSignOut = () => {
     signOut(auth).catch(error => console.log('Error logging out: ', error));
   };
@@ -73,14 +73,14 @@ const Chat = ({ route }) => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync(options);
       console.log('ImagePicker result:', result);
-      if (!result.cancelled && result.uri) {
-        selectedImageUri = result.uri;
+      if (!result.cancelled && result.assets && result.assets.length > 0 && result.assets[0].uri) {
+        setSelectedImageUri(result.assets[0].uri); // Update state with selected image URI
         const newMessage = {
           _id: new Date().toISOString(),
           createdAt: new Date(),
           text: '',
-          image: selectedImageUri,
-          user: mechanicName, // Set the user field to the mechanic's name
+          image: result.assets[0].uri, // Use the URI directly
+          user: mechanicName,
         };
         setFilteredMessages(previousMessages => [...previousMessages, newMessage]);
       }
@@ -88,7 +88,7 @@ const Chat = ({ route }) => {
       console.error('ImagePicker error:', error);
     }
   };
-
+  
   const onSend = async () => {
     if (inputText || selectedImageUri) {
       const newMessage = {
@@ -96,7 +96,7 @@ const Chat = ({ route }) => {
         createdAt: new Date(),
         text: inputText,
         image: selectedImageUri,
-        user: mechanicName, // Set the user field to the mechanic's name
+        user: mechanicName,
       };
       setFilteredMessages(previousMessages => [...previousMessages, newMessage]);
       if (inputText) {
@@ -108,7 +108,7 @@ const Chat = ({ route }) => {
         });
       }
       setInputText('');
-      selectedImageUri = null;
+      setSelectedImageUri(null); // Reset selected image URI
     }
   };
 
@@ -132,7 +132,9 @@ const Chat = ({ route }) => {
       color: 'black',
       fontSize: 16,
     },
-  });
+      
+    });
+
 
   return (
     <View style={{ flex: 1, backgroundColor: 'black' }}>
