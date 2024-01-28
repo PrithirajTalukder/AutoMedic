@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SafeAreaView, Pressable, Text, View, ScrollView, Image, TouchableOpacity, TextInput, Modal, StyleSheet } from 'react-native'
+import { SafeAreaView, Pressable, Text, View, ScrollView, Image, TouchableOpacity, TextInput, Modal, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-import Video from 'react-native-video';
 import { FontAwesome } from '@expo/vector-icons';
 
 const Periodic = () => {
@@ -41,6 +40,7 @@ const Periodic = () => {
   ]);
   const [originalData, setOriginalData] = useState(data);
   const [filteredData, setFilteredData] = useState(originalData);
+  const [selectedFilter, setSelectedFilter] = useState(null);
 
   const onSearch = (text) => {
     setSearch(text);
@@ -55,12 +55,11 @@ const Periodic = () => {
     }
   };
 
-  const [selectedFilter, setSelectedFilter] = useState(null);
-
-
-  const clearSearch = () => {
-    setSearch('');
+  const clearFilters = () => {
+    setSelectedFilter(null);
     setFilteredData(originalData);
+    closeModal();
+    navigation.navigate('Periodic'); // Adjust the destination page name
   };
 
   const handleFilterPress = () => {
@@ -74,28 +73,19 @@ const Periodic = () => {
   const applyFilter = (filter) => {
     setSelectedFilter(filter);
 
-    // Apply the selected filter to the data
     switch (filter) {
       case 'name':
         setFilteredData([...filteredData].sort((a, b) => a.title.localeCompare(b.title)));
         break;
-        case 'lowToHighPrice':
-          setFilteredData([...filteredData].sort((a, b) => {
-            const priceA = parseInt(a.price); // Convert the price string to an integer
-            const priceB = parseInt(b.price);
-            return priceA - priceB;
-          }));
-          break;
-        case 'highToLowPrice':
-          setFilteredData([...filteredData].sort((a, b) => {
-            const priceA = parseInt(a.price);
-            const priceB = parseInt(b.price);
-            return priceB - priceA;
-          }));
-          break;
+      case 'lowToHighPrice':
+        setFilteredData([...filteredData].sort((a, b) => parseInt(a.price) - parseInt(b.price)));
+        break;
+      case 'highToLowPrice':
+        setFilteredData([...filteredData].sort((a, b) => parseInt(b.price) - parseInt(a.price)));
+        break;
       //case 'rating':
-        //setFilteredData([...filteredData].sort((a, b) => /* Sort logic for rating */));
-        //break;
+      //setFilteredData([...filteredData].sort((a, b) => /* Sort logic for rating */));
+      //break;
       default:
         setFilteredData(originalData);
         break;
@@ -145,7 +135,7 @@ const Periodic = () => {
                 value={search}
               />
               {search.length > 0 && (
-                <TouchableOpacity onPress={clearSearch} style={{ marginLeft: 10 }}>
+                <TouchableOpacity onPress={clearFilters} style={{ marginLeft: 10 }}>
                   <FontAwesome name="times" size={24} color="black" />
                 </TouchableOpacity>
               )}
@@ -162,42 +152,41 @@ const Periodic = () => {
             visible={isFilterModalVisible}
             onRequestClose={closeModal}
           >
-                <View style={styles.modalContainer}>
-            <View style={styles.modalBox}>
-            <TouchableOpacity onPress={closeModal} style={{marginLeft:270}}>
-                <FontAwesome name="times-circle" size={28} color="black" />
-              </TouchableOpacity>
-              <Text style={styles.modalTitle}>Filter Modal</Text>
-              
-              <View style={styles.modalOptions}>
-                <TouchableOpacity onPress={() => applyFilter('name')} 
-                style={{ marginTop:25, backgroundColor:'white', width:'90%',height:'10%',justifyContent:'center', borderRadius:5, alignItems:'center'}}>
-                  <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Sort By Name</Text>
+            <View style={styles.modalContainer}>
+              <View style={styles.modalBox}>
+                <TouchableOpacity onPress={closeModal} style={{ marginLeft: 250 }}>
+                  <FontAwesome name="times-circle" size={28} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => applyFilter('lowToHighPrice')} 
-                style={{ marginTop:25, backgroundColor:'white', width:'90%',height:'10%',justifyContent:'center', borderRadius:5, alignItems:'center'}}>
-                  <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Low to High Price</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => applyFilter('highToLowPrice')} 
-                style={{ marginTop:25, backgroundColor:'white', width:'90%',height:'10%',justifyContent:'center', borderRadius:5, alignItems:'center'}}>
-                  <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>High to Low Price</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => applyFilter('rating')} 
-                style={{ marginTop:25, backgroundColor:'white', width:'90%',height:'10%',justifyContent:'center', borderRadius:5, alignItems:'center'}}>
-                  <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Sort By Rating</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => applyFilter(null)} 
-                style={{ marginTop:60,width:'40%', backgroundColor:'white',height:'7%',justifyContent:'center', alignItems:'center', borderRadius:4,}}>
-                  <Text style={{ fontSize: 14, fontWeight: 600, }}>Clear Filter</Text>
-                </TouchableOpacity>
+                <Text style={styles.modalTitle}>Filter Modal</Text>
+
+                <View style={styles.modalOptions}>
+                  <TouchableOpacity onPress={() => applyFilter('name')}
+                    style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
+                    <Text style={{ color: "black", fontSize: 17, fontWeight: 600 }}>Sort By Name</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => applyFilter('lowToHighPrice')}
+                    style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
+                    <Text style={{ color: "black", fontSize: 17, fontWeight: 600 }}>Low to High Price</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => applyFilter('highToLowPrice')}
+                    style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
+                    <Text style={{ color: "black", fontSize: 17, fontWeight: 600 }}>High to Low Price</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => applyFilter('rating')}
+                    style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
+                    <Text style={{ color: "black", fontSize: 17, fontWeight: 600 }}>Sort By Rating</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={clearFilters}
+                    style={{ marginTop: 60, width: '40%', backgroundColor: 'white', height: '7%', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                    <Text style={{ fontSize: 14, fontWeight: 600 }}>Clear Filter</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        
           </Modal>
 
           <View style={{ marginLeft: 25, marginTop: 10, top: 20, marginBottom: 40 }}>
-            <Text style={{ color: "black", fontSize: 24, fontWeight: 800, }}>
+            <Text style={{ color: "black", fontSize: 24, fontWeight: 800 }}>
               Scheduled Packages
             </Text>
           </View>
@@ -247,14 +236,14 @@ const styles = StyleSheet.create({
   modalBox: {
     backgroundColor: 'lightblue',
     borderRadius: 15,
-    marginLeft:10,
-    paddingTop:20,
-    paddingLeft:10,
+    marginLeft: 10,
+    paddingTop: 20,
+    paddingLeft: 10,
     paddingRight: 5,
-    paddingBottom:30,
+    paddingBottom: 30,
     marginTop: 78,
     width: '80%',
-    height:'54%', // adjust the width as needed
+    height: '54%', // adjust the width as needed
   },
   modalTitle: {
     fontSize: 18,
@@ -265,17 +254,17 @@ const styles = StyleSheet.create({
   },
   modalOptions: {
     marginTop: 10,
-    backgroundColor:'lightblue',
-    width:'90%',
-    height:'80%',
-    borderRadius:15,
-    alignItems:'center',
-    marginLeft:12,
+    backgroundColor: 'lightblue',
+    width: '90%',
+    height: '80%',
+    borderRadius: 15,
+    alignItems: 'center',
+    marginLeft: 12,
   },
 });
 
-
 export default Periodic;
+
 
 
          
