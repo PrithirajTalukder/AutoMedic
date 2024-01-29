@@ -24,10 +24,10 @@ const Tab = createBottomTabNavigator();
 export default function MainContainer(){
     return (
         
-            <Tab.Navigator initialRouteName={homeName}
+            <Tab.Navigator initialRouteName={accountName}
             screenOptions={({route}) => ({
                 tabBarIcon: ({ focused, color, size}) => {
-                    let iconName;
+                    let iconName ;
                     let iconSize = size;
                     let iconStyle = {};
                     let iconColor = focused ? color : 'white';
@@ -35,41 +35,80 @@ export default function MainContainer(){
 
                     if (rn === homeName){
                         iconName = focused ? 'home' : 'home-outline';
-                    } else if (rn=== helpName) {
-                        iconName = focused ? 'help' : 'help-circle-outline';
-                    }
-                    else if (rn=== mechanicName) {
-                        iconName = focused ? 'build' : 'build-outline';
                         if (focused) {
-                            iconStyle.backgroundColor = 'orange'; // Change the background color
-                            iconStyle.borderRadius = 10;
+                            iconStyle.color = '#112e4f'; // Change the background color
                             iconSize = focused ? size + 11 : size + 2; 
-                            iconStyle.borderWidth = 1;
+                            
                         }
                         else{
-                            iconStyle.backgroundColor = "teal";
-                            iconStyle.borderRadius = 7;
+                            iconStyle.color = 'white';
                             iconSize = focused ? size + 11 : size + 10; 
-                            iconStyle.borderWidth = 1;
+                           
+                         }
+                    } else if (rn=== helpName) {
+                        iconName = focused ? 'help' : 'help-circle-outline';
+                        if (focused) {
+                            iconStyle.color = '#112e4f'; // Change the background color
                             
+                            iconSize = focused ? size + 11 : size + 2; 
                             
-
                         }
+                        else{
+                            iconStyle.color = 'white';
+                            iconSize = focused ? size + 11 : size + 10; 
+                           
+                         }
+                    }
+                    else if (rn=== mechanicName) {
+                        iconName = focused ? 'construct' : 'construct';
+                        if (focused) {
+                            iconStyle.color = '#112e4f'; // Change the background color
+                            
+                            iconSize = focused ? size + 11 : size + 2; 
+                            
+                        }
+                        else{
+                            iconStyle.color = 'white';
+                            iconSize = focused ? size + 11 : size + 10; 
+                           
+                         }
                     } else if (rn=== marketName) {
                         iconName = focused ? 'cart' : 'cart-outline';
+                        if (focused) {
+                            iconStyle.color = '#112e4f'; // Change the background color
+                            
+                            iconSize = focused ? size + 11 : size + 2; 
+                            
+                        }
+                        else{
+                            iconStyle.color = 'white';
+                            iconSize = focused ? size + 11 : size + 10; 
+                           
+                         }
                     } else if (rn=== accountName) {
                         iconName = focused ? 'person' : 'person-outline';
+                        if (focused) {
+                            iconStyle.color = '#112e4f'; // Change the background color
+                            
+                            iconSize = focused ? size + 11 : size + 2; 
+                            
+                        }
+                        else{
+                            iconStyle.color = 'white';
+                            iconSize = focused ? size + 11 : size + 10; 
+                           
+                         }
                     }
                     
 
                     return <Ionicons name={iconName} size={iconSize} color={iconColor} style={iconStyle}/>
                 },
-                tabBarStyle: {position: 'absolute',paddingTop: 10, height: 70, backgroundColor: "lightblue", borderRadius:20 },
+                tabBarStyle: {position: 'absolute',paddingTop: 10, height: 70, backgroundColor: "#b3e8fc", borderColor: 'black' },
                 
             })}
             tabBarOptions={{
                 labelStyle: { paddingBottom: 8,fontWeight:500, fontSize: 12, color: "black" },
-                activeTintColor : "black"
+                activeTintColor : "white"
                 
                 
                 

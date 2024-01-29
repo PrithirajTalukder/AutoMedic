@@ -126,7 +126,7 @@ const Periodic = () => {
               marginTop: 60,
               flexDirection: "row",
               width: 330,
-              backgroundColor: "lightblue",
+              backgroundColor: "#bad6e3",
               borderRadius: 20,
               alignItems: "center"
             }}>
@@ -187,8 +187,8 @@ const Periodic = () => {
                   <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Sort By Rating</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => applyFilter(null)} 
-                style={{ marginTop:60,width:'40%', backgroundColor:'white',height:'7%',justifyContent:'center', alignItems:'center', borderRadius:4,}}>
-                  <Text style={{ fontSize: 14, fontWeight: 600, }}>Clear Filter</Text>
+                style={{ marginTop:60,width:'40%', backgroundColor:'#15174f',height:'9%',justifyContent:'center', alignItems:'center', borderRadius:4,}}>
+                  <Text style={{color:'white', fontSize: 14, fontWeight: 600, }}>Clear Filter</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -196,7 +196,7 @@ const Periodic = () => {
         
           </Modal>
 
-          <View style={{ marginLeft: 25, marginTop: 10, top: 20, marginBottom: 40 }}>
+          <View style={{ marginLeft: 25, marginTop: 10, top: 20, marginBottom: 20 }}>
             <Text style={{ color: "black", fontSize: 24, fontWeight: 800, }}>
               Scheduled Packages
             </Text>
@@ -207,25 +207,25 @@ const Periodic = () => {
               key={index}
               onPress={() => navigation.navigate("Account")}
               style={{
-                backgroundColor: "white",
+                backgroundColor: "#bad6e3",
                 paddingTop: 80,
-                borderRadius: 25,
+                borderRadius: 10,
                 paddingHorizontal: 12,
-                marginTop: 20,
+                marginTop: 15,
                 marginLeft: 20,
                 marginRight: 20,
-                borderColor: "lightblue",
-                borderWidth: 2
+                borderColor: "white",
+                borderWidth: 1
               }}
             >
               <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginLeft: 5, top: -60 }}>{service.title}</Text>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', top: -40 }}>
                 <View>
-                  <Text style={{ color: "gray", fontWeight: 400, fontSize: 15, marginLeft: 10 }}>{service.frequency}</Text>
-                  <Text style={{ color: "gray", fontWeight: 400, fontSize: 15, marginLeft: 10, top: 4 }}>{service.duration}</Text>
-                  <Text style={{ color: "gray", fontWeight: 400, fontSize: 15, marginLeft: 10, top: 4 }}>{service.warranty}</Text>
-                  <Text style={{ color: "gray", fontWeight: 400, fontSize: 15, marginLeft: 10, top: 4 }}>{service.services}</Text>
-                  <Text style={{ color: "gray", fontWeight: 400, fontSize: 15, marginLeft: 10, top: 4 }}>{service.price}</Text>
+                  <Text style={{ color: "#404042", fontWeight: 400, fontSize: 15, marginLeft: 10 }}>{service.frequency}</Text>
+                  <Text style={{ color: "#404042", fontWeight: 400, fontSize: 15, marginLeft: 10, top: 4 }}>{service.duration}</Text>
+                  <Text style={{ color: "#404042", fontWeight: 400, fontSize: 15, marginLeft: 10, top: 4 }}>{service.warranty}</Text>
+                  <Text style={{ color: "#404042", fontWeight: 400, fontSize: 15, marginLeft: 10, top: 4 }}>{service.services}</Text>
+                  <Text style={{ color: "#404042", fontWeight: 400, fontSize: 15, marginLeft: 10, top: 4 }}>{service.price}</Text>
                 </View>
                 <Image source={service.image} style={{ width: 100, height: 100, borderRadius: 15 }} />
               </View>
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // semi-transparent background
   },
   modalBox: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#bad6e3',
     borderRadius: 15,
     marginLeft:10,
     paddingTop:20,

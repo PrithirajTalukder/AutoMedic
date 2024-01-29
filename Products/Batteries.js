@@ -128,11 +128,11 @@ const Batteries = () => {
                 width: '94%',
                 alignSelf: 'center',
                 height: 190,
-                backgroundColor: '#fff',
+                backgroundColor: '#bad6e3',
                 marginTop: 10,
                 borderRadius: 10,
                 borderWidth: 1,
-                borderColor: 'lightblue',
+                borderColor: 'white',
                 elevation: 1,
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -141,19 +141,19 @@ const Batteries = () => {
               }}>
               <View>
                 <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginTop: -20 }}>{item.name}</Text>
-                <Text style={{ color: "green", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{'৳' + item.price}</Text>
-                <Text style={{ color: "gray", fontWeight: 600, fontSize: 12, marginTop: 10 }}>{item.frequency}</Text>
-                <Text style={{ color: "gray", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.duration}</Text>
-                <Text style={{ color: "gray", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.warranty}</Text>
-                <Text style={{ color: "gray", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.services}</Text>
+                <Text style={{ color: "#088704", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{'৳' + item.price}</Text>
+                <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 10 }}>{item.frequency}</Text>
+                <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.duration}</Text>
+                <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.warranty}</Text>
+                <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.services}</Text>
               </View>
               <View>
-                <Image source={item.image} style={{ width: 80, height: 80, marginRight: 30 }} />
+                <Image source={item.image} style={{ width: 80, height: 80, marginRight: 30, borderRadius: 5 }} />
                 {!myCart.find(cartItem => cartItem.id === item.id) || myCart.find(cartItem => cartItem.id === item.id).qty === 0 ? (
                   <TouchableOpacity
                     onPress={() => handleAddToCartPress(index)}
                     style={{
-                      backgroundColor: 'lightgreen',
+                      backgroundColor: '#15174f',
                       borderRadius: 7,
                       height: 27,
                       justifyContent: 'center',
@@ -165,7 +165,7 @@ const Batteries = () => {
                       marginTop: 10
                     }}
                   >
-                    <Text style={{ color: 'black', fontWeight: 600 }}>Add To Cart</Text>
+                    <Text style={{ color: 'white', fontWeight: 600 }}>Add To Cart</Text>
                   </TouchableOpacity>
                 ) : (
                   <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3 }}>

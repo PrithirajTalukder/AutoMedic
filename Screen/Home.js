@@ -14,9 +14,11 @@ import { useNavigation } from "@react-navigation/native";
 
 
 
+
 const Home=() => {
     const navigation = useNavigation();
     return (
+      
         <SafeAreaView style={{flex:1,
         backgroundColor:"white",
         }}>
@@ -281,7 +283,9 @@ const Home=() => {
 
         </View>
         </ScrollView>
+        {/* <MainContainer /> */}
         </SafeAreaView>
+        
     );
 }
 
