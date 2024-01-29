@@ -198,23 +198,26 @@ const Payment = () => {
         </View>
       )}
 
-      <View style={{ marginBottom: 120, paddingHorizontal: 20 }}>
+      <View style={{ marginBottom: 10, paddingHorizontal: 20, paddingTop:60 }}>
         <TextInput
           placeholder="Enter Coupon Code"
           value={couponCode}
           onChangeText={(text) => setCouponCode(text)}
           style={{
-            borderBottomWidth: 1,
+            borderWidth: 1,
+            borderRadius: 10,
             borderColor: 'gray',
             marginBottom: 10,
-            paddingVertical: 5,
+            paddingVertical: 10,
+            paddingHorizontal:20
           }}
         />
         <Button
           mode="contained"
           style={{
-            backgroundColor: 'purple',
-            paddingVertical: 10,
+            backgroundColor: '#181f63',
+            paddingVertical: 5,
+            borderRadius:10,
             marginBottom: 10,
           }}
           onPress={handleApplyCoupon}
@@ -224,7 +227,7 @@ const Payment = () => {
 
 
 {/* Payment Options Container */}
-<View style={{ margin: 20, padding: 20, backgroundColor: '#fff', borderRadius: 15, elevation: 3 }}>
+<View style={{marginTop:20, width:'100%' ,padding: 20, backgroundColor: '#fff', borderRadius: 15, elevation: 3,marginBottom:40 }}>
         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20 }}>Payment Options</Text>
         <View style={{ marginTop: 30 }}>
           {/* Credit / Debit Card Option */}
@@ -244,9 +247,9 @@ const Payment = () => {
                 <Text style={{ fontSize: 12, color: '#999' }}>VISA, Mastercard, etc.</Text>
               </View>
             </View>
-            <View style={{ width: 20, height: 20, borderRadius: 10, borderWidth: 1, borderColor: 'purple' }}>
+            <View style={{ width: 20, height: 20, borderRadius: 10, borderWidth: 1, borderColor: '#181f63' }}>
               {selectedPaymentOption === 'card' && (
-                <View style={{ flex: 1, backgroundColor: 'purple', borderRadius: 8 }} />
+                <View style={{ flex: 1, backgroundColor: '#181f63', borderRadius: 8 }} />
               )}
             </View>
           </TouchableOpacity>
@@ -267,9 +270,9 @@ const Payment = () => {
                 <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Cash on Delivery</Text>
               </View>
             </View>
-            <View style={{ width: 20, height: 20, borderRadius: 10, borderWidth: 1, borderColor: 'purple' }}>
+            <View style={{ width: 20, height: 20, borderRadius: 10, borderWidth: 1, borderColor: '#181f63' }}>
               {selectedPaymentOption === 'cash' && (
-                <View style={{ flex: 1, backgroundColor: 'purple', borderRadius: 8 }} />
+                <View style={{ flex: 1, backgroundColor: '#181f63', borderRadius: 8 }} />
               )}
             </View>
           </TouchableOpacity>
@@ -280,8 +283,8 @@ const Payment = () => {
 
 
       {/* Item Total and You Pay */}
-      <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
-        <View style={{ marginBottom: 20 }}>
+      <View style={{ paddingTop: 20, marginTop: 60, borderTopWidth:1 }}>
+        <View style={{ marginBottom: 40 }}>
           <Text style={{ fontSize: 16, fontWeight: '600' }}>Item Total: ৳{itemTotal}</Text>
           <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 10 }}>You Pay: ৳{itemTotal}</Text>
         </View>
@@ -292,8 +295,10 @@ const Payment = () => {
       <Button
         mode="contained"
         style={{
-          backgroundColor: 'purple',
-          margin: 15,
+          backgroundColor: '#181f63',
+          marginBottom: 10,
+          marginHorizontal:5,
+          borderRadius:10,
           paddingVertical: 10,
         }}
         onPress={onCheckout}

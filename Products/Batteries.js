@@ -172,9 +172,9 @@ const Batteries = () => {
                     <TouchableOpacity
                       onPress={() => handleQuantityChange(index, item.qty - 1)}
                       style={{
-                        backgroundColor: 'white',
+                        backgroundColor: '#bad6e3',
                         borderWidth: 1,
-                        borderColor: 'red',
+                        borderColor: '#99241f',
                         borderRadius: 7,
                         height: 27,
                         justifyContent: 'center',
@@ -183,16 +183,16 @@ const Batteries = () => {
                         paddingRight: 10,
                         marginLeft: -5,
                       }}>
-                      <Text style={{ color: 'red', fontWeight: 600, fontSize: 18 }}>-</Text>
+                      <Text style={{ color: '#99241f', fontWeight: 600, fontSize: 18 }}>-</Text>
                     </TouchableOpacity>
                     <Text style={{ fontWeight: 600, padding: 10 }}>{item.qty}</Text>
                     <TouchableOpacity
                       onPress={() => handleQuantityChange(index, item.qty + 1)}
                       style={{
-                        backgroundColor: 'white',
+                        backgroundColor: '#bad6e3',
                         borderRadius: 7,
                         borderWidth: 1,
-                        borderColor: 'green',
+                        borderColor: '#156112',
                         height: 27,
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -200,7 +200,7 @@ const Batteries = () => {
                         paddingRight: 9,
                         marginRight: 20
                       }}>
-                      <Text style={{ color: 'green', fontSize: 18, fontWeight: 600 }}>+</Text>
+                      <Text style={{ color: '#156112', fontSize: 18, fontWeight: 600 }}>+</Text>
                     </TouchableOpacity>
                   </View>
                 )}

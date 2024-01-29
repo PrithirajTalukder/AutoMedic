@@ -102,7 +102,7 @@ const MyCart = () => {
                 width: '94%',
                 alignSelf: 'center',
                 height: 120,
-                backgroundColor: '#fff',
+                backgroundColor: '#bad6e3',
                 marginTop: 10,
                 borderRadius: 10,
                 borderWidth: 1,
@@ -116,16 +116,16 @@ const MyCart = () => {
             >
               <View>
                 <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginTop: -20 }}>{item.name}</Text>
-                <Text style={{ color: "green", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{`Quantity: ${item.qty}`}</Text>
-                <Text style={{ color: "gray", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{`Total: ৳${item.qty * item.price}`}</Text>
+                <Text style={{ color: "#404042", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{`Quantity: ${item.qty}`}</Text>
+                <Text style={{ color: "green", fontWeight: 600, fontSize: 14, marginTop: 5 }}>{`Total: ৳${item.qty * item.price}`}</Text>
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
                   onPress={() => handleQuantityChange(item, item.qty - 1)}
                   style={{
-                    backgroundColor: 'white',
+                    backgroundColor: '#bad6e3',
                     borderWidth: 1,
-                    borderColor: 'red',
+                    borderColor: '#99241f',
                     borderRadius: 7,
                     height: 27,
                     justifyContent: 'center',
@@ -135,16 +135,16 @@ const MyCart = () => {
                     marginLeft: -5,
                   }}
                 >
-                  <Text style={{ color: 'red', fontWeight: 600, fontSize: 18 }}>-</Text>
+                  <Text style={{ color: '#99241f', fontWeight: 600, fontSize: 18 }}>-</Text>
                 </TouchableOpacity>
                 <Text style={{ fontWeight: 600, padding: 10 }}>{item.qty}</Text>
                 <TouchableOpacity
                   onPress={() => handleQuantityChange(item, item.qty + 1)}
                   style={{
-                    backgroundColor: 'white',
-                    borderRadius: 7,
+                    backgroundColor: '#bad6e3',
+                    borderRadius: 5,
                     borderWidth: 1,
-                    borderColor: 'green',
+                    borderColor: '#156112',
                     height: 27,
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -153,7 +153,7 @@ const MyCart = () => {
                     marginRight: 20
                   }}
                 >
-                  <Text style={{ color: 'green', fontSize: 18, fontWeight: 600 }}>+</Text>
+                  <Text style={{ color: '#156112', fontSize: 18, fontWeight: 600 }}>+</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -166,9 +166,9 @@ const MyCart = () => {
       )}
 
       {/* Item Total and You Pay */}
-      <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>
+      <View style={{ paddingHorizontal: 20, marginBottom: 20, borderTopWidth:1, borderColor:'gray' }}>
         <View style={{ marginBottom: 20 }}>
-          <Text style={{ fontSize: 16, fontWeight: '600' }}>Item Total: ৳{itemTotal}</Text>
+          <Text style={{ fontSize: 16, fontWeight: '600' ,marginTop:10}}>Item Total: ৳{itemTotal}</Text>
           <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 10 }}>You Pay: ৳{itemTotal}</Text>
         </View>
       </View>
@@ -177,13 +177,14 @@ const MyCart = () => {
       <Button
         mode="contained"
         style={{
-          backgroundColor: 'purple',
-          margin: 15,
+          backgroundColor: '#181f63',
+          margin: 5,
           paddingVertical: 10,
+          borderRadius: 10,
         }}
         onPress={onCheckout}
       >
-        Proceed To Payment
+        <Text style={{ fontSize: 18, fontWeight: '700'}}>Proceed To Payment</Text>
       </Button>
     </View>
   );

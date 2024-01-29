@@ -46,7 +46,7 @@ export default function MainContainer(){
                            
                          }
                     } else if (rn=== helpName) {
-                        iconName = focused ? 'help' : 'help-circle-outline';
+                        iconName = focused ? 'help-circle-outline' : 'help-circle-outline';
                         if (focused) {
                             iconStyle.color = '#112e4f'; // Change the background color
                             
