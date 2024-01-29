@@ -1,14 +1,7 @@
 import * as React from 'react'
-import { SafeAreaView ,
-          Text, 
-          TextInput,
-          Pressable,
-          Image, 
-          TouchableOpacity, 
-          View,
-          StyleSheet, 
-          ScrollView}
-           from 'react-native'
+import { SafeAreaView ,Text, TextInput,Pressable,Image,TouchableOpacity,View,StyleSheet, ScrollView}
+           from 'react-native' 
+          
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 
@@ -155,7 +148,7 @@ const Home=() => {
               marginTop: 20,
 
             }}>
-            <Image source={require("../images/wiper.png")}
+            <Image source={require("../images/car-wash.png")}
             style={{ width: 60, height: 60 }} />
             <Text style={{color:"black",fontWeight:700, fontSize:12,marginLeft:5,marginTop:5}}>Car Spa &{'\n'}Cleaning</Text>
             </Pressable>
@@ -293,14 +286,4 @@ const Home=() => {
 
 export default Home
 
-/*export default function Home(){
-    return (
-        
-        <SafeAreaView>
-        <View className="flex-1 justify-center bg-violet-400">
-            <Text className="text-white">Welcome</Text>
-        </View>
-        </SafeAreaView>
-        
-        );
-};*/
+

@@ -8,19 +8,15 @@ import { AntDesign, MaterialIcons, Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import colors from '../assets/themes/colors';
 
-
 const Chat = ({ route }) => {
-
   const { mechanicName } = route.params;
   const navigation = useNavigation();
-
 
   useLayoutEffect(() => {
     console.log('Received mechanic name:', mechanicName);
     if (mechanicName) {
       navigation.setOptions({
         headerTitle: mechanicName,
-        
         headerRight: () => (
           <TouchableOpacity
             style={{
@@ -35,16 +31,13 @@ const Chat = ({ route }) => {
     }
   }, [navigation, mechanicName]);
 
-
-  const [messages, setMessages] = useState([]);
+  const [filteredMessages, setFilteredMessages] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [selectedImageUri, setSelectedImageUri] = useState(null); // New state for image URI
 
-
-  let selectedImageUri = null;
   const onSignOut = () => {
     signOut(auth).catch(error => console.log('Error logging out: ', error));
   };
-
 
   useLayoutEffect(() => {
     const chatsCollection = collection(database, 'chats');
@@ -53,20 +46,21 @@ const Chat = ({ route }) => {
     const unsubscribe = onSnapshot(q, querySnapshot => {
       const updatedMessages = [];
       querySnapshot.docs.forEach(doc => {
-        const { _id, createdAt, text, image } = doc.data();
-        updatedMessages.push({
-          _id,
-          createdAt: createdAt.toDate(),
-          text,
-          user: doc.data().user,
-          image, // Include image field
-        });
+        const { _id, createdAt, text, image, user } = doc.data();
+        if (user === mechanicName) {
+          updatedMessages.push({
+            _id,
+            createdAt: createdAt.toDate(),
+            text,
+            user,
+            image,
+          });
+        }
       });
-      setMessages(updatedMessages);
+      setFilteredMessages(updatedMessages);
     });
     return unsubscribe;
-  }, []);
-
+  }, [mechanicName]);
 
   const onAddImage = async () => {
     const options = {
@@ -79,71 +73,76 @@ const Chat = ({ route }) => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync(options);
       console.log('ImagePicker result:', result);
-      if (!result.cancelled && result.uri) {
-        selectedImageUri = result.uri;
+      if (!result.cancelled && result.assets && result.assets.length > 0 && result.assets[0].uri) {
+        setSelectedImageUri(result.assets[0].uri); // Update state with selected image URI
         const newMessage = {
           _id: new Date().toISOString(),
           createdAt: new Date(),
           text: '',
-          image: selectedImageUri,
+          image: result.assets[0].uri, // Use the URI directly
+          user: mechanicName,
         };
-        setMessages(previousMessages => [...previousMessages, newMessage]);
+        setFilteredMessages(previousMessages => [...previousMessages, newMessage]);
       }
     } catch (error) {
       console.error('ImagePicker error:', error);
     }
   };
-
-
+  
   const onSend = async () => {
     if (inputText || selectedImageUri) {
       const newMessage = {
         _id: new Date().toISOString(),
         createdAt: new Date(),
         text: inputText,
-        image: selectedImageUri
+        image: selectedImageUri,
+        user: mechanicName,
       };
-      setMessages(previousMessages => [...previousMessages, newMessage]);
+      setFilteredMessages(previousMessages => [...previousMessages, newMessage]);
       if (inputText) {
         await addDoc(collection(database, 'chats'), {
           _id: newMessage._id,
           createdAt: newMessage.createdAt,
           text: newMessage.text,
+          user: mechanicName,
         });
       }
       setInputText('');
-      selectedImageUri = null;
+      setSelectedImageUri(null); // Reset selected image URI
     }
   };
-
 
   const onCall = () => {
     console.log('Call initiated');
   };
+
   const onVideoCall = () => {
     console.log('Video call initiated');
   };
 
-
   const messageBoxStyle = StyleSheet.create({
     messageBox: {
-      backgroundColor: 'lightblue', // Adjust color as needed
+      backgroundColor: 'lightblue',
       padding: 10,
       borderRadius: 10,
       marginVertical: 5,
-      maxWidth: '80%', // Prevent overly wide boxes
+      maxWidth: '80%',
     },
     text: {
       color: 'black',
       fontSize: 16,
     },
-  });
+      
+    });
 
 
   return (
     <View style={{ flex: 1, backgroundColor: 'black' }}>
       {/* Header with Call and Video Call Icons */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 30 }}>
+        <TouchableOpacity onPress={() => navigation.navigate("Mechaniclocation")}>
+          <AntDesign name="arrowleft" size={26} color="white" />
+        </TouchableOpacity>
         <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>{mechanicName}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity onPress={onCall} style={{ marginRight: 40 }}>
@@ -155,24 +154,17 @@ const Chat = ({ route }) => {
         </View>
       </View>
 
-   
       <FlatList
-      data={messages.slice().reverse()}
-      keyExtractor={item => item._id}
-      inverted={true}
-      renderItem={({ item }) => (
-        <View style={[messageBoxStyle.messageBox, item.user === 'user' ? { backgroundColor: 'lightblue', alignSelf: 'flex-start' } : { alignSelf: 'flex-end' }]}>
-          {item.text && <Text style={messageBoxStyle.text}>{item.text}</Text>}
-          {item.image && <Image source={{ uri: item.image }} style={{ width: 200, height: 200 }} />}
-        </View>
-      )}
-    />
-
-
-
-
-
-
+        data={filteredMessages.slice().reverse()}
+        keyExtractor={item => item._id}
+        inverted={true}
+        renderItem={({ item }) => (
+          <View style={[messageBoxStyle.messageBox, item.user === 'user' ? { backgroundColor: 'lightblue', alignSelf: 'flex-start' } : { alignSelf: 'flex-end' }]}>
+            {item.text && <Text style={messageBoxStyle.text}>{item.text}</Text>}
+            {item.image && <Image source={{ uri: item.image }} style={{ width: 200, height: 200 }} />}
+          </View>
+        )}
+      />
 
       {/* Message Input and Icons */}
       <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
@@ -200,4 +192,5 @@ const Chat = ({ route }) => {
     </View>
   );
 };
+
 export default Chat;
