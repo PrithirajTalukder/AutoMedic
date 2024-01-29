@@ -18,7 +18,7 @@ const Account = () => {
 
   // Check if the user is logged in before rendering the component
   if (!currentUser) {
-    return <Text>Loading...</Text>;
+    return <View style={{width:'100%', height:'100%', backgroundColor:'white', display:'flex',justifyContent:'center', alignItems:'center'}}><Text>Loading...</Text></View>;
   }
 
   const { displayName, email } = currentUser;
