@@ -5,6 +5,15 @@ export default defineType({
   title: 'Services',
   type: 'document',
   fields: [
+
+   {
+      name: 'serviceId', 
+      title: 'Service ID',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+
+
     {
       name: 'name',
       type: 'string',
