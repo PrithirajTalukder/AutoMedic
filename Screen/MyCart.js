@@ -128,7 +128,7 @@ const MyCart = () => {
           renderItem={({ item }) => (
             <View
               style={{
-                width: '94%',
+                width: '100%',
                 alignSelf: 'center',
                 height: 120,
                 backgroundColor: '#bad6e3',

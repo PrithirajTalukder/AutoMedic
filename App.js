@@ -17,7 +17,6 @@ import Mechanic from './Screen/Mechanic';
 import Account from './Screen/Account';
 import Profile from './Screen/Profile';
 import Batteries from './Products/Batteries';
-import Battery1 from './Products/Battery1';
 import MyCart from './Screen/MyCart';
 import Preparingorder from './Screen/Preparingorder';
 import DeliveryScreen from './Screen/DeliveryScreen';
@@ -40,7 +39,7 @@ export default function App() {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="Batteries">
+        <Stack.Navigator initialRouteName="Periodic">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -55,7 +54,6 @@ export default function App() {
           <Stack.Screen name="Account" options={{ headerShown: false }} component={Account} />
           <Stack.Screen name="Mechanic" options={{ headerShown: false }} component={Mechanic} />
           <Stack.Screen name="Batteries" options={{ headerShown: false }} component={Batteries} />
-          <Stack.Screen name="Battery1" options={{ headerShown: false }} component={Battery1} />
           <Stack.Screen name="MyCart" options={{ headerShown: false }} component={MyCart} />
           <Stack.Screen name="Preparingorder" options={{ headerShown: false }} component={Preparingorder} />
           <Stack.Screen name="DeliveryScreen" options={{ headerShown: false }} component={DeliveryScreen} />

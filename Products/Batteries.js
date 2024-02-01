@@ -207,7 +207,7 @@ const Batteries = () => {
       <FlatList
         data={filteredItems}
         renderItem={({ item, index }) => (
-          <View style={{ width: '94%', alignSelf: 'center', height: 190, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 30, justifyContent: 'space-between' }}>
+          <View style={{ width: '100%', alignSelf: 'center', height: 190, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 30, justifyContent: 'space-between' }}>
             <View>
               <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginTop: -20 }}>{item.name}</Text>
               <Text style={{ color: "#088704", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{'৳' + item.price}</Text>
