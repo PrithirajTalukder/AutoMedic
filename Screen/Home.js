@@ -73,6 +73,8 @@ const Home = () => {
             categoryScreen = "Scheduled"; // Replace with the actual screen name for scheduled services
             break;
           case "S5":
+            categoryScreen = "Denting"; // Replace with the actual screen name for scheduled services
+            break;
           case "S6":
           case "S7":
           case "S8":
