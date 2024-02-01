@@ -12,15 +12,14 @@ const Payment = () => {
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
   const [couponCode, setCouponCode] = useState('');
-  const [itemTotal, setItemTotal] = useState(0);
+
   const Stripe = useStripe();
   const [selectedPaymentOption, setSelectedPaymentOption] = useState(null);
 
   // Calculate item total whenever myCart changes
-  useEffect(() => {
-    const total = myCart.reduce((acc, item) => acc + item.qty * item.price, 0);
-    setItemTotal(total);
-  }, [myCart]);
+  const totalProducts = myCart.length;
+  const totalPrice = myCart.reduce((total, item) => total + item.qty * item.price, 0);
+
 
   const handleApplyCoupon = () => {
     // Add logic to handle applying the coupon
@@ -285,8 +284,8 @@ const Payment = () => {
       {/* Item Total and You Pay */}
       <View style={{ paddingTop: 20, marginTop: 60, borderTopWidth:1 }}>
         <View style={{ marginBottom: 40 }}>
-          <Text style={{ fontSize: 16, fontWeight: '600' }}>Item Total: ৳{itemTotal}</Text>
-          <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 10 }}>You Pay: ৳{itemTotal}</Text>
+        <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10 }}>Item Total: {`${totalProducts} Item${totalProducts !== 1 ? 's' : ''}`}</Text>
+          <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 10 }}>You Pay: ৳{totalPrice}</Text>
         </View>
       </View>
       </View>
@@ -296,8 +295,8 @@ const Payment = () => {
         mode="contained"
         style={{
           backgroundColor: '#181f63',
-          marginBottom: 10,
-          marginHorizontal:5,
+          marginTop:-30,
+          marginHorizontal:10,
           borderRadius:10,
           paddingVertical: 10,
         }}

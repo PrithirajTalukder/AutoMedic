@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, TextInput, Modal, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, TextInput, Modal, Alert, StyleSheet } from 'react-native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from 'react-redux';
-import { addProductToMyCart, removeProductFromCart, updateProductQuantity } from '../redux/MyCartSlice';
+import { addProductToMyCart } from '../redux/MyCartSlice';
+import { addMyProduct } from '../redux/MyProductSlice';
 import createClient, { urlFor } from '../sanity';
 
 const Batteries = () => {
@@ -16,6 +17,7 @@ const Batteries = () => {
   const [search, setSearch] = useState('');
   const [isFilterModalVisible, setFilterModalVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     const fetchBatteriesProducts = async () => {
@@ -81,7 +83,6 @@ const Batteries = () => {
     setFilteredItems(Items);
     closeModal();
   };
-  
 
   const handleFilterPress = () => {
     setFilterModalVisible(true);
@@ -115,18 +116,6 @@ const Batteries = () => {
     closeModal();
   };
 
-  const handleQuantityChange = (index, newQty) => {
-    const updatedItems = [...filteredItems];
-    updatedItems[index].qty = Math.max(0, newQty);
-    setFilteredItems(updatedItems);
-
-    if (updatedItems[index].qty === 0) {
-      dispatch(removeProductFromCart(updatedItems[index]));
-    } else {
-      dispatch(updateProductQuantity(updatedItems[index]));
-    }
-  };
-
   const handleAddToCartPress = (index) => {
     const updatedItems = [...filteredItems];
     const existingProductIndex = myCart.findIndex(cartItem => cartItem.id === updatedItems[index].id);
@@ -135,9 +124,23 @@ const Batteries = () => {
       updatedItems[index] = { ...updatedItems[index], qty: 1 };
       setFilteredItems(updatedItems);
 
+      // Dispatch addMyProduct to the product slice
+      dispatch(addMyProduct(updatedItems[index]));
+
+      // Dispatch addProductToMyCart to the cart slice
       dispatch(addProductToMyCart(updatedItems[index]));
+
+      // Show the alert
+      setShowAlert(true);
+
+      // Hide the alert after 2 seconds
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
     }
   };
+
+
 
   const totalProducts = myCart.length;
   const totalPrice = myCart.reduce((total, item) => total + item.qty * item.price, 0);
@@ -153,56 +156,52 @@ const Batteries = () => {
       </View>
 
       {/* Search Bar */}
-<View style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 30
-          }}>
-            <View style={{
-              padding: 10,
-              marginLeft: 18,
-              marginTop: 20,
-              flexDirection: "row",
-              width: 330,
-              backgroundColor: "#bad6e3",
-              borderRadius: 20,
-              alignItems: "center"
-            }}>
-              {search.length === 0 && (
-                <TouchableOpacity>
-                  <FontAwesome name="search" size={24} color="black" />
-                </TouchableOpacity>
-              )}
-              <TextInput
-                style={{ fontSize: 19, paddingLeft: 10, width: '70%' }}
-                placeholder='Search'
-                onChangeText={txt => {
-                  onSearch(txt);
-                  setSearch(txt);
-                }}
-                value={search}
-              />
-              {search.length > 0 && (
-                <TouchableOpacity onPress={clearFilters} style={{ marginLeft: 70 }}>
-                  <FontAwesome name="times" size={24} color="black" />
-                </TouchableOpacity>
-              )}
-            </View>
-
-            <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginTop: 10 }}>
-              <FontAwesome name="sort-down" size={28} color="black" />
+      <View style={{
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 30
+      }}>
+        <View style={{
+          padding: 10,
+          marginLeft: 18,
+          marginTop: 20,
+          flexDirection: "row",
+          width: 330,
+          backgroundColor: "#bad6e3",
+          borderRadius: 20,
+          alignItems: "center"
+        }}>
+          {search.length === 0 && (
+            <TouchableOpacity>
+              <FontAwesome name="search" size={24} color="black" />
             </TouchableOpacity>
-          </View>
+          )}
+          <TextInput
+            style={{ fontSize: 19, paddingLeft: 10, width: '70%' }}
+            placeholder='Search'
+            onChangeText={txt => {
+              onSearch(txt);
+              setSearch(txt);
+            }}
+            value={search}
+          />
+          {search.length > 0 && (
+            <TouchableOpacity onPress={clearFilters} style={{ marginLeft: 70 }}>
+              <FontAwesome name="times" size={24} color="black" />
+            </TouchableOpacity>
+          )}
+        </View>
 
+        <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginTop: 10 }}>
+          <FontAwesome name="sort-down" size={28} color="black" />
+        </TouchableOpacity>
+      </View>
 
-
-          <View style={{ marginLeft: 25,   marginBottom: 10 }}>
-            <Text style={{ color: "black", fontSize: 24, fontWeight: 800, }}>
-              Products
-            </Text>
-          </View>
-
-
+      <View style={{ marginLeft: 25, marginBottom: 10 }}>
+        <Text style={{ color: "black", fontSize: 24, fontWeight: 800, }}>
+          Products
+        </Text>
+      </View>
 
       {/* Product List */}
       <FlatList
@@ -218,7 +217,7 @@ const Batteries = () => {
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.services}</Text>
             </View>
             <View>
-              <Image source={item.image} style={{ width: 80, height: 80, marginRight: 30, borderRadius: 5 }} />
+              <Image source={item.image} style={{ width: 80, height: 80, marginLeft: 70, borderRadius: 5 }} />
               {!myCart.find(cartItem => cartItem.id === item.id) || myCart.find(cartItem => cartItem.id === item.id).qty === 0 ? (
                 <TouchableOpacity
                   onPress={() => handleAddToCartPress(index)}
@@ -240,38 +239,23 @@ const Batteries = () => {
               ) : (
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3 }}>
                   <TouchableOpacity
-                    onPress={() => handleQuantityChange(index, item.qty - 1)}
+                    
                     style={{
                       backgroundColor: '#bad6e3',
                       borderWidth: 1,
-                      borderColor: '#99241f',
+                      borderColor: 'green',
                       borderRadius: 7,
                       height: 27,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      paddingLeft: 10,
+                      paddingLeft: 20,
                       paddingRight: 10,
                       marginLeft: -5,
                     }}>
-                    <Text style={{ color: '#99241f', fontWeight: 600, fontSize: 18 }}>-</Text>
+                    <Text style={{ color: 'green', fontWeight: 600 }}>Product added to cart</Text>
                   </TouchableOpacity>
-                  <Text style={{ fontWeight: 600, padding: 10 }}>{item.qty}</Text>
-                  <TouchableOpacity
-                    onPress={() => handleQuantityChange(index, item.qty + 1)}
-                    style={{
-                      backgroundColor: '#bad6e3',
-                      borderRadius: 7,
-                      borderWidth: 1,
-                      borderColor: '#156112',
-                      height: 27,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      paddingLeft: 9,
-                      paddingRight: 9,
-                      marginRight: 20
-                    }}>
-                    <Text style={{ color: '#156112', fontSize: 18, fontWeight: 600 }}>+</Text>
-                  </TouchableOpacity>
+                  
+                   
                 </View>
               )}
             </View>
@@ -280,12 +264,11 @@ const Batteries = () => {
       />
 
       {/* Message for no search results */}
-{filteredItems.length === 0 && (
-  <View style={{ alignItems: 'center', marginTop: 20 }}>
-    <Text style={{ color: 'black', fontSize: 16 }}>This Product is not available right now.</Text>
-  </View>
-)}
-
+      {filteredItems.length === 0 && (
+        <View style={{ alignItems: 'center', marginTop: 20 }}>
+          <Text style={{ color: 'black', fontSize: 16 }}>This Product is not available right now.</Text>
+        </View>
+      )}
 
       {/* Cart Summary */}
       <TouchableOpacity
@@ -346,7 +329,16 @@ const Batteries = () => {
           </View>
         </View>
       </Modal>
+
+      {/* Alert for Product Added */}
+      {showAlert && (
+  <View style={styles.alertContainer}>
+    <View style={styles.alertBox}>
+      <Text style={styles.alertText}>Product added to the cart</Text>
     </View>
+  </View>
+)}
+</View>
   );
 };
 
@@ -383,6 +375,27 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     marginLeft: 12,
+  },
+  alertContainer: {
+    position: 'absolute',
+    top: '70%',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+   
+  },
+  alertBox: {
+    backgroundColor:'lightblue', 
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5, // Shadow
+  },
+  alertText: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
