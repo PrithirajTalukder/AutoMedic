@@ -1,0 +1,406 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, FlatList, TextInput, Modal, Alert, StyleSheet } from 'react-native';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
+import { useSelector, useDispatch } from 'react-redux';
+import { addProductToMyCart } from '../redux/MyCartSlice';
+import { addMyProduct } from '../redux/MyProductSlice';
+import createClient, { urlFor } from '../sanity';
+
+const Wheel = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const myCart = useSelector((state) => state.cart);
+
+  const [Items, setItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [search, setSearch] = useState('');
+  const [isFilterModalVisible, setFilterModalVisible] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    const fetchPeriodicProducts = async () => {
+      try {
+        const query = `
+          *[_type == 'servicesproduct' && type->name == 'Tyres & Wheel Care'] {
+            _id,
+            name,
+            image,
+            price,
+            frequency,
+            duration,
+            warranty,
+            services,
+            rating,
+            reviews
+          }
+        `;
+    
+        const data = await createClient.fetch(query);
+    
+        const itemsData = data.map((servicesproduct) => ({
+          id: servicesproduct._id,
+          name: servicesproduct.name,
+          image: { uri: urlFor(servicesproduct.image).url() },
+          price: servicesproduct.price,
+          qty: 0,
+          frequency: servicesproduct.frequency,
+          duration: servicesproduct.duration,
+          warranty: servicesproduct.warranty,
+          services: servicesproduct.services,
+        }));
+    
+        setItems(itemsData);
+      } catch (error) {
+        console.error('Error fetching service products:', error);
+      }
+    };
+
+    fetchPeriodicProducts();
+  }, []);
+
+  useEffect(() => {
+    setFilteredItems(Items);
+  }, [Items]);
+
+  useEffect(() => {
+    setFilteredItems(Items);
+  }, [Items]);
+
+  const onSearch = (text) => {
+    setSearch(text);
+
+    if (text === '') {
+      setFilteredItems(Items);
+    } else {
+      const filteredItemsData = Items.filter((item) =>
+        item.name.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredItems(filteredItemsData);
+    }
+  };
+
+  const clearFilters = () => {
+    setSelectedFilter(null);
+    setSearch('');
+    setFilteredItems(Items);
+    closeModal();
+  };
+
+  const handleFilterPress = () => {
+    setFilterModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setFilterModalVisible(false);
+  };
+
+  const applyFilter = (filter) => {
+    setSelectedFilter(filter);
+
+    switch (filter) {
+      case 'name':
+        setFilteredItems([...filteredItems].sort((a, b) => a.name.localeCompare(b.name)));
+        break;
+      case 'lowToHighPrice':
+        setFilteredItems([...filteredItems].sort((a, b) => parseInt(a.price) - parseInt(b.price)));
+        break;
+      case 'highToLowPrice':
+        setFilteredItems([...filteredItems].sort((a, b) => parseInt(b.price) - parseInt(a.price)));
+        break;
+      //case 'rating':
+      //setFilteredItems([...filteredItems].sort((a, b) => /* Sort logic for rating */));
+      //break;
+      default:
+        setFilteredItems(Items);
+        break;
+    }
+
+    closeModal();
+  };
+
+  const handleAddToCartPress = (index) => {
+    const updatedItems = [...filteredItems];
+    const existingProductIndex = myCart.findIndex(cartItem => cartItem.id === updatedItems[index].id);
+
+    if (existingProductIndex === -1 || myCart[existingProductIndex].qty === 0) {
+      updatedItems[index] = { ...updatedItems[index], qty: 1 };
+      setFilteredItems(updatedItems);
+
+      // Dispatch addMyProduct to the product slice
+      dispatch(addMyProduct(updatedItems[index]));
+
+      // Dispatch addProductToMyCart to the cart slice
+      dispatch(addProductToMyCart(updatedItems[index]));
+
+      // Show the alert
+      setShowAlert(true);
+
+      // Hide the alert after 2 seconds
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
+    }
+  };
+
+
+
+  const totalProducts = myCart.length;
+  const totalPrice = myCart.reduce((total, item) => total + item.qty * item.price, 0);
+
+  return (
+    <View style={{ flex: 1 }}>
+      {/* Header */}
+      <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: '#fff', elevation: 1 }}>
+        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
+      </View>
+
+      {/* Search Bar */}
+      <View style={{
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 30
+      }}>
+        <View style={{
+          padding: 10,
+          marginLeft: 18,
+          marginTop: 20,
+          flexDirection: "row",
+          width: 330,
+          backgroundColor: "#bad6e3",
+          borderRadius: 20,
+          alignItems: "center"
+        }}>
+          {search.length === 0 && (
+            <TouchableOpacity>
+              <FontAwesome name="search" size={24} color="black" />
+            </TouchableOpacity>
+          )}
+          <TextInput
+            style={{ fontSize: 19, paddingLeft: 10, width: '70%' }}
+            placeholder='Search'
+            onChangeText={txt => {
+              onSearch(txt);
+              setSearch(txt);
+            }}
+            value={search}
+          />
+          {search.length > 0 && (
+            <TouchableOpacity onPress={clearFilters} style={{ marginLeft: 70 }}>
+              <FontAwesome name="times" size={24} color="black" />
+            </TouchableOpacity>
+          )}
+        </View>
+
+        <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginTop: 10 }}>
+          <FontAwesome name="sort-down" size={28} color="black" />
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ marginLeft: 25, marginBottom: 10 }}>
+        <Text style={{ color: "black", fontSize: 24, fontWeight: 800, }}>
+          Services
+        </Text>
+      </View>
+
+      {/* Product List */}
+      <FlatList
+        data={filteredItems}
+        renderItem={({ item, index }) => (
+          <View style={{ width: '100%', alignSelf: 'center', height: 190, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 30, justifyContent: 'space-between' }}>
+            <View>
+              <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginTop: -20 }}>{item.name}</Text>
+              <Text style={{ color: "#088704", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{'৳' + item.price}</Text>
+              <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.frequency}</Text>
+              <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.duration}</Text>
+              <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.warranty}</Text>
+              <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.services}</Text>
+            </View>
+            <View>
+              <Image source={item.image} style={{ width: 80, height: 80, marginLeft: 70, borderRadius: 5 }} />
+              {!myCart.find(cartItem => cartItem.id === item.id) || myCart.find(cartItem => cartItem.id === item.id).qty === 0 ? (
+                <TouchableOpacity
+                  onPress={() => handleAddToCartPress(index)}
+                  style={{
+                    backgroundColor: '#15174f',
+                    borderRadius: 7,
+                    height: 27,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingLeft: 5,
+                    paddingRight: 5,
+                    marginRight: 20,
+                    marginLeft: -15,
+                    marginTop: 10
+                  }}
+                >
+                  <Text style={{ color: 'white', fontWeight: 600 }}>Add To Cart</Text>
+                </TouchableOpacity>
+              ) : (
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3 }}>
+                  <TouchableOpacity
+                    
+                    style={{
+                      backgroundColor: '#bad6e3',
+                      borderWidth: 1,
+                      borderColor: 'green',
+                      borderRadius: 7,
+                      height: 27,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingLeft: 20,
+                      paddingRight: 10,
+                      marginLeft: -5,
+                    }}>
+                    <Text style={{ color: 'green', fontWeight: 600 }}>Product added to cart</Text>
+                  </TouchableOpacity>
+                  
+                   
+                </View>
+              )}
+            </View>
+          </View>
+        )}
+      />
+
+      {/* Message for no search results */}
+      {filteredItems.length === 0 && (
+        <View style={{ alignItems: 'center', marginTop: 20 }}>
+          <Text style={{ color: 'black', fontSize: 16 }}>This Product is not available right now.</Text>
+        </View>
+      )}
+
+      {/* Cart Summary */}
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: 'lightblue',
+          borderRadius: 7,
+          borderWidth: 2,
+          height: 60,
+          margin: 20,
+        }}
+        onPress={() => {
+          navigation.navigate("MyCart");
+        }}>
+        <View style={{ marginLeft: 20 }}>
+          <Text style={{ color: 'black', fontSize: 16, fontWeight: '600', marginBottom: 4 }}>{`${totalProducts} Product${totalProducts !== 1 ? 's' : ''} Added`}</Text>
+          <Text style={{ color: 'black', fontSize: 16, fontWeight: '600' }}>{`Total: ৳${totalPrice}`}</Text>
+        </View>
+
+        <View style={{ marginRight: 20 }}>
+          <Text style={{ color: 'black', fontSize: 18, fontWeight: '600' }}>View Cart</Text>
+        </View>
+      </TouchableOpacity>
+
+      {/* Filter Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isFilterModalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalBox}>
+            <TouchableOpacity onPress={closeModal} style={{ marginLeft: 270 }}>
+              <FontAwesome name="times-circle" size={28} color="black" />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Filter Modal</Text>
+
+            <View style={styles.modalOptions}>
+              <TouchableOpacity onPress={() => applyFilter('name')} style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
+                <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Sort By Name</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => applyFilter('lowToHighPrice')} style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
+                <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Low to High Price</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => applyFilter('highToLowPrice')} style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
+                <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>High to Low Price</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => applyFilter('rating')} style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
+                <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Sort By Rating</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => applyFilter(null)} style={{ marginTop: 60, width: '40%', backgroundColor: '#15174f', height: '9%', justifyContent: 'center', alignItems: 'center', borderRadius: 4, }}>
+                <Text style={{ color: 'white', fontSize: 14, fontWeight: 600, }}>Clear Filter</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Alert for Product Added */}
+      {showAlert && (
+  <View style={styles.alertContainer}>
+    <View style={styles.alertBox}>
+      <Text style={styles.alertText}>Product added to the cart</Text>
+    </View>
+  </View>
+)}
+</View>
+  );
+};
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'start',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // semi-transparent background
+  },
+  modalBox: {
+    backgroundColor: '#bad6e3',
+    borderRadius: 15,
+    marginLeft: 10,
+    paddingTop: 20,
+    paddingLeft: 10,
+    paddingRight: 5,
+    paddingBottom: 30,
+    marginTop: 78,
+    width: '80%',
+    height: '54%', // adjust the width as needed
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginLeft: 95,
+  },
+  modalOptions: {
+    marginTop: 10,
+    backgroundColor: 'lightblue',
+    width: '90%',
+    height: '80%',
+    borderRadius: 15,
+    alignItems: 'center',
+    marginLeft: 12,
+  },
+  alertContainer: {
+    position: 'absolute',
+    top: '70%',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+   
+  },
+  alertBox: {
+    backgroundColor:'lightblue', 
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5, // Shadow
+  },
+  alertText: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
+
+export default Wheel;

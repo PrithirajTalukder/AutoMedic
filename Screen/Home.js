@@ -57,12 +57,45 @@ const Home = () => {
         marginLeft: 3,
         marginRight: 3,
       }}
-      onPress={() => navigation.navigate("Periodic", { service })}
+      onPress={() => {
+        let categoryScreen;
+        switch (service.serviceId) {
+          case "S1":
+            categoryScreen = "Periodic"; // Replace with the actual screen name for scheduled services
+            break;
+          case "S2":
+            categoryScreen = "AC"; // Replace with the actual screen name for scheduled services
+            break;
+          case "S3":
+            categoryScreen = "Wheel"; // Replace with the actual screen name for scheduled services
+            break;
+          case "S4":
+            categoryScreen = "Scheduled"; // Replace with the actual screen name for scheduled services
+            break;
+          case "S5":
+          case "S6":
+          case "S7":
+          case "S8":
+            categoryScreen = "ValueAdded"; // Replace with the actual screen name for value-added services
+            break;
+          case "S9":
+          case "S10":
+          case "S11":
+          case "S12":
+            categoryScreen = "Mechanical"; // Replace with the actual screen name for mechanical repairs
+            break;
+          default:
+            categoryScreen = "Periodic"; // Default to "Periodic" screen
+            break;
+        }
+        navigation.navigate(categoryScreen, { service });
+      }}
     >
       <Image source={{ uri: urlFor(service.image).url() }} style={{ width: 70, height: 60 }} />
       <Text style={{ color: "black", fontWeight: 700, fontSize: 12, marginLeft: 5, marginTop: 5 }}>{service.name}</Text>
     </Pressable>
   );
+  
 
   const renderCategoryRow = (categories) => (
     <ScrollView horizontal={true}>

@@ -10,6 +10,8 @@ import SignIn from './Screen/SignIn';
 import SignUp from './Screen/SignUp';
 import ForgotPassword from './Screen/ForgotPassword';
 import Periodic from './Options/Periodic';
+import AC from './Options/AC';
+import Wheel from './Options/Wheel';
 import MainContainer from './Navigation/MainContainer';
 import Workshoplocation from './Screen/Workshoplocation';
 import Mechaniclocation from './Screen/Mechaniclocation';
@@ -39,7 +41,7 @@ export default function App() {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="Periodic">
+        <Stack.Navigator initialRouteName="wheel">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -48,6 +50,8 @@ export default function App() {
           <Stack.Screen name="SignUp" options={{ headerShown: false }} component={SignUp} />
           <Stack.Screen name="ForgotPassword" options={{ headerShown: false }} component={ForgotPassword} />
           <Stack.Screen name="Periodic" options={{ headerShown: false }} component={Periodic} />
+          <Stack.Screen name="AC" options={{ headerShown: false }} component={AC} />
+          <Stack.Screen name="Wheel" options={{ headerShown: false }} component={Wheel} />
           <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
           <Stack.Screen name="Workshoplocation" options={{ headerShown: false }} component={Workshoplocation} />
           <Stack.Screen name="Mechaniclocation" options={{ headerShown: false }} component={Mechaniclocation} />
