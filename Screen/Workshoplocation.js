@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text } from 'react-native';
 
 const Workshoplocation = () => {
   const [location, setLocation] = useState(null);
@@ -16,8 +16,8 @@ const Workshoplocation = () => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      let userLocation = await Location.getCurrentPositionAsync({});
+      setLocation(userLocation);
 
       // Fetch workshop data (dummy data for example)
       const workshopData = [
@@ -44,7 +44,6 @@ const Workshoplocation = () => {
     );
   }
 
-  // Calculate the initial region based on your location and workshop locations
   const initialRegion = {
     latitude: location.coords.latitude,
     longitude: location.coords.longitude,
@@ -58,6 +57,8 @@ const Workshoplocation = () => {
         style={styles.map}
         initialRegion={initialRegion}
         onLayout={onMapLayout}
+        showsUserLocation={true}
+        followsUserLocation={true}
       >
         {/* User Location Marker */}
         <Marker
@@ -79,9 +80,15 @@ const Workshoplocation = () => {
               longitude: workshop.longitude,
             }}
             title={workshop.name}
-            description={`Car Workshop`}
             pinColor={workshop.id === 4 ? 'lightblue' : 'green'} // Customize the workshop marker color
-          />
+          >
+            <Callout>
+              <View>
+                <Text>{workshop.name}</Text>
+                <Text>Car Workshop</Text>
+              </View>
+            </Callout>
+          </Marker>
         ))}
       </MapView>
     </View>
@@ -105,4 +112,3 @@ const styles = StyleSheet.create({
 });
 
 export default Workshoplocation;
-
