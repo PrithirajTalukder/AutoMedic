@@ -103,7 +103,7 @@ export default function MainContainer(){
 
                     return <Ionicons name={iconName} size={iconSize} color={iconColor} style={iconStyle}/>
                 },
-                tabBarStyle: {position: 'absolute',paddingTop: 10, height: 70, backgroundColor: "#b3e8fc", borderColor: 'black' },
+                tabBarStyle: {position: 'absolute',paddingTop: 10, height: 70, backgroundColor: "#bad6e3", borderColor: 'black' },
                 
             })}
             tabBarOptions={{
