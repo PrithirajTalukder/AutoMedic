@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity, } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { useNavigation } from "@react-navigation/native";
 
@@ -23,14 +23,14 @@ const Mechaniclocation = () => {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
 
-         // Fetch workshop data (dummy data for example)
-         const workshopData = [
-            { id: 1, latitude: 24.8997, longitude: 91.8585, mechanic: 'Mechanic 1', workshop: 'Workshop A', address: '123 Main St' },
-            { id: 2, latitude: 24.8990, longitude: 91.8700, mechanic: 'Mechanic 2', workshop: 'Workshop B', address: '456 Oak St' },
-            { id: 3, latitude: 24.8965, longitude: 91.8749, mechanic: 'Mechanic 3', workshop: 'Workshop C', address: '789 Pine St' },
-            { id: 4, latitude: 24.8949, longitude: 91.8687, mechanic: 'Auto Medic Mechanic', workshop: 'Auto Medic Workshop', address: '101 Elm St' },
-            // Add more workshop data as needed
-          ];
+      // Fetch workshop data (dummy data for example)
+      const workshopData = [
+        { id: 1, latitude: 24.8997, longitude: 91.8585, mechanic: 'Mechanic 1', workshop: 'Workshop A', address: '123 Main St' },
+        { id: 2, latitude: 24.8990, longitude: 91.8700, mechanic: 'Mechanic 2', workshop: 'Workshop B', address: '456 Oak St' },
+        { id: 3, latitude: 24.8965, longitude: 91.8749, mechanic: 'Mechanic 3', workshop: 'Workshop C', address: '789 Pine St' },
+        { id: 4, latitude: 24.8949, longitude: 91.8687, mechanic: 'Auto Medic Mechanic', workshop: 'Auto Medic Workshop', address: '101 Elm St' },
+        // Add more workshop data as needed
+      ];
 
       setWorkshops(workshopData);
     })();
@@ -40,18 +40,16 @@ const Mechaniclocation = () => {
     // Set any necessary actions on map layout
   };
 
-  // Inside the Mechaniclocation component, update the handleMarkerPress function
-const handleMarkerPress = (mechanic) => {
-  console.log('Marker pressed. Mechanic data:', mechanic);
+  const handleMarkerPress = (mechanic) => {
+    console.log('Marker pressed. Mechanic data:', mechanic);
 
-  if (mechanic) {
-    console.log('Selected mechanic name:', mechanic);
-    navigation.navigate('Chat', { mechanicName: mechanic });
-  } else {
-    console.log('Mechanic data is undefined:', mechanic);
-  }
-};
-  
+    if (mechanic) {
+      console.log('Selected mechanic name:', mechanic);
+      navigation.navigate('Chat', { mechanicName: mechanic });
+    } else {
+      console.log('Mechanic data is undefined:', mechanic);
+    }
+  };
 
   const closeModal = () => {
     setModalVisible(false);
@@ -67,7 +65,6 @@ const handleMarkerPress = (mechanic) => {
     console.log(`Call ${selectedPlace}`);
   };
 
-
   if (!location || workshops.length === 0) {
     return (
       <View style={styles.loadingContainer}>
@@ -76,10 +73,9 @@ const handleMarkerPress = (mechanic) => {
     );
   }
 
-  // Calculate the initial region based on your location and workshop locations
   const initialRegion = {
-    latitude: 24.8924,
-    longitude: 91.8660,
+    latitude: location.coords.latitude,
+    longitude: location.coords.longitude,
     latitudeDelta: 0.03,
     longitudeDelta: 0.03,
   };
@@ -90,6 +86,8 @@ const handleMarkerPress = (mechanic) => {
         style={styles.map}
         initialRegion={initialRegion}
         onLayout={onMapLayout}
+        showsUserLocation={true}
+        followsUserLocation={true}
       >
         {/* User Location Marker */}
         <Marker
@@ -113,12 +111,11 @@ const handleMarkerPress = (mechanic) => {
             pinColor={mechanic.id === 4 ? 'lightblue' : 'green'} // Customize the workshop marker color
           >
             <Callout onPress={() => handleMarkerPress(mechanic.mechanic)}>
-  <View>
-    <Text>{mechanic.mechanic}</Text>
-    <Text>Tap to chat or call</Text>
-  </View>
-</Callout>
-
+              <View>
+                <Text>{mechanic.mechanic}</Text>
+                <Text>Tap to chat or call</Text>
+              </View>
+            </Callout>
           </Marker>
         ))}
       </MapView>
@@ -165,4 +162,5 @@ const styles = StyleSheet.create({
 });
 
 export default Mechaniclocation;
+
 

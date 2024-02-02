@@ -12,9 +12,11 @@ import ForgotPassword from './Screen/ForgotPassword';
 import Periodic from './Options/Periodic';
 import AC from './Options/AC';
 import Wheel from './Options/Wheel';
+import Denting from './Options/Denting';
 import MainContainer from './Navigation/MainContainer';
 import Workshoplocation from './Screen/Workshoplocation';
 import Mechaniclocation from './Screen/Mechaniclocation';
+import Mylocation from './Screen/Mylocation';
 import Mechanic from './Screen/Mechanic';
 import Account from './Screen/Account';
 import Profile from './Screen/Profile';
@@ -41,7 +43,7 @@ export default function App() {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="wheel">
+        <Stack.Navigator initialRouteName="Mylocation">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -52,9 +54,11 @@ export default function App() {
           <Stack.Screen name="Periodic" options={{ headerShown: false }} component={Periodic} />
           <Stack.Screen name="AC" options={{ headerShown: false }} component={AC} />
           <Stack.Screen name="Wheel" options={{ headerShown: false }} component={Wheel} />
+          <Stack.Screen name="Denting" options={{ headerShown: false }} component={Denting} />
           <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
           <Stack.Screen name="Workshoplocation" options={{ headerShown: false }} component={Workshoplocation} />
           <Stack.Screen name="Mechaniclocation" options={{ headerShown: false }} component={Mechaniclocation} />
+          <Stack.Screen name="Mylocation" options={{ headerShown: false }} component={Mylocation} />
           <Stack.Screen name="Account" options={{ headerShown: false }} component={Account} />
           <Stack.Screen name="Mechanic" options={{ headerShown: false }} component={Mechanic} />
           <Stack.Screen name="Batteries" options={{ headerShown: false }} component={Batteries} />
