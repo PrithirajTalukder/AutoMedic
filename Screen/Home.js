@@ -76,6 +76,7 @@ const Home = () => {
         marginTop: 20,
         marginLeft: 3,
         marginRight: 3,
+        alignItems:'center'
       }}
       onPress={() => {
         let categoryScreen;
@@ -113,7 +114,7 @@ const Home = () => {
         navigation.navigate(categoryScreen, { service });
       }}
     >
-      <Image source={{ uri: urlFor(service.image).url() }} style={{marginLeft:'15%', width:50 , height: 50 }} />
+      <Image source={{ uri: urlFor(service.image).url() }} style={{marginLeft:0, width:50 , height: 50 }} />
       <Text style={{ color: "black", fontWeight: 700, fontSize: 12, marginLeft: 5, marginTop: 8 }}>{service.name}</Text>
     </Pressable>
   );
@@ -130,11 +131,11 @@ const Home = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginBottom:72 }}>
-      <ScrollView>
-        <View style={{ paddingTop: 60, paddingLeft: 25 }}>
+      <View style={{ paddingTop: 60, paddingLeft: 25, }}>
           <Text style={{ color: "black", fontSize: 20 }}>What are you looking for?</Text>
         </View>
         <View style={{
+          
           padding: 10,
           marginLeft: 18,
           marginTop: 18,
@@ -142,11 +143,17 @@ const Home = () => {
           width: 350,
           backgroundColor: "#bad6e3",
           borderRadius: 20,
-          alignItems: "center"
+          alignItems: "center",
+          marginBottom:5,
+         
         }}>
           <Pressable><FontAwesome name="search" size={24} color="black" /></Pressable>
           <TextInput style={{ fontSize: 19, paddingLeft: 10, width: '80%' }} placeholder='Search' />
         </View>
+      
+      <ScrollView>
+        
+        
         <View style={styles.container}>
         <View style={styles.wrap}>
           <ScrollView

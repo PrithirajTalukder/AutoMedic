@@ -115,7 +115,7 @@ const MyCart = () => {
         backgroundColor: '#fff',
         elevation: 1
       }}>
-        <TouchableOpacity onPress={() => navigation.navigate("Batteries")}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <AntDesign name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
         <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
@@ -128,18 +128,18 @@ const MyCart = () => {
           renderItem={({ item }) => (
             <View
               style={{
-                width: '100%',
+                width: '95%',
                 alignSelf: 'center',
                 height: 120,
                 backgroundColor: '#bad6e3',
                 marginTop: 10,
                 borderRadius: 10,
                 borderWidth: 1,
-                borderColor: 'lightblue',
+                borderColor: 'white',
                 elevation: 1,
                 flexDirection: 'row',
                 alignItems: 'center',
-                paddingLeft: 30,
+                paddingLeft: 20,
                 justifyContent: 'space-between',
               }}
             >
@@ -151,26 +151,11 @@ const MyCart = () => {
               </View>
 
               {/* Quantity and Delete Buttons */}
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {/* Delete Button */}
-                <TouchableOpacity
-                  onPress={() => handleDelete(item)}
-                  style={{
-                    backgroundColor: '#ff3333', // Red color for delete button
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: '#ff0000',
-                    height: 27,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingHorizontal: 10,
-                    marginRight: 10,
-                  }}
-                >
-                  <Text style={{ color: '#ffffff', fontSize: 16, fontWeight: 600 }}>Delete</Text>
-                </TouchableOpacity>
+              <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+                
 
                 {/* Minus Button */}
+                <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', padding:10}}>
                 <TouchableOpacity
                   onPress={() => handleQuantityChange(item, item.qty - 1)}
                   style={{
@@ -209,6 +194,24 @@ const MyCart = () => {
                   }}
                 >
                   <Text style={{ color: '#156112', fontSize: 18, fontWeight: 600 }}>+</Text>
+                </TouchableOpacity>
+                </View>
+                {/* Delete Button */}
+                <TouchableOpacity
+                  onPress={() => handleDelete(item)}
+                  style={{
+                    backgroundColor: 'black', // Red color for delete button
+                    borderRadius: 5,
+                    borderWidth: 1,
+                    borderColor: 'white',
+                    height: 27,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                    marginRight: 10,
+                  }}
+                >
+                  <Text style={{ color: 'white', fontSize: 16, fontWeight: 600 }}>Delete</Text>
                 </TouchableOpacity>
               </View>
             </View>

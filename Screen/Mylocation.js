@@ -46,7 +46,7 @@ const MyLocation = ({ navigation }) => {
   if (!location) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="black" />
+        <ActivityIndicator size="large" color="#bad6e3" />
       </View>
     );
   }
@@ -56,6 +56,7 @@ const MyLocation = ({ navigation }) => {
     longitude: location.coords.longitude,
     latitudeDelta: 0.03,
     longitudeDelta: 0.03,
+    
   };
 
   return (
@@ -89,9 +90,11 @@ const MyLocation = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    
   },
   map: {
     flex: 1,
+    
   },
   loadingContainer: {
     flex: 1,
@@ -101,12 +104,14 @@ const styles = StyleSheet.create({
   },
   confirmButtonContainer: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 50,
     alignSelf: 'center',
-    backgroundColor: 'lightblue',
+    backgroundColor: '#bad6e3',
     padding: 14,
     borderRadius: 10,
     elevation: 10,
+    borderColor:'black',
+    borderWidth:1,
   },
   confirmButton: {
     color: 'black',
