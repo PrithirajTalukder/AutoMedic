@@ -3,6 +3,7 @@ import { SafeAreaView, Text, Pressable, Image, View, ScrollView, TextInput, Styl
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import createClient, { urlFor } from '../sanity';
+import * as Location from 'expo-location';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -17,7 +18,7 @@ const Home = () => {
     'https://cdn3.vectorstock.com/i/1000x1000/00/82/realistic-tire-banner-car-wheel-repair-and-auto-vector-30320082.jpg'
   ]
 
-
+  const [locationName, setLocationName] = useState('');
 
   const [imgActive, setImageActive] = useState(0);
   onchange = (nativeEvent) => {
@@ -62,7 +63,28 @@ const Home = () => {
         setMechanicalRepairs(sortServices(filterByCategory(mechanicalRepairsIds)));
       })
       .catch(error => console.error('Error fetching data:', error));
+      // Fetch user location name
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync();
+      
+      // Use reverse geocoding to get location name from coordinates
+      let reverseGeocode = await Location.reverseGeocodeAsync({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+
+      // Assuming that the first result has the location name
+      let name = reverseGeocode[0]?.name || 'Unknown Location';
+      setLocationName(name);
+    })();
   }, []);
+ 
 
   const renderCategory = (service) => (
     <Pressable
@@ -131,6 +153,17 @@ const Home = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginBottom:72 }}>
+      <ScrollView>
+      <View style={{ paddingTop: 60, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
+          {/* Image component for the icon */}
+          <Image
+            source={require('../images/mappin.png')}
+            style={{ width: 40, height: 46, marginRight: 10 }}
+          />
+
+          {/* Text displaying the location name */}
+          <Text style={{ color: 'black', fontSize: 20 }}>{locationName}</Text>
+        </View>
       <View style={{ paddingTop: 60, paddingLeft: 25, }}>
           <Text style={{ color: "black", fontSize: 20 }}>What are you looking for?</Text>
         </View>
@@ -214,6 +247,7 @@ const Home = () => {
         <View style={{ flexDirection: "row", margin: 2 }}>
           {renderCategoryRow(mechanicalRepairs.map(renderCategory))}
         </View>
+      </ScrollView>
       </ScrollView>
     </SafeAreaView>
   );
