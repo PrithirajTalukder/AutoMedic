@@ -153,7 +153,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginBottom:72 }}>
-      <ScrollView>
+    
       <View style={{ paddingTop: 60, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
           {/* Image component for the icon */}
           <Image
@@ -248,7 +248,7 @@ const Home = () => {
           {renderCategoryRow(mechanicalRepairs.map(renderCategory))}
         </View>
       </ScrollView>
-      </ScrollView>
+      
     </SafeAreaView>
   );
   
