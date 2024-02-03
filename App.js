@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Provider } from 'react-redux'; // Import the Provider component
 import { mystore } from './redux/MyStore'; // Import your Redux store
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
 import Home from './Screen/Home';
 import Welcome from './Screen/Welcome';
@@ -32,7 +33,7 @@ import { StripeProvider } from '@stripe/stripe-react-native';
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+const App = () => {
   return (
     
     <Provider store={mystore}> 
@@ -43,11 +44,11 @@ export default function App() {
 
       <NavigationContainer>
 
-<<<<<<< HEAD
-        <Stack.Navigator initialRouteName="Main">
-=======
-        <Stack.Navigator initialRouteName="Mylocation">
->>>>>>> c538cdeaf5d865ed16c3c08f7d3cc076debf08ef
+
+        <Stack.Navigator initialRouteName="SignIn">
+
+       
+
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -80,3 +81,5 @@ export default function App() {
    
   );
 }
+
+export default gestureHandlerRootHOC(App);

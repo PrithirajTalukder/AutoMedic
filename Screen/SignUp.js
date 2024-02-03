@@ -1,84 +1,106 @@
-import { Text, View, StyleSheet, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable, Modal, TouchableOpacity } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { Feather } from '@expo/vector-icons';
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { sendEmailVerification } from "firebase/auth";
-import { auth } from "../config/firebase";
+import React, { useState, useRef } from 'react';
+import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+
+import { Text, View, StyleSheet, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable } from 'react-native';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { sendEmailVerification } from 'firebase/auth';
+import { auth } from '../config/firebase';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import React, { useRef } from 'react';
+import { doc, setDoc } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
+import { getFirestore, collection } from 'firebase/firestore';
 
 
 
 export default function SignUp() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
   const phoneNumberRegex = /^\+880\d{10}$/;
   const [errorMessage, setErrorMessage] = useState(null);
   const [firstMessage, setFirstMessage] = useState(null);
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
+  const db = getFirestore();
 
   const handleSubmit = async () => {
     if (!email || !password || !name || !phone) {
-      setErrorMessage("Please fill up all the fields.");
+      setErrorMessage('Please fill up all the fields.');
       bottomSheetModalRef.current?.present();
       return;
     }
-  
+
     if (password !== confirmPassword) {
-      setErrorMessage("Passwords do not match.");
+      setErrorMessage('Passwords do not match.');
       bottomSheetModalRef.current?.present();
       return;
     }
-  
+
     if (password.length < 6) {
-      setErrorMessage("Password must be at least 6 characters long.");
+      setErrorMessage('Password must be at least 6 characters long.');
       bottomSheetModalRef.current?.present();
       return;
     }
-  
+
     if (!phoneNumberRegex.test(phone)) {
-      setErrorMessage("Invalid phone number. Please enter a valid phone number.");
+      setErrorMessage('Invalid phone number. Please enter a valid phone number.');
       bottomSheetModalRef.current?.present();
       return;
     }
-  
+    if (!address) {
+      setErrorMessage('Provide your address please.');
+      bottomSheetModalRef.current?.present();
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-  
+
       if (user) {
-        await updateProfile(user, { displayName: name });
+        // Create a Firestore document for the user
+        const usersCollectionRef = collection(db, 'Users Informations');
+        const userDocRef = doc(usersCollectionRef, user.uid);
+        await setDoc(userDocRef, {
+          name,
+          email,
+          phone,
+          address,
+        });
+        
+
+
+        
+
+        // Send email verification
         await sendEmailVerification(user);
-  
-        setFirstMessage("A verification link has been sent to your email. Please verify your email before signing in!");
+
+        setFirstMessage('A verification link has been sent to your email. Please verify your email before signing in!');
         bottomSheetModalRef.current?.present();
       }
     } catch (err) {
+      console.log(err);
       if (err.code === 'auth/invalid-email') {
-        setErrorMessage("Invalid Email!");
+        setErrorMessage('Invalid Email!');
       } else if (err.code === 'auth/email-already-in-use') {
-        setErrorMessage("Email address is already registered. Please use a different email.");
+        setErrorMessage('Email address is already registered. Please use a different email.');
       } else {
-        setErrorMessage("An error occurred. Please try again later.");
+        setErrorMessage('An error occurred. Please try again later.');
       }
       bottomSheetModalRef.current?.present();
     }
   };
-  
+
   const handleSheetDismiss = () => {
     navigation.navigate('SignUp');
     if (bottomSheetModalRef && bottomSheetModalRef.current) {
       bottomSheetModalRef.current.dismiss();
     }
   };
-  
+
   const handleBackToSignIn = () => {
     navigation.navigate('SignIn');
     if (bottomSheetModalRef && bottomSheetModalRef.current) {
@@ -92,13 +114,13 @@ export default function SignUp() {
       <SafeAreaView style={{ flex: 1, backgroundColor: "lightblue", alignItems: "center", padding: 10 }}>
       <View style={{backgroundColor:"white",
             borderRadius:20,
-            top:80,
+            top:60,
             width:380,
             paddingLeft:20,
             paddingRight:20,
             marginLeft:10,
             marginRight:10,
-            height:690,
+            height:712,
             position: "absolute",
             backgroundColor:"black",
             elevation:6,
@@ -215,6 +237,26 @@ export default function SignUp() {
                 }}
               />
             </View>
+
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+  <MaterialCommunityIcons name="home-outline" size={24} color="white" />
+  <TextInput
+    value={address}
+    onChangeText={value => setAddress(value)}
+    placeholder="Address"
+    placeholderTextColor="gray"
+    style={{
+      fontSize: 18,
+      borderBottomWidth: 1,
+      borderBottomColor: "gray",
+      marginLeft: 13,
+      width: 300,
+      marginVertical: 20,
+      color: "white",
+    }}
+  />
+</View>
+
 
             
             <Pressable
@@ -353,8 +395,3 @@ const styles = StyleSheet.create({
 
   },
 });
-
-
-
-
-
