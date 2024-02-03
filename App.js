@@ -43,7 +43,11 @@ export default function App() {
 
       <NavigationContainer>
 
+<<<<<<< HEAD
         <Stack.Navigator initialRouteName="Main">
+=======
+        <Stack.Navigator initialRouteName="Mylocation">
+>>>>>>> c538cdeaf5d865ed16c3c08f7d3cc076debf08ef
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />

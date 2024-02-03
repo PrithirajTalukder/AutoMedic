@@ -35,7 +35,7 @@ const MyLocation = ({ navigation }) => {
         {
           text: 'OK',
           onPress: () => {
-            navigation.navigate('Main');
+            navigation.navigate('Main', { confirmedLocation: location });
           },
         },
       ],
