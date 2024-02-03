@@ -154,7 +154,7 @@ const Home = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginBottom:72 }}>
     
-      <View style={{ paddingTop: 60, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ paddingTop: 30, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
           {/* Image component for the icon */}
           <Image
             source={require('../images/mappin.png')}
@@ -164,7 +164,7 @@ const Home = () => {
           {/* Text displaying the location name */}
           <Text style={{ color: 'black', fontSize: 20 }}>{locationName}</Text>
         </View>
-      <View style={{ paddingTop: 60, paddingLeft: 25, }}>
+      <View style={{ paddingTop: 20, paddingLeft: 25, }}>
           <Text style={{ color: "black", fontSize: 20 }}>What are you looking for?</Text>
         </View>
         <View style={{
