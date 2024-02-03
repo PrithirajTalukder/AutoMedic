@@ -12,10 +12,10 @@ export default function PreparingOrder() {
         },10000);
     },[])
     return (
-        <View style={{ flex: 1, backgroundColor: 'lightblue', justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
           <Image
             source={require('../assets/delivery.gif')}
-            style={{ height: 400, width: 400 }}  // Adjust the height and width as needed
+            style={{ height: 350, width: 350 }}  // Adjust the height and width as needed
           />
         </View>
   )

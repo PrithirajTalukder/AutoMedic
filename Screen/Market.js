@@ -103,10 +103,9 @@ const Market = () => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <ScrollView>
-        <View style={{ paddingTop: 50, paddingBottom: 100 }}>
-          <View style={{
+    <SafeAreaView style={{ flex: 1,  }}>
+      <View style={{ paddingTop: 50, paddingBottom: 10, backgroundColor: "white"}}>
+      <View style={{
             padding: 10,
             marginLeft: 18,
             marginTop: 18,
@@ -114,16 +113,24 @@ const Market = () => {
             width: 357,
             backgroundColor: "lightblue",
             borderRadius: 20,
-            alignItems: "center"
+            alignItems: "center",
+            borderWidth:1,
+            borderColor: 'gray',
           }}>
             <TouchableOpacity><FontAwesome name="search" size={24} color="black" /></TouchableOpacity>
             <TextInput style={{ fontSize: 19, paddingLeft: 10, width: '80%' }} placeholder='Search' />
           </View>
-          <View style={{ marginLeft: 25, marginTop: 30 }}>
+          <View style={{ marginLeft: 25, marginTop: 20 }}>
             <Text style={{ color: "black", fontSize: 18, fontWeight: 800 }}>
               At Home Delivery
           </Text>
           </View>
+      </View>
+      
+      
+      <ScrollView>
+        <View style={{ paddingTop: 0, paddingBottom: 0 }}>
+          
 
 
           <View
@@ -132,7 +139,7 @@ const Market = () => {
               justifyContent: 'space-between',
               paddingHorizontal: 10,
               marginBottom: 20,
-              marginTop: 20,
+              marginTop: 10,
             }}
           >
             {categoriesWithProducts.slice(0, 3).map((category) => renderProduct(category))}
