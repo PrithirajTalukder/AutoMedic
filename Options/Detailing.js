@@ -7,7 +7,7 @@ import { addProductToMyCart } from '../redux/MyCartSlice';
 import { addMyProduct } from '../redux/MyProductSlice';
 import createClient, { urlFor } from '../sanity';
 
-const Denting = () => {
+const Detailing = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
@@ -23,7 +23,7 @@ const Denting = () => {
     const fetchPeriodicProducts = async () => {
       try {
         const query = `
-          *[_type == 'servicesproduct' && type->name == 'Denting & Painting'] {
+          *[_type == 'servicesproduct' && type->name == 'Detailing Services'] {
             _id,
             name,
             image,
@@ -418,4 +418,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Denting;
+export default Detailing;

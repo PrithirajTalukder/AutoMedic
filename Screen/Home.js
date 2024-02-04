@@ -113,15 +113,18 @@ const Home = () => {
             categoryScreen = "Wheel"; // Replace with the actual screen name for scheduled services
             break;
           case "S4":
-            categoryScreen = "Batteries"; // Replace with the actual screen name for scheduled services
+            categoryScreen = "Batteriesservice"; // Replace with the actual screen name for scheduled services
             break;
           case "S5":
             categoryScreen = "Denting"; // Replace with the actual screen name for scheduled services
             break;
           case "S6":
+            categoryScreen = "Carspa"; // Replace with the actual screen name for scheduled services
+            break;
           case "S7":
+            categoryScreen = "Detailing"; // Replace with the actual screen name for scheduled services
           case "S8":
-            categoryScreen = "ValueAdded"; // Replace with the actual screen name for value-added services
+          
             break;
           case "S9":
           case "S10":
