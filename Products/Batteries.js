@@ -33,7 +33,8 @@ const Batteries = () => {
             warranty,
             services,
             rating,
-            reviews
+            reviews,
+            stock 
           }
         `;
 
@@ -49,6 +50,7 @@ const Batteries = () => {
           duration: product.duration,
           warranty: product.warranty,
           services: product.services,
+          stock: product.stock,
         }));
 
         setItems(itemsData);
@@ -140,8 +142,6 @@ const Batteries = () => {
     }
   };
 
-
-
   const totalProducts = myCart.length;
   const totalPrice = myCart.reduce((total, item) => total + item.qty * item.price, 0);
 
@@ -160,7 +160,7 @@ const Batteries = () => {
         flexDirection: "row",
         alignItems: "center",
         paddingBottom: 13,
-        backgroundColor:'white',
+        backgroundColor: 'white',
       }}>
         <View style={{
           padding: 10,
@@ -171,8 +171,8 @@ const Batteries = () => {
           backgroundColor: "#bad6e3",
           borderRadius: 20,
           alignItems: "center",
-          borderWidth:1,
-          borderColor:'gray'
+          borderWidth: 1,
+          borderColor: 'gray'
         }}>
           {search.length === 0 && (
             <TouchableOpacity>
@@ -200,8 +200,8 @@ const Batteries = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ borderBottomWidth:1, borderColor:'white',backgroundColor:'white' }}>
-        <Text style={{ marginLeft: 25,marginBottom: 2, color: "black", fontSize: 24, fontWeight: 800, }}>
+      <View style={{ borderBottomWidth: 1, borderColor: 'white', backgroundColor: 'white' }}>
+        <Text style={{ marginLeft: 25, marginBottom: 2, color: "black", fontSize: 24, fontWeight: 800, }}>
           Products
         </Text>
       </View>
@@ -210,7 +210,7 @@ const Batteries = () => {
       <FlatList
         data={filteredItems}
         renderItem={({ item, index }) => (
-          <View style={{ width: '95%', alignSelf: 'center', height: 190, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, justifyContent: 'space-between' }}>
+          <View style={{ width: '95%', alignSelf: 'center', height: 209, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, justifyContent: 'space-between' }}>
             <View>
               <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginTop: -20 }}>{item.name}</Text>
               <Text style={{ color: "#088704", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{'৳' + item.price}</Text>
@@ -218,50 +218,54 @@ const Batteries = () => {
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.duration}</Text>
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.warranty}</Text>
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.services}</Text>
+              <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>
+                {item.stock > 0 && `In Stock: ${item.stock} product${item.stock > 1 ? 's' : ''} available`}
+              </Text>
             </View>
             <View>
-              <Image source={item.image} style={{  width: 80, height: 80, marginLeft: 10,marginRight:30, borderRadius: 5, borderWidth:1, borderColor:'white'}} />
-              {!myCart.find(cartItem => cartItem.id === item.id) || myCart.find(cartItem => cartItem.id === item.id).qty === 0 ? (
-                <TouchableOpacity
-                  onPress={() => handleAddToCartPress(index)}
-                  style={{
-                    backgroundColor: '#15174f',
-                    borderRadius: 7,
-                    height: 27,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingLeft: 5,
-                    paddingRight: 5,
-                    marginRight: 20,
-                    marginLeft: 0,
-                    marginTop: 10
-                  }}
-                >
-                  <Text style={{ color: 'white', fontWeight: 600 }}>Add To Cart</Text>
-                </TouchableOpacity>
-              ) : (
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3 }}>
+              <Image source={item.image} style={{ width: 80, height: 80, marginLeft: 10, marginRight: 30, borderRadius: 5, borderWidth: 1, borderColor: 'white' }} />
+              {item.stock > 0 ? (
+                !myCart.find(cartItem => cartItem.id === item.id) || myCart.find(cartItem => cartItem.id === item.id).qty === 0 ? (
                   <TouchableOpacity
-                    
+                    onPress={() => handleAddToCartPress(index)}
                     style={{
-                      backgroundColor: '#bad6e3',
-                      borderWidth: 1,
-                      borderColor: '#15174f',
+                      backgroundColor: '#15174f',
                       borderRadius: 7,
                       height: 27,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                      marginRight: 5,
-                      marginLeft:-10,
-                      marginTop:10,
-                    }}>
-                    <Text style={{ color: '#15174f', fontWeight: 600 }}>Already Added!</Text>
+                      paddingLeft: 5,
+                      paddingRight: 5,
+                      marginRight: 20,
+                      marginLeft: 0,
+                      marginTop: 10
+                    }}
+                  >
+                    <Text style={{ color: 'white', fontWeight: 600 }}>Add To Cart</Text>
                   </TouchableOpacity>
-                  
-                   
-                </View>
+                ) : (
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3 }}>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: '#bad6e3',
+                        borderWidth: 1,
+                        borderColor: '#15174f',
+                        borderRadius: 7,
+                        height: 27,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        marginRight: 5,
+                        marginLeft: -10,
+                        marginTop: 10,
+                      }}>
+                      <Text style={{ color: '#15174f', fontWeight: 600 }}>Already Added!</Text>
+                    </TouchableOpacity>
+                  </View>
+                )
+              ) : (
+                <Text style={{ color: 'red', fontWeight: 600, marginTop: 10, marginLeft: 10 }}>Out of Stock</Text>
               )}
             </View>
           </View>
@@ -270,7 +274,7 @@ const Batteries = () => {
 
       {/* Message for no search results */}
       {filteredItems.length === 0 && (
-        <View style={{ alignItems: 'center', marginTop: -200,justifyContent:'center'}}>
+        <View style={{ alignItems: 'center', marginTop: -200, justifyContent: 'center' }}>
           <Text style={{ color: 'red', fontSize: 16 }}>This Product is not available right now.</Text>
         </View>
       )}
@@ -337,13 +341,13 @@ const Batteries = () => {
 
       {/* Alert for Product Added */}
       {showAlert && (
-  <View style={styles.alertContainer}>
-    <View style={styles.alertBox}>
-      <Text style={styles.alertText}>Product added to the cart</Text>
+        <View style={styles.alertContainer}>
+          <View style={styles.alertBox}>
+            <Text style={styles.alertText}>Product added to the cart</Text>
+          </View>
+        </View>
+      )}
     </View>
-  </View>
-)}
-</View>
   );
 };
 
@@ -389,10 +393,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-   
+
   },
   alertBox: {
-    backgroundColor:'black', 
+    backgroundColor: 'black',
     padding: 14,
     borderRadius: 10,
     elevation: 5, // Shadow

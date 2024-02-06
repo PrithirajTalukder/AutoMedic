@@ -50,7 +50,7 @@ const App = () => {
       <NavigationContainer>
 
 
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator initialRouteName="Batteries">
 
        
 

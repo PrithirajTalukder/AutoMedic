@@ -10,15 +10,20 @@ const MyCart = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
-  const [itemTotal, setItemTotal] = useState(0);
+
 
   // Calculate item total whenever myCart changes
   const totalProducts = myCart.length;
   const totalPrice = myCart.reduce((total, item) => total + item.qty * item.price, 0);
 
-
   // Handle quantity change for a product
   const handleQuantityChange = (item, newQty) => {
+    // Check if the requested quantity exceeds the available stock
+    if (newQty > item.stock) {
+      showAlert('Product out of stock');
+      return;
+    }
+
     const updatedItem = { ...item, qty: Math.max(0, newQty) };
 
     if (updatedItem.qty === 0) {
@@ -55,7 +60,6 @@ const MyCart = () => {
       { text: 'OK', onPress: onOk },
     ]);
   };
-  
 
   // Handle checkout button press
   const onCheckout = () => {
@@ -152,50 +156,49 @@ const MyCart = () => {
 
               {/* Quantity and Delete Buttons */}
               <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                
-
                 {/* Minus Button */}
                 <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', padding:10}}>
-                <TouchableOpacity
-                  onPress={() => handleQuantityChange(item, item.qty - 1)}
-                  style={{
-                    backgroundColor: '#bad6e3',
-                    borderWidth: 1,
-                    borderColor: '#99241f',
-                    borderRadius: 7,
-                    height: 27,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    marginLeft: -5,
-                  }}
-                >
-                  <Text style={{ color: '#99241f', fontWeight: 600, fontSize: 18 }}>-</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handleQuantityChange(item, item.qty - 1)}
+                    style={{
+                      backgroundColor: '#bad6e3',
+                      borderWidth: 1,
+                      borderColor: '#99241f',
+                      borderRadius: 7,
+                      height: 27,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                      marginLeft: -5,
+                    }}
+                  >
+                    <Text style={{ color: '#99241f', fontWeight: 600, fontSize: 18 }}>-</Text>
+                  </TouchableOpacity>
 
-                {/* Quantity Text */}
-                <Text style={{ fontWeight: 600, padding: 10 }}>{item.qty}</Text>
+                  {/* Quantity Text */}
+                  <Text style={{ fontWeight: 600, padding: 10 }}>{item.qty}</Text>
 
-                {/* Plus Button */}
-                <TouchableOpacity
-                  onPress={() => handleQuantityChange(item, item.qty + 1)}
-                  style={{
-                    backgroundColor: '#bad6e3',
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: '#156112',
-                    height: 27,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingLeft: 9,
-                    paddingRight: 9,
-                    marginRight: 20,
-                  }}
-                >
-                  <Text style={{ color: '#156112', fontSize: 18, fontWeight: 600 }}>+</Text>
-                </TouchableOpacity>
+                  {/* Plus Button */}
+                  <TouchableOpacity
+                    onPress={() => handleQuantityChange(item, item.qty + 1)}
+                    style={{
+                      backgroundColor: '#bad6e3',
+                      borderRadius: 5,
+                      borderWidth: 1,
+                      borderColor: '#156112',
+                      height: 27,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingLeft: 9,
+                      paddingRight: 9,
+                      marginRight: 20,
+                    }}
+                  >
+                    <Text style={{ color: '#156112', fontSize: 18, fontWeight: 600 }}>+</Text>
+                  </TouchableOpacity>
                 </View>
+
                 {/* Delete Button */}
                 <TouchableOpacity
                   onPress={() => handleDelete(item)}
