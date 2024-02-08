@@ -86,7 +86,7 @@ const Profile = () => {
       </View>
 
       <View style={{
-        backgroundColor: "white",
+        backgroundColor: "black",
         borderRadius: 20,
         top: 110,
         paddingLeft: 20,
@@ -98,7 +98,7 @@ const Profile = () => {
         elevation: 6,
       }}>
         <View style={{ paddingTop: 15, paddingLeft: 10 }}>
-          <Text style={{ color: "gray", fontWeight: 600 }}>PERSONAL DETAILS</Text>
+          <Text style={{ color: "white", fontWeight: 600 }}>PERSONAL DETAILS</Text>
         </View>
 
         <View style={{ marginTop: 30 }}>
@@ -171,11 +171,11 @@ const styles = {
     marginLeft: 3,
     width: 310,
     marginVertical: 10,
-    color: "black",
+    color: "white",
   },
   saveButton: {
     width: 310,
-    backgroundColor: "lightblue",
+    backgroundColor: "black",
     padding: 12,
     borderRadius: 7,
     marginTop: 260,
@@ -186,7 +186,7 @@ const styles = {
   saveButtonText: {
     fontSize: 20,
     textAlign: "center",
-    color: "black",
+    color: "white",
     fontWeight: "600",
   },
 };
