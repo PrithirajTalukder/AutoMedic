@@ -25,7 +25,6 @@ app.post('/pay', async (req, res) => {
       currency: 'usd',
       payment_method_types: ['card'],
       metadata: {
-        checkout_summary: 'Your checkout summary here',
         products: JSON.stringify(lineItems.map(item => ({
           name: item.name,
           quantity: item.quantity,
