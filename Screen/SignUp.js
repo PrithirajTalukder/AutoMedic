@@ -22,6 +22,8 @@ export default function SignUp() {
   const phoneNumberRegex = /^\+880\d{10}$/;
   const [errorMessage, setErrorMessage] = useState(null);
   const [firstMessage, setFirstMessage] = useState(null);
+  const [buttonColors, setButtonColors] = useState('white');
+
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
   const db = getFirestore();
@@ -259,22 +261,29 @@ export default function SignUp() {
 
 
             
-            <Pressable
-              style={{
-                width: 200,
-                backgroundColor: "lightblue",
-                padding: 15,
-                borderRadius: 7,
-                marginTop: 50,
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-              onPress={handleSubmit}
-            >
-              <Text style={{ fontSize: 18, textAlign: "center", color: "black" }}>
-                Register
-              </Text>
-            </Pressable>
+<Pressable
+      onPressIn={() => {
+        setButtonColors('lightblue');
+        
+      }}
+      onPressOut={() => {
+        setButtonColors('white');
+        handleSubmit(); 
+      }}
+      style={{
+        width: 150,
+        backgroundColor: buttonColors,
+        padding: 15,
+        borderRadius: 7,
+        marginTop: 50,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      }}
+    >
+      <Text style={{ fontSize: 20, textAlign: 'center', color: 'black', fontWeight: '900' }}>
+        Register
+      </Text>
+    </Pressable>
             <Pressable onPress={() => navigation.navigate("SignIn")} style={{ marginTop: 20 }}>
               <Text
                 style={{

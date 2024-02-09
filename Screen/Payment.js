@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, TextInput, Alert, Image, ScrollView, } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert, Image, ScrollView, } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import { useNavigation } from "@react-navigation/native";
 import { Button } from 'react-native-paper';
 import { useStripe } from '@stripe/stripe-react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { auth } from '../config/firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getDatabase, ref, push } from 'firebase/database';
+
+
 
 const Payment = () => {
   const navigation = useNavigation();
@@ -102,23 +105,48 @@ const Payment = () => {
   const onCheckout = async () => {
     try {
       if (myCart.length === 0) {
-        Alert.alert('Your cart is empty. Add items before proceeding to payment.');
-        return;
+        return Alert.alert('Your cart is empty. Add items before proceeding to payment.');
       }
-  
-      if (!selectedPaymentOption) {
-        Alert.alert('Select a payment option before placing the order.');
-        return;
-      }
-  
-      // Check if address is saved when paying with 'card' or 'cash'
-      if ((!isAddressSaved || isEditing) && (selectedPaymentOption === 'card' || selectedPaymentOption === 'cash')) {
-        Alert.alert('Save your address before proceeding to order.');
-        return;
-      }
-      
 
-    
+      if (!selectedPaymentOption) {
+        return Alert.alert('Select a payment option before placing the order.');
+      }
+
+      if ((!isAddressSaved || isEditing) && (selectedPaymentOption === 'card' || selectedPaymentOption === 'cash')) {
+        return Alert.alert('Save your address before proceeding to order.');
+      }
+
+      const ordersDatabase = getDatabase();
+      let ordersRef;
+
+      if (selectedPaymentOption === 'card') {
+        // For card payment, store orders in the "Stripe Orders" field
+        ordersRef = ref(ordersDatabase, 'Stripe Orders');
+      } else if (selectedPaymentOption === 'cash') {
+        // For Cash on Delivery (COD), store orders in the "Cash on Delivery Orders" field
+        ordersRef = ref(ordersDatabase, 'Cash on Delivery Orders');
+      } else {
+        // Handle other payment options if needed
+        return;
+      }
+
+      const orderData = {
+        userId: currentUser.uid,
+        name: name,
+        email: email,
+        phone: phone,
+        address: address,
+        paymentOption: selectedPaymentOption,
+        items: myCart.map(item => ({
+          name: item.name,
+          quantity: item.qty,
+          price: item.price,
+        })),
+        totalAmount: totalPrice,
+        timestamp: new Date().toISOString(),
+      };
+
+   
 
       const lineItems = myCart.map(item => ({
         name: item.name,
@@ -133,7 +161,6 @@ const Payment = () => {
         },
       }));
 
-
       if (selectedPaymentOption === 'card') {
         const totalAmount = myCart.reduce((acc, item) => acc + item.qty * item.price, 0);
 
@@ -142,7 +169,7 @@ const Payment = () => {
           return;
         }
 
-        const response = await fetch("http://192.168.0.5:8082/pay", {
+        const response = await fetch("http://192.168.0.5:8085/pay", {
           method: "POST",
           body: JSON.stringify({
             name: name,
@@ -177,18 +204,26 @@ const Payment = () => {
         Alert.alert(
           "Payment completed",
           "Thank you for being with Auto Medic!",
-          [{ text: "OK", onPress: () => navigation.navigate('Preparingorder') }]
-        );
-      } else if (selectedPaymentOption === 'cash') {
-        navigation.navigate('Preparingorder');
-      }
-    } catch (err) {
-      console.error(err);
-      Alert.alert("Something went wrong, try again later!");
+          [{
+            text: "OK",
+          onPress: async () => {
+            const newOrderRef = push(ordersRef, orderData);
+            const orderId = newOrderRef.key;
+            navigation.navigate('Preparingorder');
+          },
+        }]
+      );
+    } else if (selectedPaymentOption === 'cash') {
+      // For cash payment, directly navigate to the next screen
+      const newOrderRef = push(ordersRef, orderData);
+      const orderId = newOrderRef.key;
+      navigation.navigate('Preparingorder');
     }
-  };
-
-
+  } catch (err) {
+    console.error(err);
+    Alert.alert("Something went wrong, try again later!");
+  }
+};
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={{

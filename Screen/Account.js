@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Text, Pressable, Image } from 'react-native';
+import { View, SafeAreaView, Text, Pressable, Image, ActivityIndicator } from 'react-native';
 import { Avatar, Title } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -10,8 +10,11 @@ import { useNavigation } from "@react-navigation/native";
 const Account = () => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const currentUser = auth.currentUser;
   const db = getFirestore();
+  const [buttonColor, setButtonColor] = useState('lightblue');
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -23,13 +26,25 @@ const Account = () => {
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
+      }finally {
+        // Set loading to false when data is fetched (whether successful or not)
+        setLoading(false);
       }
     };
+    
 
     if (currentUser) {
       fetchUserData();
     }
   }, [currentUser, db]);
+  
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="lightblue" />
+      </View>
+    );
+  }
 
   if (!userData) {
     return <Text>Loading...</Text>;
@@ -123,21 +138,31 @@ const Account = () => {
       </View>
 
       <View>
-        <Pressable onPress={() => navigation.navigate("SignIn")}
-          style={{
-            width: 250,
-            backgroundColor: "lightblue",
-            padding: 12,
-            borderRadius: 7,
-            marginTop: 5,
-            marginLeft: "auto",
-            marginRight: "auto",
-            elevation: 4,
-          }}>
-          <Text style={{ fontSize: 20, textAlign: "center", color: "black", fontWeight: "600" }}>
-            Logout
-          </Text>
-        </Pressable>
+      <Pressable
+  onPress={() => {
+    navigation.navigate("SignIn");
+  }}
+  onPressIn={() => {
+    setButtonColor('white');
+  }}
+  onPressOut={() => {
+    setButtonColor('lightblue');
+  }}
+  style={{
+    width: 250,
+    backgroundColor: buttonColor, // Use the dynamic buttonColor
+    padding: 12,
+    borderRadius: 7,
+    marginTop: 5,
+    marginLeft: "auto",
+    marginRight: "auto",
+    elevation: 4,
+  }}>
+  <Text style={{ fontSize: 20, textAlign: "center", color: "black", fontWeight: "600" }}>
+    Logout
+  </Text>
+</Pressable>
+
       </View>
     </SafeAreaView>
   );
