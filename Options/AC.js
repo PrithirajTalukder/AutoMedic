@@ -28,6 +28,7 @@ const AC = () => {
             name,
             image,
             price,
+            frequency,
             duration,
             warranty,
             services,
@@ -44,7 +45,7 @@ const AC = () => {
           image: { uri: urlFor(servicesproduct.image).url() },
           price: servicesproduct.price,
           qty: 0,
-          
+          frequency: servicesproduct.frequency,
           duration: servicesproduct.duration,
           warranty: servicesproduct.warranty,
           services: servicesproduct.services,
@@ -151,7 +152,7 @@ const AC = () => {
   return (
     <View style={{ flex: 1 }}>
       {/* Header */}
-      <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: '#fff', elevation: 1 }}>
+      <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: 'white', elevation: 1 }}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
           <AntDesign name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
@@ -162,17 +163,20 @@ const AC = () => {
       <View style={{
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 30
+        paddingBottom: 13,
+        backgroundColor:'white',
       }}>
         <View style={{
           padding: 10,
           marginLeft: 18,
-          marginTop: 20,
+          marginTop: 10,
           flexDirection: "row",
           width: 330,
           backgroundColor: "#bad6e3",
           borderRadius: 20,
-          alignItems: "center"
+          alignItems: "center",
+          borderWidth:1,
+          borderColor:'gray'
         }}>
           {search.length === 0 && (
             <TouchableOpacity>
@@ -195,31 +199,38 @@ const AC = () => {
           )}
         </View>
 
-        <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginTop: 10 }}>
+        <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginTop: 5 }}>
           <FontAwesome name="sort-down" size={28} color="black" />
         </TouchableOpacity>
       </View>
 
-      <View style={{ marginLeft: 25, marginBottom: 10 }}>
-        <Text style={{ color: "black", fontSize: 24, fontWeight: 800, }}>
+      <View style={{ borderBottomWidth:1, borderColor:'white',backgroundColor:'white' }}>
+        <Text style={{marginLeft: 25,marginBottom: 2, color: "black", fontSize: 24, fontWeight: 800, }}>
           Services
         </Text>
       </View>
 
+
+
+
+      
+
       {/* Product List */}
       <FlatList
         data={filteredItems}
+        
         renderItem={({ item, index }) => (
           <View style={{ width: '95%', alignSelf: 'center', height: 190, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, justifyContent: 'space-between' }}>
             <View>
               <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginTop: -20 }}>{item.name}</Text>
               <Text style={{ color: "#088704", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{'৳' + item.price}</Text>
+              <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 10 }}>{item.frequency}</Text>
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.duration}</Text>
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.warranty}</Text>
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.services}</Text>
             </View>
             <View>
-              <Image source={item.image} style={{ width: 80, height: 80, marginLeft: 10,marginRight:30, borderRadius: 5, borderWidth:1, borderColor:'white'  }} />
+              <Image source={item.image} style={{ width: 80, height: 80, marginLeft: 10,marginRight:30, borderRadius: 5, borderWidth:1, borderColor:'white' }} />
               {!myCart.find(cartItem => cartItem.id === item.id) || myCart.find(cartItem => cartItem.id === item.id).qty === 0 ? (
                 <TouchableOpacity
                   onPress={() => handleAddToCartPress(index)}
@@ -256,7 +267,7 @@ const AC = () => {
                       marginLeft:-10,
                       marginTop:10,
                     }}>
-                    <Text style={{ color: '#15174f', fontWeight: 600}}>Already Added!</Text>
+                    <Text style={{ color: '#15174f', fontWeight: 600 }}>Already Added!</Text>
                   </TouchableOpacity>
                   
                    
@@ -269,12 +280,13 @@ const AC = () => {
 
       {/* Message for no search results */}
       {filteredItems.length === 0 && (
-        <View style={{ alignItems: 'center', marginTop: -200,justifyContent:'center'}}>
+        <View style={{ alignItems: 'center', marginTop: -200,justifyContent:'center' }}>
           <Text style={{ color: 'red', fontSize: 16 }}>This Product is not available right now.</Text>
         </View>
       )}
 
       {/* Cart Summary */}
+      <View style={{borderTopWidth:1, borderColor:'white' }}>
       <TouchableOpacity
         style={{
           flexDirection: 'row',
@@ -285,6 +297,7 @@ const AC = () => {
           borderWidth: 2,
           height: 60,
           margin: 10,
+          
         }}
         onPress={() => {
           navigation.navigate("MyCart");
@@ -299,6 +312,8 @@ const AC = () => {
         </View>
       </TouchableOpacity>
 
+      </View>
+      
       {/* Filter Modal */}
       <Modal
         animationType="slide"
@@ -394,7 +409,7 @@ const styles = StyleSheet.create({
     backgroundColor:'black', 
     padding: 14,
     borderRadius: 10,
-    elevation: 5,// Shadow
+    elevation: 5, // Shadow
   },
   alertText: {
     color: 'white',

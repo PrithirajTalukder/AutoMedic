@@ -12,6 +12,7 @@ const SignIn = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
+  const [buttonColor, setButtonColor] = useState('white');
 
   const handleSubmit = async () => {
     if (!email || !password) {
@@ -146,24 +147,28 @@ const SignIn = () => {
 
 
             <Pressable
-              onPress={handleSubmit}
-              style={{
-                width: 150,
-                backgroundColor: "lightblue",
-                padding: 15,
-                borderRadius: 7,
-                marginTop: 50,
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-            >
-              <Text style={{ fontSize: 20, textAlign: "center", color: "black", fontWeight: "900" }}>
-                Login
-              </Text>
-
-            </Pressable>
-
-
+      onPressIn={() => {
+        setButtonColor('lightblue');
+        
+      }}
+      onPressOut={() => {
+        setButtonColor('white');
+        handleSubmit(); 
+      }}
+      style={{
+        width: 150,
+        backgroundColor: buttonColor,
+        padding: 15,
+        borderRadius: 7,
+        marginTop: 50,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      }}
+    >
+      <Text style={{ fontSize: 20, textAlign: 'center', color: 'black', fontWeight: '900' }}>
+        Login
+      </Text>
+    </Pressable>
 
 
 

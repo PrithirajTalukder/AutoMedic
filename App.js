@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Provider } from 'react-redux'; // Import the Provider component
 import { mystore } from './redux/MyStore'; // Import your Redux store
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
 import Home from './Screen/Home';
 import Welcome from './Screen/Welcome';
@@ -13,6 +14,9 @@ import Periodic from './Options/Periodic';
 import AC from './Options/AC';
 import Wheel from './Options/Wheel';
 import Denting from './Options/Denting';
+import Batteriesservice from './Options/Batteriesservice';
+import Carspa from './Options/Carspa';
+import Detailing from './Options/Detailing';
 import MainContainer from './Navigation/MainContainer';
 import Workshoplocation from './Screen/Workshoplocation';
 import Mechaniclocation from './Screen/Mechaniclocation';
@@ -27,12 +31,14 @@ import DeliveryScreen from './Screen/DeliveryScreen';
 import Market from './Screen/Market';
 import Payment from './Screen/Payment';
 import Chat from './Screen/Chat';
+
 import { StripeProvider } from '@stripe/stripe-react-native';
+
 
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+const App = () => {
   return (
     
     <Provider store={mystore}> 
@@ -43,7 +49,15 @@ export default function App() {
 
       <NavigationContainer>
 
+<<<<<<< HEAD
         <Stack.Navigator initialRouteName="Main">
+=======
+
+        <Stack.Navigator initialRouteName="SignIn">
+
+       
+
+>>>>>>> 01ce701578579c3f45799c658fde2ff2860624d6
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -55,6 +69,9 @@ export default function App() {
           <Stack.Screen name="AC" options={{ headerShown: false }} component={AC} />
           <Stack.Screen name="Wheel" options={{ headerShown: false }} component={Wheel} />
           <Stack.Screen name="Denting" options={{ headerShown: false }} component={Denting} />
+          <Stack.Screen name="Batteriesservice" options={{ headerShown: false }} component={Batteriesservice} />
+          <Stack.Screen name="Carspa" options={{ headerShown: false }} component={Carspa} />
+          <Stack.Screen name="Detailing" options={{ headerShown: false }} component={Detailing} />
           <Stack.Screen name="Profile" options={{ headerShown: false }} component={Profile} />
           <Stack.Screen name="Workshoplocation" options={{ headerShown: false }} component={Workshoplocation} />
           <Stack.Screen name="Mechaniclocation" options={{ headerShown: false }} component={Mechaniclocation} />
@@ -76,3 +93,5 @@ export default function App() {
    
   );
 }
+
+export default gestureHandlerRootHOC(App);

@@ -113,15 +113,18 @@ const Home = () => {
             categoryScreen = "Wheel"; // Replace with the actual screen name for scheduled services
             break;
           case "S4":
-            categoryScreen = "Batteries"; // Replace with the actual screen name for scheduled services
+            categoryScreen = "Batteriesservice"; // Replace with the actual screen name for scheduled services
             break;
           case "S5":
             categoryScreen = "Denting"; // Replace with the actual screen name for scheduled services
             break;
           case "S6":
+            categoryScreen = "Carspa"; // Replace with the actual screen name for scheduled services
+            break;
           case "S7":
+            categoryScreen = "Detailing"; // Replace with the actual screen name for scheduled services
           case "S8":
-            categoryScreen = "ValueAdded"; // Replace with the actual screen name for value-added services
+          
             break;
           case "S9":
           case "S10":
@@ -154,7 +157,7 @@ const Home = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginBottom:72 }}>
     
-      <View style={{ paddingTop: 60, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ paddingTop: 30, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
           {/* Image component for the icon */}
           <Image
           style={{ width: 31, height: 35, marginRight: 10 }}
@@ -164,7 +167,7 @@ const Home = () => {
           {/* Text displaying the location name */}
           <Text style={{ color: 'black', fontSize: 20 }}>{locationName}</Text>
         </View>
-      <View style={{ paddingTop: 60, paddingLeft: 25, }}>
+      <View style={{ paddingTop: 20, paddingLeft: 25, }}>
           <Text style={{ color: "black", fontSize: 20 }}>What are you looking for?</Text>
         </View>
         <View style={{

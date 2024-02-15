@@ -152,7 +152,7 @@ const Denting = () => {
   return (
     <View style={{ flex: 1 }}>
       {/* Header */}
-      <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: '#fff', elevation: 1 }}>
+      <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: 'white', elevation: 1 }}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
           <AntDesign name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
@@ -163,17 +163,20 @@ const Denting = () => {
       <View style={{
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 30
+        paddingBottom: 13,
+        backgroundColor:'white',
       }}>
         <View style={{
           padding: 10,
           marginLeft: 18,
-          marginTop: 20,
+          marginTop: 10,
           flexDirection: "row",
           width: 330,
           backgroundColor: "#bad6e3",
           borderRadius: 20,
-          alignItems: "center"
+          alignItems: "center",
+          borderWidth:1,
+          borderColor:'gray'
         }}>
           {search.length === 0 && (
             <TouchableOpacity>
@@ -196,22 +199,28 @@ const Denting = () => {
           )}
         </View>
 
-        <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginTop: 10 }}>
+        <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginTop: 5 }}>
           <FontAwesome name="sort-down" size={28} color="black" />
         </TouchableOpacity>
       </View>
 
-      <View style={{ marginLeft: 25, marginBottom: 10 }}>
-        <Text style={{ color: "black", fontSize: 24, fontWeight: 800, }}>
+      <View style={{ borderBottomWidth:1, borderColor:'white',backgroundColor:'white' }}>
+        <Text style={{marginLeft: 25,marginBottom: 2, color: "black", fontSize: 24, fontWeight: 800, }}>
           Services
         </Text>
       </View>
 
+
+
+
+      
+
       {/* Product List */}
       <FlatList
         data={filteredItems}
+        
         renderItem={({ item, index }) => (
-          <View style={{ width: '100%', alignSelf: 'center', height: 190, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 30, justifyContent: 'space-between' }}>
+          <View style={{ width: '95%', alignSelf: 'center', height: 190, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, justifyContent: 'space-between' }}>
             <View>
               <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginTop: -20 }}>{item.name}</Text>
               <Text style={{ color: "#088704", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{'৳' + item.price}</Text>
@@ -221,7 +230,7 @@ const Denting = () => {
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.services}</Text>
             </View>
             <View>
-              <Image source={item.image} style={{ width: 80, height: 80, marginLeft: 70, borderRadius: 5 }} />
+              <Image source={item.image} style={{ width: 80, height: 80, marginLeft: 10,marginRight:30, borderRadius: 5, borderWidth:1, borderColor:'white' }} />
               {!myCart.find(cartItem => cartItem.id === item.id) || myCart.find(cartItem => cartItem.id === item.id).qty === 0 ? (
                 <TouchableOpacity
                   onPress={() => handleAddToCartPress(index)}
@@ -234,7 +243,7 @@ const Denting = () => {
                     paddingLeft: 5,
                     paddingRight: 5,
                     marginRight: 20,
-                    marginLeft: -15,
+                    marginLeft: 0,
                     marginTop: 10
                   }}
                 >
@@ -247,16 +256,18 @@ const Denting = () => {
                     style={{
                       backgroundColor: '#bad6e3',
                       borderWidth: 1,
-                      borderColor: 'green',
+                      borderColor: '#15174f',
                       borderRadius: 7,
                       height: 27,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      paddingLeft: 20,
+                      paddingLeft: 10,
                       paddingRight: 10,
-                      marginLeft: -5,
+                      marginRight: 5,
+                      marginLeft:-10,
+                      marginTop:10,
                     }}>
-                    <Text style={{ color: 'green', fontWeight: 600 }}>Product added to cart</Text>
+                    <Text style={{ color: '#15174f', fontWeight: 600 }}>Already Added!</Text>
                   </TouchableOpacity>
                   
                    
@@ -269,22 +280,24 @@ const Denting = () => {
 
       {/* Message for no search results */}
       {filteredItems.length === 0 && (
-        <View style={{ alignItems: 'center', marginTop: 20 }}>
-          <Text style={{ color: 'black', fontSize: 16 }}>This Product is not available right now.</Text>
+        <View style={{ alignItems: 'center', marginTop: -200,justifyContent:'center' }}>
+          <Text style={{ color: 'red', fontSize: 16 }}>This Product is not available right now.</Text>
         </View>
       )}
 
       {/* Cart Summary */}
+      <View style={{borderTopWidth:1, borderColor:'white' }}>
       <TouchableOpacity
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          backgroundColor: 'lightblue',
+          backgroundColor: '#bad6e3',
           borderRadius: 7,
           borderWidth: 2,
           height: 60,
-          margin: 20,
+          margin: 10,
+          
         }}
         onPress={() => {
           navigation.navigate("MyCart");
@@ -299,6 +312,8 @@ const Denting = () => {
         </View>
       </TouchableOpacity>
 
+      </View>
+      
       {/* Filter Modal */}
       <Modal
         animationType="slide"
@@ -382,7 +397,7 @@ const styles = StyleSheet.create({
   },
   alertContainer: {
     position: 'absolute',
-    top: '70%',
+    top: '20%',
     left: 0,
     right: 0,
     bottom: 0,
@@ -391,13 +406,13 @@ const styles = StyleSheet.create({
    
   },
   alertBox: {
-    backgroundColor:'lightblue', 
-    padding: 20,
+    backgroundColor:'black', 
+    padding: 14,
     borderRadius: 10,
     elevation: 5, // Shadow
   },
   alertText: {
-    color: 'black',
+    color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
   },
