@@ -54,7 +54,7 @@ const Account = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <View style={{ paddingTop: 100, paddingLeft: 20, flexDirection: 'row' }}>
+      <View style={{ paddingTop: 80, paddingLeft: 20, flexDirection: 'row' }}>
         <Avatar.Image source={require('../images/user.png')} size={80} />
         <View style={{ flexDirection: 'column' }}>
           <Title style={{ color: 'black', left: 12,  fontWeight: '700' }}>{name}</Title>
@@ -71,15 +71,14 @@ const Account = () => {
         </View>
       </View>
 
+      <View style={{ marginTop:15,marginLeft:9, borderTopWidth: 1, borderColor:'#15174f',width:'95%' }}>
+        </View>
+
       <View style={{
         flexDirection: "row",
         paddingTop: 20,
-        borderTopWidth: 2,
-        marginTop: 38,
-        borderBottomWidth: 2,
+        marginTop: 10,
         paddingBottom: 20,
-        borderTopColor: "lightblue",
-        borderBottomColor: "lightblue",
       }}>
         <Pressable onPress={() => navigation.navigate("Periodic")}
           style={{
@@ -113,7 +112,10 @@ const Account = () => {
         </Pressable>
       </View>
 
-      <View style={{ borderBottomWidth: 2, borderBottomColor: "lightblue", paddingBottom: 40 }}>
+      <View style={{ marginTop:15,marginLeft:9, borderTopWidth: 1, borderColor:'#15174f',width:'95%' }}>
+        </View>
+
+      <View style={{  paddingBottom: 40 }}>
         <Pressable onPress={() => navigation.navigate("Profile")}>
           <View style={{ flexDirection: "row", paddingTop: 50, paddingLeft: 20 }}>
             <AntDesign name="profile" size={36} color="black" />
@@ -137,6 +139,9 @@ const Account = () => {
         </Pressable>
       </View>
 
+      <View style={{ marginTop:15,marginLeft:9, borderTopWidth: 1, borderColor:'#15174f',width:'95%' }}>
+        </View>
+
       <View>
       <Pressable
   onPress={() => {
@@ -149,16 +154,16 @@ const Account = () => {
     setButtonColor('lightblue');
   }}
   style={{
-    width: 250,
+    width: 180,
     backgroundColor: buttonColor, // Use the dynamic buttonColor
     padding: 12,
     borderRadius: 7,
-    marginTop: 5,
+    marginTop: 15,
     marginLeft: "auto",
     marginRight: "auto",
-    elevation: 4,
+    elevation: 3,
   }}>
-  <Text style={{ fontSize: 20, textAlign: "center", color: "black", fontWeight: "600" }}>
+  <Text style={{ fontSize: 20, textAlign: "center", color: "black", fontWeight: "700" }}>
     Logout
   </Text>
 </Pressable>

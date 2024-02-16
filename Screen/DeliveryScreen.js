@@ -68,7 +68,7 @@ export default function DeliveryScreen() {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-          style={{ flex: 1 }}
+          style={{ height:600 }}
           mapType="standard"
         >
           {/* Marker for Your Location */}
@@ -82,7 +82,7 @@ export default function DeliveryScreen() {
           <Marker
             coordinate={sylhetCoordinates}
             title="Auto Medic"
-            description="ALL in one Solution"
+            description="All in one solution"
             pinColor={'lightblue'}
             
           />
@@ -90,19 +90,19 @@ export default function DeliveryScreen() {
       )}
 
       {/* View for delivery details */}
-      <View style={{ flex: 0.5, backgroundColor: 'white' }}>
-        <View style={{ backgroundColor: 'white', paddingTop: 10, paddingHorizontal: 15 }}>
+      <View style={{ marginTop:-30,flex: 1, backgroundColor: 'white',borderTopLeftRadius:20, borderTopRightRadius:20,elevation:10 }}>
+        <View style={{ backgroundColor: 'white', paddingTop: 10, paddingHorizontal: 15,borderTopLeftRadius:20, borderTopRightRadius:20, }}>
           {/* Button to navigate back to Market screen */}
           <TouchableOpacity
             style={{ position: 'absolute', right: 15, top: 10 }}
             onPress={() => navigation.navigate('Market')}
           >
-            <Icon.X stroke={'red'} strokeWidth="5" />
+            <Icon.X stroke={'red'} strokeWidth="2" />
           </TouchableOpacity>
           {/* Text displaying estimated arrival time */}
-          <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'gray' }}>Estimated Arrival</Text>
-          <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'gray' }}>{estimatedArrival}</Text>
-          <Text style={{ marginTop: 5, color: 'gray', fontWeight: 'bold' }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>Estimated Arrival</Text>
+          <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#181f63' }}>{estimatedArrival}</Text>
+          <Text style={{ marginTop: 5, color: 'black', fontWeight: 'bold' }}>
             Your Order is on its way
           </Text>
         </View>
@@ -110,35 +110,36 @@ export default function DeliveryScreen() {
         {/* View for rider information */}
         <View
           style={{
-            backgroundColor: 'lightblue', // Change background color to light blue
-            padding: 10,
+            backgroundColor: '#bad6e3', // Change background color to light blue
+            padding: 20,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginVertical: 5,
-            marginHorizontal: 2,
-            borderRadius: 20,
+            marginTop: 35,
+            marginHorizontal: 10,
+            borderRadius: 10,
+            elevation:2
           }}
         >
           {/* Rider's profile picture */}
           <View style={{ backgroundColor: 'rgba(255,255,255,0.4)', padding: 5, borderRadius: 50 }}>
-            <Image style={{ width: 80, height: 80, borderRadius: 40 }} source={require('../images/messi.jpg')} />
+            <Image style={{ width: 50, height: 50, borderRadius: 40 }} source={require('../images/rider.jpg')} />
           </View>
           {/* Rider's information */}
           <View style={{ flex: 1, marginLeft: 10 }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>Leo Messi</Text>
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>Your Rider</Text>
+            <Text style={{width:100,height:30, fontSize: 18, fontWeight: 'bold', color: 'black' }}>Anonymous</Text>
+            <Text style={{ color: 'gray', fontWeight: 'bold' }}>Your Rider</Text>
           </View>
           {/* Actions for calling and navigating back to Market */}
           <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
-            <TouchableOpacity style={{ backgroundColor: 'white', padding: 10, borderRadius: 20 }}>
+            <TouchableOpacity style={{ backgroundColor: 'white', padding: 7, borderRadius: 20 }}>
               <Icon.Phone fill="#008000" stroke="#008000" strokeWidth="1" />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Home')}
-              style={{ backgroundColor: 'white', padding: 10, borderRadius: 20, marginLeft: 10 }}
+              onPress={() => navigation.navigate('Main')}
+              style={{ backgroundColor: 'white', padding: 7, borderRadius: 20, marginLeft: 10 }}
             >
-              <Icon.X stroke={'red'} strokeWidth="5" />
+              <Icon.X stroke={'red'} strokeWidth="3" />
             </TouchableOpacity>
           </View>
         </View>
