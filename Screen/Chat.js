@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { TouchableOpacity, Text, View, TextInput, FlatList, Image, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, View, TextInput, FlatList, Image, StyleSheet, ImageBackground } from 'react-native';
 import { collection, addDoc, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { auth, database } from '../config/firebase';
@@ -122,14 +122,15 @@ const Chat = ({ route }) => {
 
   const messageBoxStyle = StyleSheet.create({
     messageBox: {
-      backgroundColor: 'lightblue',
+      backgroundColor:'#15174f',
       padding: 10,
-      borderRadius: 10,
+      borderRadius: 7,
       marginVertical: 5,
+      marginHorizontal:15,
       maxWidth: '80%',
     },
     text: {
-      color: 'black',
+      color: 'white',
       fontSize: 16,
     },
       
@@ -137,19 +138,23 @@ const Chat = ({ route }) => {
 
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'black' }}>
+    // <View style={{ flex: 1, bac }}>
+      <ImageBackground
+      source={require('../images/chatBackground/chat.jpg')} // Change path to your image
+      style={styles.container}
+    >
       {/* Header with Call and Video Call Icons */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 30 }}>
+      <View style={{paddingTop:50, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20,paddingBottom:20, backgroundColor:'#bad6e3',zIndex:99 }}>
         <TouchableOpacity onPress={() => navigation.navigate("Mechaniclocation")}>
-          <AntDesign name="arrowleft" size={26} color="white" />
+          <AntDesign name="arrowleft" size={26} color="black" />
         </TouchableOpacity>
-        <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>{mechanicName}</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black',marginLeft:-70, }}>{mechanicName}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
           <TouchableOpacity onPress={onCall} style={{ marginRight: 40 }}>
-            <Feather name="phone" size={24} color="lightblue" />
+            <Feather name="phone" size={24} color="black" />
           </TouchableOpacity>
           <TouchableOpacity onPress={onVideoCall}>
-            <Feather name="video" size={24} color="lightblue" />
+            <Feather name="video" size={24} color="black" />
           </TouchableOpacity>
         </View>
       </View>
@@ -167,9 +172,9 @@ const Chat = ({ route }) => {
       />
 
       {/* Message Input and Icons */}
-      <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+      <View style={{zIndex:99, flexDirection: 'row',borderTopStartRadius:20, borderTopEndRadius:20, alignItems: 'center', padding: 10,paddingVertical:20, backgroundColor:'#bad6e3' }}>
         <TouchableOpacity onPress={onAddImage} style={{ marginRight: 10 }}>
-          <MaterialIcons name="add-a-photo" size={24} color="lightblue" />
+          <MaterialIcons name="add-a-photo" size={25} color="black" />
         </TouchableOpacity>
         <TextInput
           style={{
@@ -177,6 +182,7 @@ const Chat = ({ route }) => {
             backgroundColor: '#fff',
             borderRadius: 20,
             paddingHorizontal: 20,
+            paddingVertical:7,
             marginRight: 10,
             color: 'black',
           }}
@@ -186,11 +192,19 @@ const Chat = ({ route }) => {
           placeholderTextColor="grey"
         />
         <TouchableOpacity onPress={onSend}>
-          <Text style={{ color: 'lightblue', fontSize: 16 }}>Send</Text>
+          <Text style={{ color: 'black', fontSize: 16, fontWeight:700 }}>Send</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    {/* </View> */}
+    </ImageBackground>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    
+    
+  },
+});
 
 export default Chat;

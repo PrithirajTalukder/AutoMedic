@@ -111,9 +111,9 @@ const Mechaniclocation = () => {
             pinColor={mechanic.id === 4 ? 'lightblue' : 'green'} // Customize the workshop marker color
           >
             <Callout onPress={() => handleMarkerPress(mechanic.mechanic)}>
-              <View>
-                <Text>{mechanic.mechanic}</Text>
-                <Text>Tap to chat or call</Text>
+              <View style={{justifyContent:'center', alignItems:'center'}}>
+                <Text style={{fontWeight:800, color:'blue'}}>{mechanic.mechanic}</Text>
+                <Text style={{color:'blue'}}>Tap to chat or call</Text>
               </View>
             </Callout>
           </Marker>

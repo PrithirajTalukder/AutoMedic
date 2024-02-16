@@ -11,33 +11,38 @@ const HomeSearch = () => {
   
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'lightblue' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#dfe8f7' }}>
       {/* Search Mechanic */}
+      <View style={{ flexDirection:'row', justifyContent:'space-between', gap:25}}>
       <TouchableOpacity onPress={() => navigation.navigate("Mechaniclocation")} >
         <View style={{
           flexDirection: 'column',
           alignItems: 'center',
-          padding: 30,
+          padding: 5,
           width: 150,
           height: 200,
           borderWidth: 1,
           borderColor: '#b3b3b3',
           borderRadius: 10,
-          marginBottom: 10,
-          backgroundColor: 'black',
+          marginBottom: 0,
+          backgroundColor: '#15174f',
         }}>
           <View style={{
-            backgroundColor: '#ffffff',
+            backgroundColor: 'black',
             padding: 10,
+            top:40,
             borderRadius: 25,
+            borderWidth:1,
+            borderColor:'white'
           }}>
-            <MaterialIcons name={'engineering'} size={16} color={'red'} />
+            <MaterialIcons name={'engineering'} size={16} color={'white'} />
           </View>
           <Text style={{
-            marginLeft: 10,
+            marginLeft: 0,
             fontWeight: '500',
-            fontSize: 16,
-            color: '#ffffff',
+            fontSize: 19,
+            color: 'white',
+            top:50
           }}>
             Search Mechanic
           </Text>
@@ -49,33 +54,37 @@ const HomeSearch = () => {
         <View style={{
           flexDirection: 'column',
           alignItems: 'center',
-          padding: 30,
+          padding: 5,
           width: 150,
           height: 200,
           borderWidth: 1,
           borderColor: '#b3b3b3',
-          marginTop: 100,
           borderRadius: 10,
-          backgroundColor: 'black',
+          marginBottom: 0,
+          backgroundColor: '#15174f',
         }}>
           <View style={{
-            backgroundColor: '#ffffff',
+            backgroundColor: 'black',
             padding: 10,
+            top:40,
             borderRadius: 25,
+            borderWidth:1,
+            borderColor:'white'
           }}>
-            <FontAwesome name={'gear'} size={16} color={'#218cff'} />
+            <FontAwesome name={'gear'} size={16} color={'white'} />
           </View>
           <Text style={{
-            marginLeft: 10,
+            marginLeft: 0,
             fontWeight: '500',
-            fontSize: 16,
-            color: '#ffffff',
-            alignItems: 'center'
+            fontSize: 19,
+            color: 'white',
+            top:50
           }}>
             Nearest Workshop
           </Text>
         </View>
       </TouchableOpacity>
+      </View>
     </View>
   );
 }

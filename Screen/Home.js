@@ -160,8 +160,8 @@ const Home = () => {
       <View style={{ paddingTop: 30, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
           {/* Image component for the icon */}
           <Image
-            source={require('../images/mappin.png')}
-            style={{ width: 40, height: 46, marginRight: 10 }}
+          style={{ width: 31, height: 35, marginRight: 10 }}
+          source={require('../images/mappin.png')}
           />
 
           {/* Text displaying the location name */}
