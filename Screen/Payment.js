@@ -225,26 +225,33 @@ const Payment = () => {
   }
 };
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={{
-        width: '100%',
-        height: 100,
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingLeft: 20,
-        paddingTop: 30,
-        backgroundColor: '#fff',
-        elevation: 1
-      }}>
-        <TouchableOpacity onPress={() => navigation.navigate("MyCart")}>
-          <AntDesign name="arrowleft" size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
-      </View>
+    
+    
+    
+      
 
+<ScrollView style={{flex:1}}>
+<View style={{
+      width: '100%',
+      height: 100,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingLeft: 20,
+      paddingTop: 30,
+      backgroundColor: '#fff',
+      elevation: 1,
+      
+    }}>
+      <TouchableOpacity onPress={() => navigation.navigate("MyCart")}>
+        <AntDesign name="arrowleft" size={24} color="black" />
+      </TouchableOpacity>
+      <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
+      
+    </View>
 
+    
       {/* Cart Items */}
-      <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
+      <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
           <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 5 }}>Checkout Summary</Text>
       <View>
         {myCart.length > 0 ? (
@@ -253,26 +260,27 @@ const Payment = () => {
               <View
                 key={item.id}
                 style={{
-                  width: '94%',
+                  width: '98%',
                   alignSelf: 'center',
-                  height: 120,
+                  height: 60,
                   backgroundColor: '#fff',
                   marginTop: 10,
                   borderRadius: 10,
                   borderWidth: 1,
-                  borderColor: 'lightblue',
-                  elevation: 1,
+                  borderColor: '#bad6e3',
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  paddingHorizontal: 20,
+                  paddingLeft: 10,
+                  paddingRight:10,
+                  elevation: 2,
                 }}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={{ color: "black", fontWeight: 700, fontSize: 17 }}>{`${item.qty} x ${item.name}`}</Text>
+                  <Text style={{ color: "black", fontWeight: 700, fontSize: 15 }}>{`${item.qty} x ${item.name}`}</Text>
                 </View>
                 <View>
-                  <Text style={{ color: "black", fontWeight: 'bold', fontSize: 17 }}>{`৳${item.qty * item.price}`}</Text>
+                  <Text style={{ color: "green", fontWeight: 'bold', fontSize: 17 }}>{`৳${item.qty * item.price}`}</Text>
 
                 </View>
               </View>
@@ -287,16 +295,19 @@ const Payment = () => {
       </View>
 
       {/* Checkout Summary */}
-      <View style={{ paddingTop: 20, marginTop: 60, borderTopWidth: 1 }}>
-        <View style={{ marginBottom: 40 }}>
-          <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 10 }}>Item Total: {`${totalProducts} Item${totalProducts !== 1 ? 's' : ''}`}</Text>
+      <View style={{ paddingTop: 20,marginBottom:10, marginTop: 20,marginLeft:9, borderTopWidth: 1, borderColor:'#15174f',width:'95%' }}>
+        <View style={{ marginBottom: 2, marginLeft:10 }}>
+          <Text style={{ fontSize: 16, fontWeight: '600', marginTop: 8 }}>Item Total: {`${totalProducts} Item${totalProducts !== 1 ? 's' : ''}`}</Text>
           <Text style={{ fontSize: 18, fontWeight: '700', marginTop: 10 }}>You Pay: ৳{totalPrice}</Text>
         </View>
       </View>
 
+      <View style={{ marginTop:15,marginLeft:9, borderTopWidth: 1, borderColor:'#15174f',width:'95%' }}>
+        </View>
+
 
       {/* Apply Coupon Box */}
-      <View style={{ marginBottom: 10, paddingHorizontal: 20, paddingTop: 60 }}>
+      <View style={{ marginBottom: 10, paddingHorizontal: 20, paddingTop: 30 }}>
         <TextInput
           placeholder="Enter Coupon Code"
           value={couponCode}
@@ -324,16 +335,19 @@ const Payment = () => {
         </Button>
       </View>
 
+      <View style={{ marginTop:15,marginLeft:9, borderTopWidth: 1, borderColor:'#15174f',width:'95%' }}>
+        </View>
+
       {/* Payment Options Container */}
-      <View style={{ marginTop: 20, width: '100%', padding: 20, backgroundColor: '#fff', borderRadius: 15, elevation: 3, marginBottom: 40 }}>
+      <View style={{ marginTop: 20,marginLeft:7, width: '96%', padding: 20, backgroundColor: '#fff', borderRadius: 15, elevation: 3, marginBottom: 30 }}>
         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20 }}>Payment Options</Text>
-        <View style={{ marginTop: 30 }}>
+        <View style={{ marginTop: 20 }}>
           <TouchableOpacity
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: 20,
+              marginBottom: 10,
             }}
             onPress={() => setSelectedPaymentOption('card')}
           >
@@ -363,7 +377,7 @@ const Payment = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image source={require('../images/cod.png')} style={{ width: 40, height: 40 }} />
               <View style={{ marginLeft: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Cash on Delivery</Text>
+                <Text style={{ fontSize: 16,  }}>Cash on Delivery</Text>
               </View>
             </View>
             <View style={{ width: 20, height: 20, borderRadius: 10, borderWidth: 1, borderColor: '#181f63' }}>
@@ -373,15 +387,17 @@ const Payment = () => {
             </View>
           </TouchableOpacity>
         </View>
+        
       </View>
 
+      
 
 
       {/* Half Map Section */}
-      <View style={{ height: 200 }}>
+      <View style={{ height: 200, width:'95%', marginLeft:10, elevation:5, borderRadius:10, overflow:'hidden' }}>
         {location && (
           <MapView
-            style={{ flex: 1 }}
+            style={{ flex: 1, }}
             initialRegion={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
@@ -404,49 +420,54 @@ const Payment = () => {
 
 
 
-      <View style={{ paddingTop: 30, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ paddingTop: 20, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
         {/* Image component for the icon */}
         <Image
           source={require('../images/mappin.png')}
-          style={{ width: 40, height: 46, marginRight: 10 }}
+          style={{ width: 28, height: 31, marginRight: 10 }}
         />
 
         {/* Text displaying the location name */}
-        <Text style={{ color: 'black', fontSize: 20 }}>{locationName}</Text>
+        <Text style={{ color: 'black', fontSize: 17 }}>{locationName}</Text>
       </View>
 
-
+      <View style={{ marginTop:15,marginLeft:9, borderTopWidth: 1, borderColor:'#15174f',width:'95%' }}>
+        </View>
 
       <View
         style={{
-          width: '94%',
-          alignSelf: 'center',
-          marginTop: 30,
+          width: '96%',
+          marginLeft: 7,
+          height: 150,
+          backgroundColor: '#fff',
+          marginTop: 20,
           borderRadius: 10,
           borderWidth: 1,
-          borderColor: 'lightblue',
-          elevation: 1,
-          paddingHorizontal: 20,
+          borderColor: '#15174f',
+          flexDirection: 'column',
+          paddingLeft: 20,
+          paddingRight:10,
+          elevation: 2,
         }}
       >
-        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10, marginBottom: 5 }}>Personal Details</Text>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10, marginBottom: 5, color:'#15174f' }}>Personal Details</Text>
 
         <View style={{ paddingTop: 10, flexDirection: 'row' }}>
           <View style={{ flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
               <AntDesign name="user" size={19} color="black" />
-              <Text style={{ color: 'black', marginLeft: 6, fontSize: 16 }}>{name}</Text>
+              <Text style={{ color: 'black', marginLeft: 10, fontSize: 16 }}>{name}</Text>
             </View>
 
 
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
               <AntDesign name="mail" size={19} color="black" />
-              <Text style={{ color: 'black', marginLeft: 6, fontSize: 16 }}>{email}</Text>
+              <Text style={{ color: 'black', marginLeft: 10, fontSize: 16 }}>{email}</Text>
             </View>
 
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
               <MaterialIcons name="phone" size={19} color="black" />
-              <Text style={{ color: 'black', marginLeft: 6, fontSize: 16 }}>{phone}</Text>
+              <Text style={{ color: 'black', marginLeft: 10, fontSize: 16 }}>{phone}</Text>
             </View>
           </View>
         </View>
@@ -455,7 +476,7 @@ const Payment = () => {
 
       {/* Conditionally render input boxes based on address saved status and editing mode */}
       {!isAddressSaved || isEditing ? (
-        <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
+        <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
           {/* Automatically filled address input with location name */}
           <TextInput
             placeholder="Enter Your Address"
@@ -492,9 +513,11 @@ const Payment = () => {
             mode="contained"
             style={{
               backgroundColor: '#181f63',
-              paddingVertical: 10,
+              paddingVertical: 4,
               borderRadius: 10,
               marginBottom: 10,
+              width:230,
+              marginLeft:60
             }}
             onPress={handleSaveAddress}
           >
@@ -514,7 +537,8 @@ const Payment = () => {
 
 
 
-      
+<View style={{ marginTop:15,marginLeft:9, borderTopWidth: 1, borderColor:'#15174f',width:'95%' }}>
+        </View>
 
       
       
@@ -526,10 +550,11 @@ const Payment = () => {
         mode="contained"
         style={{
           backgroundColor: '#181f63',
-          marginTop: -30,
+          marginTop: 20,
           marginHorizontal: 10,
           borderRadius: 10,
           paddingVertical: 10,
+          marginVertical:20,
         }}
         onPress={onCheckout}
       >
