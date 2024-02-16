@@ -84,10 +84,25 @@ export default {
       title: 'Reviews',
     },
     {
-      name: 'stock',  // Added the 'stock' field
+      name: 'stock',
       title: 'Stock',
       type: 'number',
       validation: (rule) => rule.required().min(0).integer(),
-    },
+      // Add the following permission
+      
+      read: { everyone: true },
+      write: {
+         // Only allow authenticated users with the "update" permission
+         rules: [
+            { user: "currentUser" }, // Assuming `currentUser` holds the logged-in user
+            { permissions: ["update"] },
+         ],
+      },
+   },
+
+    
   ],
+
+  
 };
+

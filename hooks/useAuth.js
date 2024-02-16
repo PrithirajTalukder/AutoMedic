@@ -20,7 +20,8 @@ export default function useAuth(navigation) {
 
   useEffect(() => {
     if (user) {
-      navigation.navigate('SignIn'); 
+      // Navigate to a different route or perform a different action based on your app logic
+      navigation.navigate('Home');
     }
   }, [user, navigation]);
 
