@@ -11,6 +11,8 @@ import * as Location from 'expo-location';
 import { auth } from '../config/firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { getDatabase, ref, push } from 'firebase/database';
+import { updateStock } from '../sanity';
+
 
 
 
@@ -104,21 +106,25 @@ const Payment = () => {
 
   const onCheckout = async () => {
     try {
+      if (!currentUser) {
+        return Alert.alert('Please log in before placing an order.');
+      }
+  
       if (myCart.length === 0) {
         return Alert.alert('Your cart is empty. Add items before proceeding to payment.');
       }
-
+  
       if (!selectedPaymentOption) {
         return Alert.alert('Select a payment option before placing the order.');
       }
-
+  
       if ((!isAddressSaved || isEditing) && (selectedPaymentOption === 'card' || selectedPaymentOption === 'cash')) {
         return Alert.alert('Save your address before proceeding to order.');
       }
-
+  
       const ordersDatabase = getDatabase();
       let ordersRef;
-
+  
       if (selectedPaymentOption === 'card') {
         // For card payment, store orders in the "Stripe Orders" field
         ordersRef = ref(ordersDatabase, 'Stripe Orders');
@@ -129,7 +135,7 @@ const Payment = () => {
         // Handle other payment options if needed
         return;
       }
-
+  
       const orderData = {
         userId: currentUser.uid,
         name: name,
@@ -145,85 +151,98 @@ const Payment = () => {
         totalAmount: totalPrice,
         timestamp: new Date().toISOString(),
       };
-
-   
-
+  
       const lineItems = myCart.map(item => ({
         name: item.name,
         quantity: item.qty,
         price_data: {
           currency: 'usd', // Replace with your currency code
           unit_amount: Math.round(item.price * 100), // Amount in cents
-          product_data: { // Optional product metadata for reference
+          product_data: {
             name: item.name,
             description: item.description,
           },
         },
       }));
-
+  
       if (selectedPaymentOption === 'card') {
         const totalAmount = myCart.reduce((acc, item) => acc + item.qty * item.price, 0);
-
+  
         if (totalAmount <= 0) {
           Alert.alert('Invalid total amount. Add items with valid prices to proceed.');
           return;
         }
-
+  
         const response = await fetch("http://192.168.0.5:8085/pay", {
           method: "POST",
           body: JSON.stringify({
             name: name,
             amount: totalPrice,
-            address: address, // Include address
-            phone: phone, // Include phone
-            email: email, // Include email
+            address: address,
+            phone: phone,
+            email: email,
             lineItems: lineItems,
           }),
           headers: {
             "Content-Type": "application/json",
           },
         });
-
+  
         const data = await response.json();
         if (!response.ok) return Alert.alert(data.message);
-
+  
         const clientSecret = data.clientSecret;
         const initSheet = await Stripe.initPaymentSheet({
           paymentIntentClientSecret: clientSecret,
           merchantDisplayName: "YourMerchantName",
         });
-
+  
         if (initSheet.error) return Alert.alert(initSheet.error.message);
-
+  
         const presentSheet = await Stripe.presentPaymentSheet({
           clientSecret,
         });
-
+  
         if (presentSheet.error) return Alert.alert(presentSheet.error.message);
-
+  
         Alert.alert(
           "Payment completed",
           "Thank you for being with Auto Medic!",
           [{
             text: "OK",
-          onPress: async () => {
-            const newOrderRef = push(ordersRef, orderData);
-            const orderId = newOrderRef.key;
-            navigation.navigate('Preparingorder');
-          },
-        }]
-      );
-    } else if (selectedPaymentOption === 'cash') {
-      // For cash payment, directly navigate to the next screen
-      const newOrderRef = push(ordersRef, orderData);
-      const orderId = newOrderRef.key;
-      navigation.navigate('Preparingorder');
+            onPress: async () => {
+              const newOrderRef = push(ordersRef, orderData);
+              const orderId = newOrderRef.key;
+              navigation.navigate('Preparingorder');
+            },
+          }]
+        );
+      } else if (selectedPaymentOption === 'cash') {
+        // For cash payment, directly navigate to the next screen
+        const newOrderRef = push(ordersRef, orderData);
+        const orderId = newOrderRef.key;
+  
+        // Update stock for each ordered product
+        myCart.forEach(async (item) => {
+          console.log(`Updating stock for product ID: ${item.id}, Quantity: ${item.qty}`);
+          await updateStock(item.id, item.qty);
+          console.log(`Stock updated for product ID: ${item.id}`);
+        });
+    
+  
+        navigation.navigate('Preparingorder');
+      }
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Something went wrong, try again later!");
     }
-  } catch (err) {
-    console.error(err);
-    Alert.alert("Something went wrong, try again later!");
-  }
-};
+  };
+  
+
+
+
+
+
   return (
     
     

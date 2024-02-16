@@ -212,6 +212,7 @@ const Batteries = () => {
         renderItem={({ item, index }) => (
           <View style={{ width: '95%', alignSelf: 'center', height: 209, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, justifyContent: 'space-between' }}>
             <View>
+              
               <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginTop: -20 }}>{item.name}</Text>
               <Text style={{ color: "#088704", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{'৳' + item.price}</Text>
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 10 }}>{item.frequency}</Text>
