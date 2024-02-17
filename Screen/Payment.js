@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Alert, Image, ScrollView, } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert, Image, ScrollView, ActivityIndicator } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useSelector} from 'react-redux';
@@ -12,6 +12,8 @@ import { auth } from '../config/firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { getDatabase, ref, push } from 'firebase/database';
 import { updateStock } from '../sanity';
+import { useDispatch } from 'react-redux';
+import { removeProductFromCart, updateProductQuantity } from '../redux/MyCartSlice';
 
 
 
@@ -29,6 +31,8 @@ const Payment = () => {
   const currentUser = auth.currentUser;
   const db = getFirestore();
   const [userData, setUserData] = useState(null);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   const Stripe = useStripe();
   const [selectedPaymentOption, setSelectedPaymentOption] = useState(null);
@@ -74,8 +78,27 @@ const Payment = () => {
 
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
+        if (!currentUser) {
+          Alert.alert(
+            "Not Signed In",
+            "You are not signed in. Please sign in before proceeding.",
+            [
+              {
+                text: "Cancel",
+                onPress: () => navigation.goBack(),
+                style: "cancel",
+              },
+              {
+                text: "OK",
+                onPress: () => navigation.navigate("SignIn"),
+              },
+            ]
+          );
+          return;
+        }
+
         const userDocRef = doc(db, 'Users Informations', currentUser.uid);
         const userDocSnapshot = await getDoc(userDocRef);
         if (userDocSnapshot.exists()) {
@@ -83,16 +106,20 @@ const Payment = () => {
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false); // Set loading to false when data is fetched (whether successful or not)
       }
     };
 
-    if (currentUser) {
-      fetchUserData();
-    }
-  }, [currentUser, db]);
+    fetchData();
+  }, [currentUser, db, navigation]);
 
-  if (!userData) {
-    return <Text>Loading...</Text>;
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="lightblue" />
+      </View>
+    );
   }
 
   const { name, email, phone } = userData;
@@ -173,7 +200,7 @@ const Payment = () => {
           return;
         }
   
-        const response = await fetch("http://192.168.0.5:8085/pay", {
+        const response = await fetch("http://192.168.0.4:8085/pay", {
           method: "POST",
           body: JSON.stringify({
             name: name,
@@ -204,6 +231,12 @@ const Payment = () => {
         });
   
         if (presentSheet.error) return Alert.alert(presentSheet.error.message);
+
+        // Reset product quantities and remove them from the cart
+      myCart.forEach((item) => {
+        dispatch(updateProductQuantity({ id: item.id, qty: 0 }));
+        dispatch(removeProductFromCart({ id: item.id }));
+      });
   
         Alert.alert(
           "Payment completed",
@@ -228,6 +261,12 @@ const Payment = () => {
           await updateStock(item.id, item.qty);
           console.log(`Stock updated for product ID: ${item.id}`);
         });
+
+         // Reset product quantities and remove them from the cart
+      myCart.forEach((item) => {
+        dispatch(updateProductQuantity({ id: item.id, qty: 0 }));
+        dispatch(removeProductFromCart({ id: item.id }));
+      });
     
   
         navigation.navigate('Preparingorder');
@@ -237,6 +276,8 @@ const Payment = () => {
       Alert.alert("Something went wrong, try again later!");
     }
   };
+
+ 
   
 
 
