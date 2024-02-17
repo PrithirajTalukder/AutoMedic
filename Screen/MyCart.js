@@ -5,16 +5,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from "@react-navigation/native";
 import { Button } from 'react-native-paper';
 import { removeProductFromCart, updateProductQuantity } from '../redux/MyCartSlice';
+import { auth } from '../config/firebase';
+import { signIn } from '../Screen/SignIn'; // Import your authentication service
 
 const MyCart = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
 
-
   // Calculate item total whenever myCart changes
   const totalProducts = myCart.length;
   const totalPrice = myCart.reduce((total, item) => total + item.qty * item.price, 0);
+
+  // Check if the user is logged in
+  const currentUser = auth.currentUser;
 
   // Handle quantity change for a product
   const handleQuantityChange = (item, newQty) => {
@@ -62,8 +66,28 @@ const MyCart = () => {
   };
 
   // Handle checkout button press
-  const onCheckout = () => {
-    try {
+const onCheckout = async () => {
+  try {
+    // Check if the user is logged in
+    if (!currentUser) {
+      // Show alert to sign in
+      showAlert('Please SignIn before placing an order.', async () => {
+        // Navigate to SignIn page
+        navigation.navigate('SignIn');
+
+        // Wait for the user to sign in
+        const user = await signIn(); // Replace with your actual authentication function
+
+        // Check if sign-in was successful
+        if (user) {
+          // Navigate back to the MyCart screen after successful sign-in
+          navigation.goBack();
+        }
+      });
+
+      return;
+    }
+
       // Check if the cart is empty
       if (myCart.length === 0) {
         showAlert('Your cart is empty. Add items before proceeding to payment.');

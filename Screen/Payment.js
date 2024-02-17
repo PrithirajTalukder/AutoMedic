@@ -12,6 +12,8 @@ import { auth } from '../config/firebase';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { getDatabase, ref, push } from 'firebase/database';
 import { updateStock } from '../sanity';
+import { useDispatch } from 'react-redux';
+import { removeProductFromCart, updateProductQuantity } from '../redux/MyCartSlice';
 
 
 
@@ -29,6 +31,7 @@ const Payment = () => {
   const currentUser = auth.currentUser;
   const db = getFirestore();
   const [userData, setUserData] = useState(null);
+  const dispatch = useDispatch();
 
   const Stripe = useStripe();
   const [selectedPaymentOption, setSelectedPaymentOption] = useState(null);
@@ -228,6 +231,12 @@ const Payment = () => {
           await updateStock(item.id, item.qty);
           console.log(`Stock updated for product ID: ${item.id}`);
         });
+
+         // Reset product quantities and remove them from the cart
+      myCart.forEach((item) => {
+        dispatch(updateProductQuantity({ id: item.id, qty: 0 }));
+        dispatch(removeProductFromCart({ id: item.id }));
+      });
     
   
         navigation.navigate('Preparingorder');
