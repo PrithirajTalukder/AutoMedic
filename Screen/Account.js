@@ -17,6 +17,27 @@ const Account = () => {
 
 
   useEffect(() => {
+
+    if (!currentUser) {
+      // Show an alert if the user is not signed in
+      Alert.alert(
+        "Not Signed In",
+        "You are not signed in. Please sign in before proceeding.",
+        [
+          {
+            text: "Cancel",
+            onPress: () => navigation.goBack(),
+            style: "cancel",
+          },
+          {
+            text: "OK",
+            onPress: () => navigation.navigate("SignIn"),
+          },
+        ]
+      );
+      return;
+    }
+    
     const fetchUserData = async () => {
       try {
         const userDocRef = doc(db, 'Users Informations', currentUser.uid);
