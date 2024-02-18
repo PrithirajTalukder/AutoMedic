@@ -31,6 +31,8 @@ import DeliveryScreen from './Screen/DeliveryScreen';
 import Market from './Screen/Market';
 import Payment from './Screen/Payment';
 import Chat from './Screen/Chat';
+import Myorder from './Screen/Myorder';
+import Orderdetails from './Screen/Orderdetails';
 
 import { StripeProvider } from '@stripe/stripe-react-native';
 
@@ -77,6 +79,8 @@ const App = () => {
           <Stack.Screen name="Market" options={{ headerShown: false }} component={Market} />
           <Stack.Screen name="Payment" options={{ headerShown: false }} component={Payment} />
           <Stack.Screen name="Chat" options={{ headerShown: false }} component={Chat} />
+          <Stack.Screen name="Myorder" options={{ headerShown: false }} component={Myorder} />
+          <Stack.Screen name="Orderdetails" options={{ headerShown: false }} component={Orderdetails} />
         </Stack.Navigator>
       </NavigationContainer>
       

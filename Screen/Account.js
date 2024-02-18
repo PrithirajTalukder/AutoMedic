@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Text, Pressable, Image, ActivityIndicator } from 'react-native';
+import { View, SafeAreaView, Text, Pressable, Image, ActivityIndicator,Alert } from 'react-native';
 import { Avatar, Title } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -37,7 +37,7 @@ const Account = () => {
       );
       return;
     }
-    
+
     const fetchUserData = async () => {
       try {
         const userDocRef = doc(db, 'Users Informations', currentUser.uid);
@@ -101,7 +101,7 @@ const Account = () => {
         marginTop: 10,
         paddingBottom: 20,
       }}>
-        <Pressable onPress={() => navigation.navigate("Periodic")}
+        <Pressable onPress={() => navigation.navigate("Myorder")}
           style={{
             padding: 10,
             paddingLeft: 40,
@@ -111,7 +111,7 @@ const Account = () => {
             style={{ width: 60, height: 60 }} />
           <Text style={{ color: "black", fontWeight: 700, fontSize: 14, marginTop: 8, marginLeft: -10 }}>Order History</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate("Periodic")}
+        <Pressable onPress={() => navigation.navigate("")}
           style={{
             padding: 10,
             paddingLeft: 34,
