@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Alert, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Alert, Image, ScrollView, ActivityIndicator, SafeAreaView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useSelector} from 'react-redux';
@@ -286,11 +286,7 @@ const Payment = () => {
 
   return (
     
-    
-    
-      
-
-<ScrollView style={{flex:1}}>
+<SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>  
 <View style={{
       width: '100%',
       height: 100,
@@ -307,7 +303,11 @@ const Payment = () => {
       </TouchableOpacity>
       <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
       
-    </View>
+    </View>    
+      
+
+<ScrollView style={{flex:1}}>
+
 
     
       {/* Cart Items */}
@@ -621,6 +621,7 @@ const Payment = () => {
         {selectedPaymentOption === 'card' ? 'Proceed To Payment' : 'Place Order'}
       </Button>
     </ScrollView>
+    </SafeAreaView>  
   );
 };
 

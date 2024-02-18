@@ -62,7 +62,7 @@ const Account = () => {
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="lightblue" />
+        <ActivityIndicator size="large" color="#bad6e3" />
       </View>
     );
   }

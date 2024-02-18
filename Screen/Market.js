@@ -111,7 +111,7 @@ const Market = () => {
     alignItems: 'center',
     width: 115,
     height: 115,
-    backgroundColor: "lightblue",
+    backgroundColor: "#bad6e3",
     borderRadius: 7,
     elevation: 6,
   };
@@ -153,7 +153,7 @@ const Market = () => {
             marginTop: 18,
             flexDirection: "row",
             width: 357,
-            backgroundColor: "lightblue",
+            backgroundColor: "#bad6e3",
             borderRadius: 20,
             alignItems: "center",
             borderWidth:1,
