@@ -44,9 +44,51 @@ const Market = () => {
   }, []);
 
   const renderProduct = (product) => {
-   
-    const onProductPress = () => {
-      navigation.navigate('Batteries'); // Replace 'Batteries' with the correct screen name
+    const onProductPress = (productId) => {
+      
+      switch (productId) {
+        case "1":
+          
+          navigation.navigate("Lights"); // Replace with the actual screen name for scheduled services
+          break;
+        case "2":
+          navigation.navigate("Batteries"); // Replace with the actual screen name for scheduled services
+          break;
+        case "3":
+          navigation.navigate("Wheel"); // Replace with the actual screen name for scheduled services
+          break;
+        case "P4":
+          navigation.navigate("Batteriesservice"); // Replace with the actual screen name for scheduled services
+          break;
+        case "P5":
+          navigation.navigate("Denting"); // Replace with the actual screen name for scheduled services
+          break;
+        case "P6":
+          navigation.navigate("Carspa"); // Replace with the actual screen name for scheduled services
+          break;
+        case "P7":
+          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
+          break;
+        case "P8":
+          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
+          break;
+        case "P9":
+          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
+          break;
+        case "P10":
+          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
+          break;
+        case "P11":
+          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
+          break;
+        case "P12":
+          navigation.navigate("Mechanical"); // Replace with the actual screen name for mechanical repairs
+          break;
+        default:
+          console.log("Navigating to Lights screen");
+          navigation.navigate("Denting"); // Default to "Periodic" screen
+          break;
+      }
     };
 
     // Extract the image URL using the urlFor function
@@ -55,7 +97,7 @@ const Market = () => {
     
 
     return (
-      <TouchableOpacity key={product._id} onPress={onProductPress}>
+      <TouchableOpacity key={product._id} onPress={() => onProductPress(product._id)}>
         <View style={productContainerStyle}>
           <Image style={productImageStyle} 
           source={{ uri: urlFor(product.image).url() }}/>
