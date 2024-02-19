@@ -136,18 +136,18 @@ const Account = () => {
       <View style={{ marginTop:15,marginLeft:9, borderTopWidth: 1, borderColor:'#15174f',width:'95%' }}>
         </View>
 
-      <View style={{  paddingBottom: 40 }}>
+      <View style={{  paddingBottom: 20 }}>
         <Pressable onPress={() => navigation.navigate("Profile")}>
-          <View style={{ flexDirection: "row", paddingTop: 50, paddingLeft: 20 }}>
+          <View style={{ flexDirection: "row", paddingTop: 20, paddingLeft: 20 }}>
             <AntDesign name="profile" size={36} color="black" />
             <Text style={{ marginLeft: 30, marginTop: 8, fontSize: 16, fontWeight: 800 }}>Profile</Text>
             <View style={{ marginLeft: 200, marginTop: 8 }}><MaterialIcons name="navigate-next" size={24} color="black" /></View>
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate("Periodic")}>
+        <Pressable onPress={() => navigation.navigate("Schedule")}>
           <View style={{ flexDirection: "row", paddingTop: 50, paddingLeft: 20 }}>
             <MaterialIcons name="dashboard-customize" size={36} color="black" />
-            <Text style={{ marginLeft: 30, marginTop: 8, fontSize: 16, fontWeight: 800 }}>Set Preferences</Text>
+            <Text style={{ marginLeft: 30, marginTop: 8, fontSize: 16, fontWeight: 800 }}>Book Appointment</Text>
             <View style={{ marginLeft: 130, marginTop: 8 }}><MaterialIcons name="navigate-next" size={24} color="black" /></View>
           </View>
         </Pressable>

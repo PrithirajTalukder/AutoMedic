@@ -1,210 +1,194 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView, Platform, Alert } from 'react-native';
-import { Calendar } from 'react-native-calendars';
+import React, { useState, useEffect } from 'react';
+import { Alert, Pressable, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 import { auth } from '../config/firebase';
-import { getFirestore, doc, updateDoc, getDoc, addDoc, collection, query, where } from 'firebase/firestore';
+import { getFirestore, doc, updateDoc, getDoc } from 'firebase/firestore';
 
-export default function Schedule() {
-    const [timeList, setTimeList] = useState([]);
-    const [selectedTime, setSelectedTime] = useState();
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [note, setNote] = useState();
-    const [showDatePicker, setShowDatePicker] = useState(false);
-    const [bookedTimeSlots, setBookedTimeSlots] = useState([]);
+const Profile = () => {
+  const navigation = useNavigation();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
 
-    useEffect(() => {
-        getTime();
-        fetchBookedAppointments();
-    }, [selectedDate]);
+  // Function to fetch user information from Firestore
+  const fetchUserInfo = async () => {
+    try {
+      const user = auth.currentUser;
+      const db = getFirestore();
+      const userDocRef = doc(db, 'Users Informations', user.uid);
 
-    const userId = auth.currentUser.uid;
+      // Fetch the user document data
+      const userDocSnapshot = await getDoc(userDocRef);
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+       
+        // Update state with fetched data
+        setName(userData.name || '');
+        setEmail(userData.email || '');
+        setPhone(userData.phone || '');
+        setAddress(userData.address || '');
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
 
-    const getTime = () => {
-        let newTimeList = [];
+  // useEffect hook to fetch user information when the component mounts
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
-        for (let i = 0; i < 48; i++) {
-            let hour = Math.floor(i / 2) % 12 || 12;
-            let period = i < 24 ? 'AM' : 'PM';
+  const handleSave = async () => {
+    try {
+      const user = auth.currentUser;
+      const db = getFirestore();
+      const userDocRef = doc(db, 'Users Informations', user.uid);
 
-            const time = `${hour < 10 ? '0' : ''}${hour}:${i % 2 === 0 ? '00' : '30'} ${period}`;
+      await updateDoc(userDocRef, {
+        name,
+        email,
+        phone,
+        address,
+      });
 
-            if ((hour === 10 && period === 'AM') || (hour > 10 && period === 'AM' && hour < 12) || (hour === 12 && period === 'PM') || (period === 'PM' && hour < 10)) {
-                newTimeList.push({ time, isBooked: false });
-            }
-        }
+      Alert.alert(
+        "Profile Updated",
+        "Your profile has been successfully updated.",
+        [{ text: "OK", onPress: () => navigation.navigate("Main") }]
+      );
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
 
-        setTimeList(newTimeList);
-    };
-
-    const fetchBookedAppointments = async () => {
-        try {
-            const db = getFirestore();
-            const appointmentsRef = collection(db, 'users', userId, 'appointments');
-            const q = query(appointmentsRef, where('date', '==', selectedDate));
-
-            const querySnapshot = await getDoc(q);
-
-            const bookedSlots = querySnapshot.docs.map((doc) => doc.data().time);
-
-            setBookedTimeSlots(bookedSlots);
-        } catch (error) {
-            console.error('Error fetching booked appointments:', error);
-        }
-    };
-
-    const handleDatePress = (date) => {
-        setSelectedDate(new Date(date.timestamp));
-        setShowDatePicker(false);
-    };
-
-    const handleConfirmAndBook = async () => {
-        try {
-            const db = getFirestore();
-            const appointmentsRef = collection(db, 'users', userId, 'appointments');
-
-            if (bookedTimeSlots.includes(selectedTime)) {
-                Alert.alert('Time Slot Already Booked', 'Please select another time slot.');
-                return;
-            }
-
-            await addDoc(appointmentsRef, {
-                date: selectedDate,
-                time: selectedTime,
-                note,
-            });
-
-            console.log('Confirmed and booked:', selectedDate, selectedTime, note);
-            fetchBookedAppointments();
-        } catch (error) {
-            console.error('Error confirming and booking:', error);
-        }
-    };
-
-    return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.container}
-        >
-            <ScrollView>
-                <View style={styles.container}>
-                    <Text style={styles.title}>Book an appointment</Text>
-
-                    <View style={styles.calendarContainer}>
-                        <Calendar
-                            current={selectedDate.toISOString().split('T')[0]}
-                            onDayPress={(day) => handleDatePress(day)}
-                            markedDates={{
-                                [selectedDate.toISOString().split('T')[0]]: { selected: true, marked: true, selectedColor: 'black' },
-                            }}
-                            theme={{
-                                todayTextColor: 'white',
-                                selectedDayBackgroundColor: 'black',
-                                selectedDayTextColor: 'white',
-                            }}
-                        />
-                    </View>
-
-                    <View style={styles.timeSlotContainer}>
-                        <Text style={styles.subtitle}>Select Time Slot</Text>
-                        <FlatList
-                            data={timeList}
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
-                            renderItem={({ item, index }) => (
-                                <TouchableOpacity
-                                    style={[styles.timeSlotButton, item.isBooked && styles.bookedTimeSlot]}
-                                    onPress={() => setSelectedTime(item.time)}
-                                    disabled={item.isBooked}
-                                >
-                                    <Text style={[styles.timeSlotText, item.isBooked && styles.bookedTimeSlotText]}>{item.time}</Text>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </View>
-
-                    <View style={styles.noteContainer}>
-                        <Text style={styles.subtitle}>Leave a Note</Text>
-                        <TextInput
-                            placeholder='Start typing...'
-                            numberOfLines={3}
-                            multiline={true}
-                            style={styles.noteTextArea}
-                            onChangeText={(text) => setNote(text)}
-                        />
-                    </View>
-
-                    <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmAndBook}>
-                        <Text style={styles.confirmButtonText}>Confirm & Book</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
-        </KeyboardAvoidingView>
+  const showEmailUpdateAlert = () => {
+    Alert.alert(
+      "Email Update",
+      "Email cannot be updated.",
+      [{ text: "OK", onPress: () => navigation.navigate("Profile") }]
     );
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "lightblue" }}>
+      <View style={{
+        flexDirection: "row",
+        top: 60,
+        paddingLeft: 23
+      }}>
+        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={{ paddingLeft: 22, fontSize: 18, fontWeight: "600" }}>My Profile</Text>
+      </View>
+
+      <View style={{
+        backgroundColor: "black",
+        borderRadius: 20,
+        top: 110,
+        paddingLeft: 20,
+        paddingRight: 20,
+        marginLeft: 20,
+        marginRight: 10,
+        height: 570,
+        position: "absolute",
+        elevation: 6,
+      }}>
+        <View style={{ paddingTop: 15, paddingLeft: 10 }}>
+          <Text style={{ color: "white", fontWeight: 600 }}>PERSONAL DETAILS</Text>
+        </View>
+
+        <View style={{ marginTop: 30 }}>
+          <TextInput
+            placeholder="Name"
+            placeholderTextColor="darkgray"
+            value={name}
+            onChangeText={(value) => setName(value)}
+            style={styles.input}
+          />
+        </View>
+
+        <View style={{ marginTop: 10 }}>
+        <TouchableOpacity onPress={showEmailUpdateAlert}>
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="darkgray"
+            value={email}
+            editable={false}
+            onChangeText={(value) => setEmail(value)}
+            style={styles.input}
+          />
+        </TouchableOpacity>
+      </View>
+
+        <View style={{ marginTop: 10 }}>
+          <TextInput
+            placeholder="Mobile"
+            placeholderTextColor="darkgray"
+            value={phone}
+            onChangeText={(value) => setPhone(value)}
+            style={styles.input}
+          />
+        </View>
+
+        <View style={{ marginTop: 10 }}>
+          <TextInput
+            placeholder="Address"
+            placeholderTextColor="darkgray"
+            value={address}
+            onChangeText={(value) => setAddress(value)}
+            style={styles.input}
+          />
+        </View>
+
+        <View>
+          <Pressable
+            style={styles.saveButton}
+            onPress={handleSave}
+          >
+            <Text style={styles.saveButtonText}>
+              SAVE
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 30,
-    },
-    title: {
-        marginTop: 35,
-        marginBottom: 20,
-        fontSize: 25,
-        fontWeight: 'bold',
-        color: 'black',
-    },
-    subtitle: {
-        marginBottom: 20,
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'black',
-    },
-    calendarContainer: {
-        backgroundColor: '#B4CBF0',
-        padding: 20,
-        borderRadius: 15,
-        marginBottom: 20,
-    },
-    timeSlotContainer: {
-        marginBottom: 20,
-    },
-    timeSlotButton: {
-        marginRight: 10,
-        borderWidth: 1,
-        borderRadius: 10,
-        padding: 10,
-    },
-    timeSlotText: {
-        fontSize: 16,
-    },
-    bookedTimeSlot: {
-        backgroundColor: 'red',
-    },
-    bookedTimeSlotText: {
-        color: 'white',
-    },
-    noteContainer: {
-        marginBottom: 20,
-    },
-    noteTextArea: {
-        borderWidth: 1,
-        borderRadius: 15,
-        textAlignVertical: 'top',
-        fontSize: 16,
-        padding: 20,
-        borderColor: 'lightgray',
-    },
-    confirmButton: {
-        marginTop: 10,
-        alignItems: 'center',
-        backgroundColor: '#B4CBF0',
-        padding: 10,
-        borderRadius: 10,
-    },
-    confirmButtonText: {
-        fontSize: 17,
-        fontWeight: 'bold',
-        color: 'white',
-    },
-});
+const styles = {
+  input: {
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    padding: 5,
+    paddingLeft: 13,
+    paddingVertical: 9,
+    marginLeft: 3,
+    width: 310,
+    marginVertical: 10,
+    color: "white",
+  },
+  saveButton: {
+    width: 310,
+    backgroundColor: "black",
+    padding: 12,
+    borderRadius: 7,
+    marginTop: 260,
+    marginLeft: "auto",
+    marginRight: "auto",
+    elevation: 2,
+  },
+  saveButtonText: {
+    fontSize: 20,
+    textAlign: "center",
+    color: "white",
+    fontWeight: "600",
+  },
+};
+
+export default Profile;

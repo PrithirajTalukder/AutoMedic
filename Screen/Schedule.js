@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import {SafeAreaView, ScrollView, View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Schedule() {
+    const navigation = useNavigation();
     const [timeList, setTimeList] = useState([]);
     const [selectedTime, setSelectedTime] = useState();
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -42,6 +45,13 @@ export default function Schedule() {
     };
 
     return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: '#fff', elevation: 1 }}>
+        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
+      </View>
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}
@@ -52,10 +62,11 @@ export default function Schedule() {
 
                     <View style={styles.calendarContainer}>
                         <Calendar
+                            style={{elevation:5}}
                             current={selectedDate.toISOString().split('T')[0]}
                             onDayPress={(day) => handleDatePress(day)}
                             markedDates={{
-                                [selectedDate.toISOString().split('T')[0]]: { selected: true, marked: true, selectedColor: 'black' },
+                                [selectedDate.toISOString().split('T')[0]]: { selected: true, marked: true, selectedColor: '#15174f' },
                             }}
                             theme={{
                                 todayTextColor: 'white',
@@ -99,16 +110,19 @@ export default function Schedule() {
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 30,
+        paddingHorizontal: 5,
+        paddingBottom:5
     },
     title: {
-        marginTop: 35,
+        
+        paddingTop:10,
         marginBottom: 20,
         fontSize: 25,
         fontWeight: 'bold',
@@ -123,14 +137,18 @@ const styles = StyleSheet.create({
     calendarContainer: {
         backgroundColor: 'lightblue',
         padding: 20,
-        borderRadius: 15,
+        borderRadius: 5,
         marginBottom: 20,
     },
     timeSlotContainer: {
-        marginBottom: 20,
+        marginBottom: 5,
+        height:120,
+        width:'100%',
     },
     timeSlotButton: {
-        marginRight: 10,
+        marginRight: 5,
+        marginLeft:10
+        
     },
     timeSlotText: {
         padding: 12,
@@ -138,9 +156,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 99,
         borderColor: 'lightgray',
+        backgroundColor:'white',
+        elevation:5
     },
     selectedTime: {
-        backgroundColor: 'black',
+        backgroundColor: '#15174f',
         color: 'lightgray',
     },
     unSelectedTime: {
@@ -160,9 +180,10 @@ const styles = StyleSheet.create({
     confirmButton: {
         marginTop: 10,
         alignItems: 'center',
-        backgroundColor: 'black',
+        backgroundColor: '#15174f',
         padding: 10,
         borderRadius: 99,
+        paddingVertical:15,
     },
     confirmButtonText: {
         fontSize: 17,
