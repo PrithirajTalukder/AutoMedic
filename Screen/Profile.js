@@ -73,11 +73,14 @@ const Profile = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "lightblue" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{
         flexDirection: "row",
         top: 60,
-        paddingLeft: 23
+        paddingLeft: 23,
+        borderBottomWidth:1,
+        borderColor:'lightGray',
+        paddingBottom:15
       }}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
           <AntDesign name="arrowleft" size={24} color="black" />
@@ -86,9 +89,9 @@ const Profile = () => {
       </View>
 
       <View style={{
-        backgroundColor: "black",
+        backgroundColor: "#bad6e3",
         borderRadius: 20,
-        top: 110,
+        top: 130,
         paddingLeft: 20,
         paddingRight: 20,
         marginLeft: 20,
@@ -97,11 +100,11 @@ const Profile = () => {
         position: "absolute",
         elevation: 6,
       }}>
-        <View style={{ paddingTop: 15, paddingLeft: 10 }}>
-          <Text style={{ color: "white", fontWeight: 600 }}>PERSONAL DETAILS</Text>
+        <View style={{ paddingTop: 15, paddingLeft: 10, justifyContent:'center', alignItems:'center' }}>
+          <Text style={{ color: "black", fontWeight: 800, fontSize:17 }}>PERSONAL DETAILS</Text>
         </View>
 
-        <View style={{ marginTop: 30 }}>
+        <View style={{ marginTop: 20 }}>
           <TextInput
             placeholder="Name"
             placeholderTextColor="darkgray"
@@ -161,9 +164,9 @@ const Profile = () => {
 
 const styles = {
   input: {
-    fontSize: 18,
+    fontSize: 17,
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: "#15174f",
     borderRadius: 5,
     padding: 5,
     paddingLeft: 13,
@@ -171,11 +174,11 @@ const styles = {
     marginLeft: 3,
     width: 310,
     marginVertical: 10,
-    color: "white",
+    color: "gray",
   },
   saveButton: {
     width: 310,
-    backgroundColor: "black",
+    backgroundColor: "#15174f",
     padding: 12,
     borderRadius: 7,
     marginTop: 260,
