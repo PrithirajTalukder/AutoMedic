@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, TextInput, Text, View, Image, TouchableOpacity, ScrollView, ActivityIndicator} from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-
+import { SafeAreaView, TextInput, Text, View, Image, TouchableOpacity, ScrollView, ActivityIndicator, } from 'react-native';
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import createClient, { urlFor } from '../sanity';
 
@@ -10,11 +9,12 @@ const Market = () => {
   const [categoriesWithProducts, setCategoriesWithProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [search, setSearch] = useState('');
+  const [filteredCategories, setFilteredCategories] = useState([]);
 
   useEffect(() => {
     const fetchCategoriesWithProducts = async () => {
       try {
-        // Fetch categories with products
         const query = `*[_type == 'category'] {
           _id,
           name,
@@ -43,64 +43,45 @@ const Market = () => {
     fetchCategoriesWithProducts();
   }, []);
 
+  const onSearch = (text) => {
+    setSearch(text);
+
+    if (text === '') {
+      setFilteredCategories(categoriesWithProducts);
+    } else {
+      const filteredCategoriesData = categoriesWithProducts.filter((category) =>
+        category.name.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredCategories(filteredCategoriesData);
+    }
+  };
+
   const renderProduct = (product) => {
-    const onProductPress = (productId) => {
-      
-      switch (productId) {
-        case "1":
-          
-          navigation.navigate("Lights"); // Replace with the actual screen name for scheduled services
+    const onProductPress = (productName) => {
+      switch (productName) {
+        case "Lights":
+          navigation.navigate("Lights");
           break;
-        case "2":
-          navigation.navigate("Batteries"); // Replace with the actual screen name for scheduled services
+        case "Tyres":
+          navigation.navigate("Tyres");
           break;
-        case "3":
-          navigation.navigate("Wheel"); // Replace with the actual screen name for scheduled services
+        case "Body Parts":
+          navigation.navigate("BodyParts");
           break;
-        case "P4":
-          navigation.navigate("Batteriesservice"); // Replace with the actual screen name for scheduled services
-          break;
-        case "P5":
-          navigation.navigate("Denting"); // Replace with the actual screen name for scheduled services
-          break;
-        case "P6":
-          navigation.navigate("Carspa"); // Replace with the actual screen name for scheduled services
-          break;
-        case "P7":
-          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
-          break;
-        case "P8":
-          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
-          break;
-        case "P9":
-          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
-          break;
-        case "P10":
-          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
-          break;
-        case "P11":
-          navigation.navigate("Detailing"); // Replace with the actual screen name for scheduled services
-          break;
-        case "P12":
-          navigation.navigate("Mechanical"); // Replace with the actual screen name for mechanical repairs
+        case "Batteries":
+          navigation.navigate("Batteries");
           break;
         default:
-          console.log("Navigating to Lights screen");
-          navigation.navigate("Denting"); // Default to "Periodic" screen
+          console.log("Default case: Navigating to some default screen");
+          navigation.navigate("DefaultScreen");
           break;
       }
     };
 
-    // Extract the image URL using the urlFor function
-   
-    
-    
-
     return (
-      <TouchableOpacity key={product._id} onPress={() => onProductPress(product._id)}>
+      <TouchableOpacity key={product._id} onPress={() => onProductPress(product.name)}>
         <View style={productContainerStyle}>
-          <Image style={productImageStyle} 
-          source={{ uri: urlFor(product.image).url() }}/>
+          <Image style={productImageStyle} source={{ uri: urlFor(product.image).url() }} />
           <Text style={productDescriptionStyle}>{product.description}</Text>
         </View>
       </TouchableOpacity>
@@ -116,7 +97,6 @@ const Market = () => {
     elevation: 6,
   };
 
-
   const productImageStyle = {
     width: 50,
     height: 50,
@@ -125,7 +105,6 @@ const Market = () => {
     marginTop: 15,
   };
 
-
   const productDescriptionStyle = {
     textAlign: 'center',
     marginBottom: 5,
@@ -133,48 +112,54 @@ const Market = () => {
     fontWeight: 600,
   };
 
-
   if (loading) {
     return <ActivityIndicator />;
   }
-
 
   if (error) {
     return <Text>{`Error fetching data: ${error.message}`}</Text>;
   }
 
-
   return (
-    <SafeAreaView style={{ flex: 1,  }}>
-      <View style={{ paddingTop: 50, paddingBottom: 10, backgroundColor: "white"}}>
-      <View style={{
-            padding: 10,
-            marginLeft: 18,
-            marginTop: 18,
-            flexDirection: "row",
-            width: 357,
-            backgroundColor: "#bad6e3",
-            borderRadius: 20,
-            alignItems: "center",
-            borderWidth:1,
-            borderColor: 'gray',
-          }}>
-            <TouchableOpacity><FontAwesome name="search" size={24} color="black" /></TouchableOpacity>
-            <TextInput style={{ fontSize: 19, paddingLeft: 10, width: '80%' }} placeholder='Search' />
-          </View>
-          <View style={{ marginLeft: 25, marginTop: 20 }}>
-            <Text style={{ color: "black", fontSize: 18, fontWeight: 800 }}>
-              At Home Delivery
-          </Text>
-          </View>
+    <SafeAreaView style={{ flex: 1 }}>
+
+      <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 50, backgroundColor: 'white', elevation: 1 }}>
+        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
       </View>
-      
-      
+
+      <View style={{ paddingTop: 50, paddingBottom: 10, backgroundColor: "white" }}>
+        <View style={{
+          padding: 10,
+          marginLeft: 18,
+
+          flexDirection: "row",
+          width: 357,
+          backgroundColor: "#bad6e3",
+          borderRadius: 20,
+          alignItems: "center",
+          borderWidth: 1,
+          borderColor: 'gray',
+        }}>
+          <TouchableOpacity><FontAwesome name="search" size={24} color="black" /></TouchableOpacity>
+          <TextInput
+            style={{ fontSize: 19, paddingLeft: 10, width: '80%' }}
+            placeholder='Search'
+            onChangeText={txt => onSearch(txt)}
+            value={search}
+          />
+        </View>
+        <View style={{ marginLeft: 25, marginTop: 20 }}>
+          <Text style={{ color: "black", fontSize: 18, fontWeight: 800 }}>
+            At Home Delivery
+          </Text>
+        </View>
+      </View>
+
       <ScrollView>
         <View style={{ paddingTop: 0, paddingBottom: 0 }}>
-          
-
-
           <View
             style={{
               flexDirection: 'row',
@@ -184,7 +169,11 @@ const Market = () => {
               marginTop: 10,
             }}
           >
-            {categoriesWithProducts.slice(0, 3).map((category) => renderProduct(category))}
+            {search === '' ? (
+              categoriesWithProducts.slice(0, 3).map((category) => renderProduct(category))
+            ) : (
+              filteredCategories.slice(0, 3).map((category) => renderProduct(category))
+            )}
           </View>
           <View
             style={{
@@ -195,7 +184,11 @@ const Market = () => {
               marginTop: 5,
             }}
           >
-            {categoriesWithProducts.slice(3, 6).map((category) => renderProduct(category))}
+            {search === '' ? (
+              categoriesWithProducts.slice(3, 6).map((category) => renderProduct(category))
+            ) : (
+              filteredCategories.slice(3, 6).map((category) => renderProduct(category))
+            )}
           </View>
           <View
             style={{
@@ -206,7 +199,11 @@ const Market = () => {
               marginTop: 5,
             }}
           >
-            {categoriesWithProducts.slice(6, 9).map((category) => renderProduct(category))}
+            {search === '' ? (
+              categoriesWithProducts.slice(6, 9).map((category) => renderProduct(category))
+            ) : (
+              filteredCategories.slice(6, 9).map((category) => renderProduct(category))
+            )}
           </View>
           <View
             style={{
@@ -217,12 +214,16 @@ const Market = () => {
               marginTop: 5,
             }}
           >
-            {categoriesWithProducts.slice(9, 12).map((category) => renderProduct(category))}
+            {search === '' ? (
+              categoriesWithProducts.slice(9, 12).map((category) => renderProduct(category))
+            ) : (
+              filteredCategories.slice(9, 12).map((category) => renderProduct(category))
+            )}
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 export default Market;
