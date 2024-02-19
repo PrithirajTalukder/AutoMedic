@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { ScrollView, View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import { auth } from '../config/firebase';
-import { getFirestore, doc, updateDoc, getDoc, addDoc, collection, query, where } from 'firebase/firestore';
 
 export default function Schedule() {
     const [timeList, setTimeList] = useState([]);
@@ -10,46 +8,27 @@ export default function Schedule() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [note, setNote] = useState();
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [bookedTimeSlots, setBookedTimeSlots] = useState([]);
 
     useEffect(() => {
         getTime();
-        fetchBookedAppointments();
-    }, [selectedDate]);
-
-    const userId = auth.currentUser.uid;
+    }, []);
 
     const getTime = () => {
         let newTimeList = [];
-
+    
         for (let i = 0; i < 48; i++) {
             let hour = Math.floor(i / 2) % 12 || 12;
             let period = i < 24 ? 'AM' : 'PM';
-
+    
             const time = `${hour < 10 ? '0' : ''}${hour}:${i % 2 === 0 ? '00' : '30'} ${period}`;
-
+    
+            // Filter time slots only between 10:00 AM and 10:00 PM
             if ((hour === 10 && period === 'AM') || (hour > 10 && period === 'AM' && hour < 12) || (hour === 12 && period === 'PM') || (period === 'PM' && hour < 10)) {
-                newTimeList.push({ time, isBooked: false });
+                newTimeList.push({ time });
             }
         }
-
+    
         setTimeList(newTimeList);
-    };
-
-    const fetchBookedAppointments = async () => {
-        try {
-            const db = getFirestore();
-            const appointmentsRef = collection(db, 'users', userId, 'appointments');
-            const q = query(appointmentsRef, where('date', '==', selectedDate));
-
-            const querySnapshot = await getDoc(q);
-
-            const bookedSlots = querySnapshot.docs.map((doc) => doc.data().time);
-
-            setBookedTimeSlots(bookedSlots);
-        } catch (error) {
-            console.error('Error fetching booked appointments:', error);
-        }
     };
 
     const handleDatePress = (date) => {
@@ -57,27 +36,9 @@ export default function Schedule() {
         setShowDatePicker(false);
     };
 
-    const handleConfirmAndBook = async () => {
-        try {
-            const db = getFirestore();
-            const appointmentsRef = collection(db, 'users', userId, 'appointments');
-
-            if (bookedTimeSlots.includes(selectedTime)) {
-                Alert.alert('Time Slot Already Booked', 'Please select another time slot.');
-                return;
-            }
-
-            await addDoc(appointmentsRef, {
-                date: selectedDate,
-                time: selectedTime,
-                note,
-            });
-
-            console.log('Confirmed and booked:', selectedDate, selectedTime, note);
-            fetchBookedAppointments();
-        } catch (error) {
-            console.error('Error confirming and booking:', error);
-        }
+    const handleSubmit = () => {
+        // Implement the logic for submitting the appointment
+        console.log('Submitted:', selectedDate, selectedTime, note);
     };
 
     return (
@@ -112,11 +73,10 @@ export default function Schedule() {
                             showsHorizontalScrollIndicator={false}
                             renderItem={({ item, index }) => (
                                 <TouchableOpacity
-                                    style={[styles.timeSlotButton, item.isBooked && styles.bookedTimeSlot]}
+                                    style={styles.timeSlotButton}
                                     onPress={() => setSelectedTime(item.time)}
-                                    disabled={item.isBooked}
                                 >
-                                    <Text style={[styles.timeSlotText, item.isBooked && styles.bookedTimeSlotText]}>{item.time}</Text>
+                                    <Text style={[styles.timeSlotText, selectedTime === item.time ? styles.selectedTime : styles.unSelectedTime]}>{item.time}</Text>
                                 </TouchableOpacity>
                             )}
                         />
@@ -133,8 +93,8 @@ export default function Schedule() {
                         />
                     </View>
 
-                    <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmAndBook}>
-                        <Text style={styles.confirmButtonText}>Confirm & Book</Text>
+                    <TouchableOpacity style={styles.confirmButton} onPress={handleSubmit}>
+                        <Text style={styles.confirmButtonText}>Submit</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -161,7 +121,7 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     calendarContainer: {
-        backgroundColor: '#B4CBF0',
+        backgroundColor: 'lightblue',
         padding: 20,
         borderRadius: 15,
         marginBottom: 20,
@@ -171,18 +131,20 @@ const styles = StyleSheet.create({
     },
     timeSlotButton: {
         marginRight: 10,
-        borderWidth: 1,
-        borderRadius: 10,
-        padding: 10,
     },
     timeSlotText: {
-        fontSize: 16,
+        padding: 12,
+        paddingHorizontal: 18,
+        borderWidth: 1,
+        borderRadius: 99,
+        borderColor: 'lightgray',
     },
-    bookedTimeSlot: {
-        backgroundColor: 'red',
+    selectedTime: {
+        backgroundColor: 'black',
+        color: 'lightgray',
     },
-    bookedTimeSlotText: {
-        color: 'white',
+    unSelectedTime: {
+        color: 'gray',
     },
     noteContainer: {
         marginBottom: 20,
@@ -198,9 +160,9 @@ const styles = StyleSheet.create({
     confirmButton: {
         marginTop: 10,
         alignItems: 'center',
-        backgroundColor: '#B4CBF0',
+        backgroundColor: 'black',
         padding: 10,
-        borderRadius: 10,
+        borderRadius: 99,
     },
     confirmButtonText: {
         fontSize: 17,

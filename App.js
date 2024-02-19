@@ -34,6 +34,7 @@ import Payment from './Screen/Payment';
 import Chat from './Screen/Chat';
 import Myorder from './Screen/Myorder';
 import Orderdetails from './Screen/Orderdetails';
+import Schedule from './Screen/Schedule';
 
 import { StripeProvider } from '@stripe/stripe-react-native';
 import Lights from './Products/Lights';
@@ -53,7 +54,7 @@ const App = () => {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator initialRouteName="Schedule">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -84,6 +85,7 @@ const App = () => {
           <Stack.Screen name="Chat" options={{ headerShown: false }} component={Chat} />
           <Stack.Screen name="Myorder" options={{ headerShown: false }} component={Myorder} />
           <Stack.Screen name="Orderdetails" options={{ headerShown: false }} component={Orderdetails} />
+          <Stack.Screen name="Schedule" options={{ headerShown: false }} component={Schedule} />
         </Stack.Navigator>
       </NavigationContainer>
       
