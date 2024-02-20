@@ -20,6 +20,18 @@ const AC = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
+    // Display initial alert when the component mounts
+    Alert.alert(
+      'Appointment Recommendation',
+      'It is recommended to schedule an appointment with Auto Medic to get the desired services.',
+      [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ]
+    );
+  }, []);
+
+  
+  useEffect(() => {
     const fetchPeriodicProducts = async () => {
       try {
         const query = `
