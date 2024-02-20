@@ -26,7 +26,7 @@ import Account from './Screen/Account';
 import Profile from './Screen/Profile';
 import Batteries from './Products/Batteries';
 import MyCar from './Screen/MyCar';
-
+import CarType from './Screen/CarType';
 import MyCart from './Screen/MyCart';
 import Preparingorder from './Screen/Preparingorder';
 import DeliveryScreen from './Screen/DeliveryScreen';
@@ -55,7 +55,7 @@ const App = () => {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="MyCar">
+        <Stack.Navigator initialRouteName="CarType">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -88,6 +88,7 @@ const App = () => {
           <Stack.Screen name="Orderdetails" options={{ headerShown: false }} component={Orderdetails} />
           <Stack.Screen name="Schedule" options={{ headerShown: false }} component={Schedule} />
           <Stack.Screen name="MyCar" options={{ headerShown: false }} component={MyCar} />
+          <Stack.Screen name="CarType" options={{ headerShown: false }} component={CarType} />
         </Stack.Navigator>
       </NavigationContainer>
       

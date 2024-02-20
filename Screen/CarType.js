@@ -6,12 +6,12 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 
 
-const MyCar = () => {
+const CarType = () => {
   const navigation = useNavigation();
   return (
     <>
-    <View style={{ width: '100%',  flexDirection: 'row', alignItems: 'center', paddingLeft: 5, paddingTop: 5, marginTop:35, marginLeft:15 }}>
-      <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+    <View style={{width: '100%',  flexDirection: 'row', alignItems: 'center', paddingLeft: 5, paddingTop: 5, marginTop:35, marginLeft:15 }}>
+      <TouchableOpacity onPress={() => navigation.navigate("MyCar")}>
           <AntDesign name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
         <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 700 }}>Back</Text>
@@ -22,72 +22,79 @@ const MyCar = () => {
       <View style={styles.modalBox}>
       <View style={{ width: '100%',  flexDirection: 'row', alignItems: 'center', paddingLeft: 5, paddingTop: 5}}>
       
-        <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 700, color:'#15174f' }}>Select Manufacturer</Text>
+        <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 700, color:'#15174f' }}>Select Model</Text>
         </View>
         <View style={{ marginTop:15,marginLeft:9, borderTopWidth: 1, borderColor:'gray',width:'95%' }}>
         </View>
         <View style={{marginTop:10}}>
         <View style={styles.modalContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate("CarType")}>
+            <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={() => navigation.navigate("Main")}>
             <Image
           style={{ width: 80, height: 61, marginRight: 10 }}
-          source={require('../images/Cars/suzuki.jpg')}
+          source={require('../images/Cars/sera.png')}
           />
+          <Text style={{fontWeight:'700'}}>Sera</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("CarType")}>
+            <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={() => navigation.navigate("Main")}>
             <Image
           style={{ width: 80, height: 61, marginRight: 10 }}
-          source={require('../images/Cars/toyota.png')}
+          source={require('../images/Cars/etios.png')}
           />
+          <Text style={{fontWeight:'700'}}>Etios</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("CarType")}>
+            <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={() => navigation.navigate("Main")}>
             <Image
           style={{ width: 80, height: 61, marginRight: 10 }}
-          source={require('../images/Cars/audi.jpg')}
+          source={require('../images/Cars/corolla.png')}
           />
-            </TouchableOpacity>
-
-            </View> 
-            <View style={styles.modalContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate("CarType")}>
-            <Image
-          style={{ width: 80, height: 61, marginRight: 10 }}
-          source={require('../images/Cars/bmw.jpg')}
-          />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("CarType")}>
-            <Image
-          style={{ width: 80, height: 61, marginRight: 10 }}
-          source={require('../images/Cars/hyundai.jpg')}
-          />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("CarType")}>
-            <Image
-          style={{ width: 80, height: 61, marginRight: 10 }}
-          source={require('../images/Cars/mercedes.jpg')}
-          />
+          <Text style={{fontWeight:'700'}}>Corolla</Text>
             </TouchableOpacity>
 
             </View> 
             <View style={styles.modalContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate("CarType")}>
+            <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={() => navigation.navigate("Main")}>
+            <Image
+          style={{ width: 90, height: 61, marginRight: 10 }}
+          source={require('../images/Cars/crysta.png')}
+          />
+          <Text style={{fontWeight:'700'}}>Crysta</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={() => navigation.navigate("Main")}>
             <Image
           style={{ width: 80, height: 61, marginRight: 10 }}
-          source={require('../images/Cars/mitshu.jpg')}
+          source={require('../images/Cars/hilux.png')}
           />
+          <Text style={{fontWeight:'700'}}>Hilux</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("CarType")}>
+            <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={() => navigation.navigate("Main")}>
             <Image
           style={{ width: 80, height: 61, marginRight: 10 }}
-          source={require('../images/Cars/rover.jpg')}
+          source={require('../images/Cars/innova.png')}
           />
+          <Text style={{fontWeight:'700'}}>Innova</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("CarType")}>
+
+            </View> 
+            <View style={styles.modalContainer}>
+            <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={() => navigation.navigate("Main")}>
             <Image
           style={{ width: 80, height: 61, marginRight: 10 }}
-          source={require('../images/Cars/honda.png')}
+          source={require('../images/Cars/suv.png')}
+          />
+          <Text style={{fontWeight:'700'}}>SUV</Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+            <Image
+          style={{ width: 80, height: 61, marginRight: 10 }}
+          source={require('../images/Cars/sera.png')}
           />
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+            <Image
+          style={{ width: 80, height: 61, marginRight: 10 }}
+          source={require('../images/Cars/sera.png')}
+          />
+            </TouchableOpacity> */}
 
             </View> 
             
@@ -120,8 +127,9 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     padding:20,
     
+    
   }
   
 });
 
-export default MyCar
+export default CarType
