@@ -5,41 +5,35 @@ import { useNavigation } from "@react-navigation/native";
 
 const MyCar = () => {
   return (
-    <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isFilterModalVisible}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalBox}>
-            <TouchableOpacity onPress={closeModal} style={{ marginLeft: 270 }}>
-              <FontAwesome name="times-circle" size={28} color="black" />
-            </TouchableOpacity>
-            <Text style={styles.modalTitle}>Filter Modal</Text>
-
-            <View style={styles.modalOptions}>
-              <TouchableOpacity onPress={() => applyFilter('name')} style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
-                <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Sort By Name</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => applyFilter('lowToHighPrice')} style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
-                <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Low to High Price</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => applyFilter('highToLowPrice')} style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
-                <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>High to Low Price</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => applyFilter('rating')} style={{ marginTop: 25, backgroundColor: 'white', width: '90%', height: '10%', justifyContent: 'center', borderRadius: 5, alignItems: 'center' }}>
-                <Text style={{ color: "black", fontSize: 17, fontWeight: 600, }}>Sort By Rating</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => applyFilter(null)} style={{ marginTop: 60, width: '40%', backgroundColor: '#15174f', height: '9%', justifyContent: 'center', alignItems: 'center', borderRadius: 4, }}>
-                <Text style={{ color: 'white', fontSize: 14, fontWeight: 600, }}>Clear Filter</Text>
-              </TouchableOpacity>
-            </View>
+    
+    
+      <View style={styles.modalBox}>
+           <View style={{ width: '100%',  flexDirection: 'row', alignItems: 'center', paddingLeft: 5, paddingTop: 5, }}>
+        
+        <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 700 }}>Select Manufacturer</Text>
+      </View> 
+            
           </View>
-        </View>
-      </Modal>
+    
+    
     
   )
 }
+const styles = StyleSheet.create({
+  
+  modalBox: {
+    backgroundColor: '#bad6e3',
+    borderRadius: 15,
+    marginLeft: 10,
+    paddingTop: 20,
+    paddingLeft: 10,
+    paddingRight: 5,
+    paddingBottom: 30,
+    marginTop: 78,
+    width: '95%',
+    height: '80%', // adjust the width as needed
+  },
+  
+});
 
 export default MyCar

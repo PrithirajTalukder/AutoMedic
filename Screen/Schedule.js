@@ -64,12 +64,6 @@ export default function Schedule() {
       let hour = Math.floor(i / 2) % 12 || 12;
       let period = i < 24 ? 'AM' : 'PM';
 
-<<<<<<< HEAD
-    return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', }}>
-      <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: '#fff', elevation: 1 }}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-=======
       const time = `${hour < 10 ? '0' : ''}${hour}:${i % 2 === 0 ? '00' : '30'} ${period}`;
 
       if (
@@ -207,7 +201,6 @@ export default function Schedule() {
         }}
       >
         <TouchableOpacity onPress={() => navigation.navigate('Main')}>
->>>>>>> 26b58d956655ed23c3a395730f85256b0ed3da34
           <AntDesign name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
         <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
@@ -290,84 +283,6 @@ export default function Schedule() {
 }
 
 const styles = StyleSheet.create({
-<<<<<<< HEAD
-    container: {
-        flex: 1,
-        paddingHorizontal: 5,
-        paddingBottom:5
-    },
-    title: {
-        
-        paddingTop:10,
-        marginBottom: 20,
-        fontSize: 25,
-        fontWeight: 'bold',
-        color: 'black',
-    },
-    subtitle: {
-        marginBottom: 20,
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'black',
-    },
-    calendarContainer: {
-        backgroundColor: 'lightblue',
-        padding: 20,
-        borderRadius: 5,
-        marginBottom: 20,
-    },
-    timeSlotContainer: {
-        marginBottom: 5,
-        height:120,
-        width:'100%',
-    },
-    timeSlotButton: {
-        marginRight: 5,
-        marginLeft:10
-        
-    },
-    timeSlotText: {
-        padding: 12,
-        paddingHorizontal: 18,
-        borderWidth: 1,
-        borderRadius: 99,
-        borderColor: 'lightgray',
-        backgroundColor:'white',
-        elevation:5
-    },
-    selectedTime: {
-        backgroundColor: '#15174f',
-        color: 'lightgray',
-    },
-    unSelectedTime: {
-        color: 'gray',
-    },
-    noteContainer: {
-        marginBottom: 20,
-    },
-    noteTextArea: {
-        borderWidth: 1,
-        borderRadius: 15,
-        textAlignVertical: 'top',
-        fontSize: 16,
-        padding: 20,
-        borderColor: 'lightgray',
-    },
-    confirmButton: {
-        marginTop: 10,
-        alignItems: 'center',
-        backgroundColor: '#15174f',
-        padding: 10,
-        borderRadius: 99,
-        paddingVertical:15,
-        marginBottom:72
-    },
-    confirmButtonText: {
-        fontSize: 17,
-        fontWeight: 'bold',
-        color: 'white',
-    },
-=======
   container: {
     flex: 1,
     paddingHorizontal: 5,
@@ -439,11 +354,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 99,
     paddingVertical: 15,
+    marginBottom:75
   },
   confirmButtonText: {
     fontSize: 17,
     fontWeight: 'bold',
     color: 'white',
   },
->>>>>>> 26b58d956655ed23c3a395730f85256b0ed3da34
 });

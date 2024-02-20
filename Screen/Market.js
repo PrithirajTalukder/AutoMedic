@@ -130,7 +130,7 @@ const Market = () => {
         <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
       </View>
 
-      <View style={{ paddingTop: 50, paddingBottom: 10, backgroundColor: "white" }}>
+      <View style={{ paddingTop: 20, paddingBottom: 10, backgroundColor: "white" }}>
         <View style={{
           padding: 10,
           marginLeft: 18,
@@ -151,14 +151,15 @@ const Market = () => {
             value={search}
           />
         </View>
-        <View style={{ marginLeft: 25, marginTop: 20 }}>
+        
+      </View>
+
+      <ScrollView>
+      <View style={{ marginLeft: 15, marginTop: 20 }}>
           <Text style={{ color: "black", fontSize: 18, fontWeight: 800 }}>
             At Home Delivery
           </Text>
         </View>
-      </View>
-
-      <ScrollView>
         <View style={{ paddingTop: 0, paddingBottom: 0 }}>
           <View
             style={{

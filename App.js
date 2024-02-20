@@ -55,7 +55,7 @@ const App = () => {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="Schedule">
+        <Stack.Navigator initialRouteName="MyCar">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
