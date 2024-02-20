@@ -7,14 +7,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 
 import Home from '../Screen/Home';
-import Help from '../Screen/Help';
+import Help from '../Screen/Schedule';
 import Account from '../Screen/Account';
 import Market from '../Screen/Market';
 import Mechanic from '../Screen/Mechanic';
 
 
 const homeName = 'Home';
-const helpName = 'Help';
+const helpName = 'Appointment';
 const marketName = 'Market';
 const accountName = 'Account';
 const mechanicName = 'Mechanic';
@@ -48,7 +48,7 @@ export default function MainContainer(){
                            
                          }
                     } else if (rn=== helpName) {
-                        iconName = focused ? 'help-circle-outline' : 'help-circle-outline';
+                        iconName = focused ? 'calendar' : 'calendar';
                         if (focused) {
                             iconStyle.color = '#112e4f'; // Change the background color
                             

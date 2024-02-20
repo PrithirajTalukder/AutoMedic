@@ -45,7 +45,7 @@ export default function Schedule() {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white', }}>
       <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: '#fff', elevation: 1 }}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
           <AntDesign name="arrowleft" size={24} color="black" />
@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 99,
         paddingVertical:15,
+        marginBottom:72
     },
     confirmButtonText: {
         fontSize: 17,

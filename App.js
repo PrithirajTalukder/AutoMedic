@@ -25,6 +25,7 @@ import Mechanic from './Screen/Mechanic';
 import Account from './Screen/Account';
 import Profile from './Screen/Profile';
 import Batteries from './Products/Batteries';
+import MyCar from './Screen/MyCar';
 
 import MyCart from './Screen/MyCart';
 import Preparingorder from './Screen/Preparingorder';
@@ -86,6 +87,7 @@ const App = () => {
           <Stack.Screen name="Myorder" options={{ headerShown: false }} component={Myorder} />
           <Stack.Screen name="Orderdetails" options={{ headerShown: false }} component={Orderdetails} />
           <Stack.Screen name="Schedule" options={{ headerShown: false }} component={Schedule} />
+          <Stack.Screen name="MyCar" options={{ headerShown: false }} component={MyCar} />
         </Stack.Navigator>
       </NavigationContainer>
       

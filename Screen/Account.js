@@ -111,7 +111,7 @@ const Account = () => {
             style={{ width: 60, height: 60 }} />
           <Text style={{ color: "black", fontWeight: 700, fontSize: 14, marginTop: 8, marginLeft: -10 }}>Order History</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate("")}
+        <Pressable onPress={() => navigation.navigate("MyCar")}
           style={{
             padding: 10,
             paddingLeft: 34,
@@ -121,7 +121,7 @@ const Account = () => {
             style={{ width: 60, height: 60 }} />
           <Text style={{ color: "black", fontWeight: 700, fontSize: 14, marginTop: 8 }}>My Cars</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate("Periodic")}
+        <Pressable onPress={() => navigation.navigate("MyCar")}
           style={{
             padding: 10,
             paddingLeft: 36,
