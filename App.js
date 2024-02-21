@@ -36,6 +36,16 @@ import Chat from './Screen/Chat';
 import Myorder from './Screen/Myorder';
 import Orderdetails from './Screen/Orderdetails';
 import Schedule from './Screen/Schedule';
+import Ac from './Products/Ac';
+import Body from './Products/Body';
+import Brakes from './Products/Brakes';
+import Clutch from './Products/Clutch';
+import Glasses from './Products/Glasses';
+import Screen from './Products/Screen';
+import Seat from './Products/Screen';
+import Steering from './Products/Steering';
+import Suspension from './Products/Suspension';
+import Tyres from './Products/Tyres'; 
 
 import { StripeProvider } from '@stripe/stripe-react-native';
 import Lights from './Products/Lights';
@@ -55,7 +65,7 @@ const App = () => {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="DeliveryScreen">
+        <Stack.Navigator initialRouteName="Market">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -89,6 +99,16 @@ const App = () => {
           <Stack.Screen name="Schedule" options={{ headerShown: false }} component={Schedule} />
           <Stack.Screen name="MyCar" options={{ headerShown: false }} component={MyCar} />
           <Stack.Screen name="CarType" options={{ headerShown: false }} component={CarType} />
+          <Stack.Screen name="Ac" options={{ headerShown: false }} component={Ac} />
+          <Stack.Screen name="Body" options={{ headerShown: false }} component={Body} />
+          <Stack.Screen name="Brakes" options={{ headerShown: false }} component={Brakes} />
+          <Stack.Screen name="Clutch" options={{ headerShown: false }} component={Clutch} />
+          <Stack.Screen name="Glasses" options={{ headerShown: false }} component={Glasses} />
+          <Stack.Screen name="Screen" options={{ headerShown: false }} component={Screen} />
+          <Stack.Screen name="Seat" options={{ headerShown: false }} component={Seat} />
+          <Stack.Screen name="Steering" options={{ headerShown: false }} component={Steering} />
+          <Stack.Screen name="Suspension" options={{ headerShown: false }} component={Suspension} />
+          <Stack.Screen name="Tyres" options={{ headerShown: false }} component={Tyres} />
         </Stack.Navigator>
       </NavigationContainer>
       

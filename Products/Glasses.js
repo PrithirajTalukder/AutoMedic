@@ -7,7 +7,7 @@ import { addProductToMyCart } from '../redux/MyCartSlice';
 import { addMyProduct } from '../redux/MyProductSlice';
 import createClient, { urlFor } from '../sanity';
 
-const Lights = () => {
+const Glasses = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
@@ -23,7 +23,7 @@ const Lights = () => {
     const fetchBatteriesProducts = async () => {
       try {
         const query = `
-          *[_type == 'product' && references(*[_type == 'category' && name == 'Lights']._id)] {
+          *[_type == 'product' && references(*[_type == 'category' && name == 'Glasses']._id)] {
             _id,
             name,
             image,
@@ -409,4 +409,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Lights;
+export default Glasses;
