@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Text, Pressable, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, Text, Pressable, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native';
 import { auth } from '../config/firebase';
 import { AntDesign } from '@expo/vector-icons';
 import { getDatabase, ref, get } from 'firebase/database';
@@ -85,27 +85,30 @@ const Myorder = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-    <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: '#fff', elevation: 1 }}>
-      <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-        <AntDesign name="arrowleft" size={24} color="black" />
-      </TouchableOpacity>
-      <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
-    </View>
-    <View>
-      {orderIds.map((orderId) => (
-        <Pressable key={orderId} onPress={() => handleOrderPress(orderId)}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10, marginVertical: 10, backgroundColor: '#bad6e3', borderRadius: 10, borderColor: 'gray', paddingVertical: 40, paddingHorizontal: 10 }}>
-            <Text style={{ fontWeight: 600, fontSize: 15, lineHeight: 30, }}>Order ID:{'\n'}{orderId}</Text>
-            <Text style={{ color: orders[orderId]?.paymentOption === 'cash' ? 'green' : 'blue', fontWeight: 'bold', marginTop: 20, fontSize: 16 }}>
-              {orders[orderId]?.paymentOption === 'cash' ? 'Cash on Delivery' : 'Stripe'}
-            </Text>
-          </View>
-        </Pressable>
-      ))}
-    </View>
-  </SafeAreaView>
-);
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white',  }}>
+      <ScrollView stickyHeaderIndices={[0]}>
+        <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', elevation: 1, position: 'absolute', zIndex: 1 }}>
+          <TouchableOpacity onPress={() => navigation.navigate("Main")} style={{ padding: 15 }}>
+            <AntDesign name="arrowleft" size={24} color="black" />
+          </TouchableOpacity>
+          <Text style={{ fontSize: 18, fontWeight: '600' }}>Back</Text>
+        </View>
+
+        <View>
+          {orderIds.map((orderId) => (
+            <Pressable key={orderId} onPress={() => handleOrderPress(orderId)}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10, marginVertical: 10, backgroundColor: '#bad6e3', borderRadius: 10, borderColor: 'gray', paddingVertical: 40, paddingHorizontal: 10 }}>
+                <Text style={{ fontWeight: 600, fontSize: 15, lineHeight: 30 }}>Order ID:{'\n'}{orderId}</Text>
+                <Text style={{ color: orders[orderId]?.paymentOption === 'cash' ? 'green' : 'blue', fontWeight: 'bold', marginTop: 20, fontSize: 16 }}>
+                  {orders[orderId]?.paymentOption === 'cash' ? 'Cash on Delivery' : 'Stripe'}
+                </Text>
+              </View>
+            </Pressable>
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 };
 
 export default Myorder;

@@ -148,6 +148,8 @@ const Payment = () => {
       if ((!isAddressSaved || isEditing) && (selectedPaymentOption === 'card' || selectedPaymentOption === 'cash')) {
         return Alert.alert('Save your address before proceeding to order.');
       }
+
+    
   
       const ordersDatabase = getDatabase();
       let ordersRef;
@@ -255,19 +257,7 @@ const Payment = () => {
         const newOrderRef = push(ordersRef, orderData);
         const orderId = newOrderRef.key;
   
-        // Update stock for each ordered product
-        myCart.forEach(async (item) => {
-          console.log(`Updating stock for product ID: ${item.id}, Quantity: ${item.qty}`);
-          await updateStock(item.id, item.qty);
-          console.log(`Stock updated for product ID: ${item.id}`);
-        });
-
-         // Reset product quantities and remove them from the cart
-      myCart.forEach((item) => {
-        dispatch(updateProductQuantity({ id: item.id, qty: 0 }));
-        dispatch(removeProductFromCart({ id: item.id }));
-      });
-    
+       
   
         navigation.navigate('Preparingorder');
       }

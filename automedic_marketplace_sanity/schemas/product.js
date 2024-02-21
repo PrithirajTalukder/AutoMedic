@@ -90,19 +90,25 @@ export default {
       validation: (rule) => rule.required().min(0).integer(),
       // Add the following permission
       
-      read: { everyone: true },
+      read: { rule: 'true' },
       write: {
-         // Only allow authenticated users with the "update" permission
-         rules: [
-            { user: "currentUser" }, // Assuming `currentUser` holds the logged-in user
-            { permissions: ["update"] },
-         ],
+        // Allow updating the stock field for specified roles or emails
+        rules: [
+          { role: 'administrator' }, // Assuming 'administrator' is your role for admin access
+          { user: 'musaddek59@gmail.com' },
+          { user: 'prithirajtalukder@gmail.com' },
+        ],
       },
-   },
-
-    
+    },
   ],
-
-  
+  permissions: [
+    {
+      // Allow updating the stock field for specified roles or emails
+      fields: ['stock'],
+      role: 'administrator',
+      // You can add more roles or users here if needed
+      // roles: ['editor'],
+      // users: ['another@example.com'],
+    },
+  ],
 };
-

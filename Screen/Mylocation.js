@@ -35,14 +35,16 @@ const MyLocation = ({ navigation }) => {
         {
           text: 'OK',
           onPress: () => {
-            navigation.navigate('Main', { confirmedLocation: location });
+           
+  
+            // After navigating to Mycars, navigate to Main with confirmedLocation
+            navigation.navigate('MyCar', { confirmedLocation: location });
           },
         },
       ],
       { cancelable: false }
     );
   };
-
   if (!location) {
     return (
       <View style={styles.loadingContainer}>
