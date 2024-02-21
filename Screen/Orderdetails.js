@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Orderdetails = ({ route }) => {
+  const navigation = useNavigation();
   const { orderDetails } = route.params;
 
   return (
