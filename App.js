@@ -55,11 +55,7 @@ const App = () => {
 
       <NavigationContainer>
 
-<<<<<<< HEAD
-        <Stack.Navigator initialRouteName="CarType">
-=======
-        <Stack.Navigator initialRouteName="Main">
->>>>>>> 780d80eb75f98f99de1fc7983b8d6f5073d5fc57
+        <Stack.Navigator initialRouteName="DeliveryScreen">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
