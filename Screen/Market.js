@@ -66,11 +66,35 @@ const Market = () => {
           navigation.navigate("Tyres");
           break;
         case "Body Parts":
-          navigation.navigate("BodyParts");
+          navigation.navigate("Body");
           break;
         case "Batteries":
           navigation.navigate("Batteries");
           break;
+          case "Clutch":
+            navigation.navigate("Clutch");
+            break;
+            case "Steering":
+            navigation.navigate("Steering");
+            break;
+            case "Seat Covers":
+            navigation.navigate("Seat");
+            break;
+            case "Suspension":
+            navigation.navigate("Suspension");
+            break;
+            case "Brakes":
+            navigation.navigate("Brakes");
+            break;
+            case "Android Screen":
+            navigation.navigate("Screen");
+            break;
+            case "Glasses":
+            navigation.navigate("Glasses");
+            break;
+            case "AC Parts":
+            navigation.navigate("Ac");
+            break;
         default:
           console.log("Default case: Navigating to some default screen");
           navigation.navigate("DefaultScreen");
