@@ -86,14 +86,14 @@ const Myorder = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white',  }}>
-      <ScrollView stickyHeaderIndices={[0]}>
-        <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', elevation: 1, position: 'absolute', zIndex: 1 }}>
+      
+        <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', elevation: 1,paddingTop:25}}>
           <TouchableOpacity onPress={() => navigation.navigate("Main")} style={{ padding: 15 }}>
             <AntDesign name="arrowleft" size={24} color="black" />
           </TouchableOpacity>
           <Text style={{ fontSize: 18, fontWeight: '600' }}>Back</Text>
         </View>
-
+        <ScrollView>
         <View>
           {orderIds.map((orderId) => (
             <Pressable key={orderId} onPress={() => handleOrderPress(orderId)}>

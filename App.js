@@ -48,7 +48,10 @@ import Suspension from './Products/Suspension';
 import Tyres from './Products/Tyres'; 
 import Lights from './Products/Lights';
 import AllSearch from './Screen/AllSearch';
-
+import Clutchs from './Options/Clutchs';
+import Inspection from './Options/Inspection';
+import Insurance from './Options/Insurance';
+import Lightss from './Options/Lightss';
 
 
 import { StripeProvider } from '@stripe/stripe-react-native';
@@ -118,6 +121,10 @@ const App = () => {
           <Stack.Screen name="Suspension" options={{ headerShown: false }} component={Suspension} />
           <Stack.Screen name="Tyres" options={{ headerShown: false }} component={Tyres} />
           <Stack.Screen name="AllSearch" options={{ headerShown: false }} component={AllSearch} />
+          <Stack.Screen name="Clutchs" options={{ headerShown: false }} component={Clutchs} />
+          <Stack.Screen name="Inspection" options={{ headerShown: false }} component={Inspection} />
+          <Stack.Screen name="Insurance" options={{ headerShown: false }} component={Insurance} />
+          <Stack.Screen name="Lightss" options={{ headerShown: false }} component={Lightss} />
 
 
         </Stack.Navigator>

@@ -179,7 +179,7 @@ const Market = () => {
       </View>
 
       <ScrollView>
-      <View style={{ marginLeft: 15, marginTop: 20 }}>
+      <View style={{ marginLeft: 15, marginTop: 10,}}>
           <Text style={{ color: "black", fontSize: 18, fontWeight: 800 }}>
             At Home Delivery
           </Text>
@@ -235,7 +235,7 @@ const Market = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               paddingHorizontal: 10,
-              marginBottom: 20,
+              marginBottom: 120,
               marginTop: 5,
             }}
           >

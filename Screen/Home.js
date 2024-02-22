@@ -157,7 +157,7 @@ const Home = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white", marginBottom:72 }}>
     
-      <View style={{marginTop:20 ,paddingTop: 15, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{marginTop:30 ,paddingTop: 10, paddingLeft: 25, flexDirection: 'row', alignItems: 'center' }}>
           {/* Image component for the icon */}
           <Image
           style={{ width: 28, height: 31, marginRight: 10 }}
@@ -167,25 +167,28 @@ const Home = () => {
           {/* Text displaying the location name */}
           <Text style={{ color: 'black', fontSize: 17 }}>{locationName}</Text>
         </View>
-      <View style={{ paddingTop: 10, paddingLeft: 25, }}>
-          <Text style={{ color: "black", fontSize: 17 }}>What are you looking for?</Text>
+      <View style={{ paddingTop: 5,paddingBottom:10, paddingLeft: 25,flexDirection:'row', justifyContent:'space-between', alignItems:'center' }}>
+          <Text style={{ color: "black", fontSize: 21, fontWeight:700 }}>What are you looking for?</Text>
+          <Pressable
+           style={{
+            padding: 13,
+            flexDirection: "row",
+            width: 50,
+            backgroundColor: "#bad6e3",
+            borderRadius: 50,
+            alignItems: "center",
+            marginRight:50,
+            elevation:3
+          }}
+           onPress={() => navigation.navigate("AllSearch")}>
+            <FontAwesome name="search" size={24} color="black" />
+            
+            </Pressable>
         </View>
-        <View style={{
+        
           
-          padding: 10,
-          marginLeft: 18,
-          marginTop: 8,
-          flexDirection: "row",
-          width: 350,
-          backgroundColor: "#bad6e3",
-          borderRadius: 20,
-          alignItems: "center",
-          marginBottom:5,
-         
-        }}>
-          <Pressable><FontAwesome name="search" size={24} color="black" /></Pressable>
-          <TextInput style={{ fontSize: 19, paddingLeft: 10, width: '80%' }} placeholder='Search' />
-        </View>
+          
+        
       
       <ScrollView>
         
@@ -227,7 +230,7 @@ const Home = () => {
         </View>
         </View>
 
-        <View style={{ marginLeft: 10, marginTop: 20 }}>
+        <View style={{ marginLeft: 10, marginTop: 20,}}>
           <Text style={{ color: "black", fontSize: 18, fontWeight: '800' }}>Scheduled Services</Text>
         </View>
 
@@ -247,7 +250,7 @@ const Home = () => {
           <Text style={{ color: "black", fontSize: 18, fontWeight: '800' }}>Mechanical Repairs</Text>
         </View>
 
-        <View style={{ flexDirection: "row", margin: 2 }}>
+        <View style={{ flexDirection: "row", margin: 2, marginBottom:20 }}>
           {renderCategoryRow(mechanicalRepairs.map(renderCategory))}
         </View>
       </ScrollView>
@@ -260,11 +263,11 @@ const Home = () => {
 const styles = StyleSheet.create({
     container:{
       marginTop:8,
-      flex:1
+      flex:1,
     },
     wrap:{
       width: WIDTH,
-      height: HEIGHT * 0.25
+      height: HEIGHT * 0.25,
     },
     wrapDot: {
       position: 'absolute',
