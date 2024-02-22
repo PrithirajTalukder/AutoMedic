@@ -65,11 +65,7 @@ const App = () => {
 
       <NavigationContainer>
 
-<<<<<<< HEAD
-        <Stack.Navigator initialRouteName="Market">
-=======
-        <Stack.Navigator initialRouteName="SignIn">
->>>>>>> 88e653eb5c72309c1fa0c241f1a6b8c2a6ce5d0c
+        <Stack.Navigator initialRouteName="Main">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
