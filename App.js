@@ -37,7 +37,6 @@ import Myorder from './Screen/Myorder';
 import Orderdetails from './Screen/Orderdetails';
 import Schedule from './Screen/Schedule';
 
-
 import { StripeProvider } from '@stripe/stripe-react-native';
 import Lights from './Products/Lights';
 
@@ -56,7 +55,7 @@ const App = () => {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="Schedule">
+        <Stack.Navigator initialRouteName="SignIn">
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -90,7 +89,6 @@ const App = () => {
           <Stack.Screen name="Schedule" options={{ headerShown: false }} component={Schedule} />
           <Stack.Screen name="MyCar" options={{ headerShown: false }} component={MyCar} />
           <Stack.Screen name="CarType" options={{ headerShown: false }} component={CarType} />
-          
         </Stack.Navigator>
       </NavigationContainer>
       
