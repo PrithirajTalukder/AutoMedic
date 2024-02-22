@@ -183,9 +183,7 @@ const Home = () => {
           marginBottom:5,
          
         }}>
-          
-          <Pressable onPress={() => navigation.navigate('AllSearch')}>
-            <FontAwesome name="search" size={24} color="black" /></Pressable>
+          <Pressable><FontAwesome name="search" size={24} color="black" /></Pressable>
           <TextInput style={{ fontSize: 19, paddingLeft: 10, width: '80%' }} placeholder='Search' />
         </View>
       
