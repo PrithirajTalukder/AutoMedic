@@ -46,9 +46,13 @@ import Seat from './Products/Screen';
 import Steering from './Products/Steering';
 import Suspension from './Products/Suspension';
 import Tyres from './Products/Tyres'; 
+import Lights from './Products/Lights';
+import AllSearch from './Screen/AllSearch';
+
+
 
 import { StripeProvider } from '@stripe/stripe-react-native';
-import Lights from './Products/Lights';
+
 
 
 
@@ -65,7 +69,11 @@ const App = () => {
 
       <NavigationContainer>
 
+
+        
+
         <Stack.Navigator initialRouteName="Main">
+
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
           <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
@@ -109,6 +117,9 @@ const App = () => {
           <Stack.Screen name="Steering" options={{ headerShown: false }} component={Steering} />
           <Stack.Screen name="Suspension" options={{ headerShown: false }} component={Suspension} />
           <Stack.Screen name="Tyres" options={{ headerShown: false }} component={Tyres} />
+          <Stack.Screen name="AllSearch" options={{ headerShown: false }} component={AllSearch} />
+
+
         </Stack.Navigator>
       </NavigationContainer>
       

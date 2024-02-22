@@ -216,7 +216,8 @@ export default function Schedule() {
             <View style={styles.calendarContainer}>
               <Calendar
                 style={{ elevation: 5 }}
-                current={selectedDate.toISOString().split('T')[0]}
+                current={new Date().toISOString().split('T')[0]} // Set current date
+  minDate={new Date().toISOString().split('T')[0]} // Set minimum date to current date
                 onDayPress={(day) => handleDatePress(day)}
                 markedDates={{
                   [selectedDate.toISOString().split('T')[0]]: {
@@ -230,6 +231,8 @@ export default function Schedule() {
                   selectedDayBackgroundColor: 'black',
                   selectedDayTextColor: 'white',
                 }}
+
+                
               />
             </View>
 

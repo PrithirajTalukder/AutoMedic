@@ -7,10 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign, MaterialIcons, Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import colors from '../assets/themes/colors';
+import { Linking } from 'react-native';
 
 const Chat = ({ route }) => {
-  const { mechanicName } = route.params;
+  const { mechanicName, mechanicNumber } = route.params;
   const navigation = useNavigation();
+
+
 
   useLayoutEffect(() => {
     console.log('Received mechanic name:', mechanicName);
@@ -113,7 +116,24 @@ const Chat = ({ route }) => {
   };
 
   const onCall = () => {
-    console.log('Call initiated');
+    if (mechanicNumber) {
+      const formattedPhoneNumber = phoneNumber.replace(/[^0-9+]/g, ''); // Remove non-numeric characters
+      const dialerURL = `tel:${formattedPhoneNumber}`;
+  
+      Linking.canOpenURL(dialerURL)
+        .then((supported) => {
+          if (supported) {
+            Linking.openURL(dialerURL);
+          } else {
+            console.log('Phone dialer not supported on this device');
+          }
+        })
+        .catch((error) => {
+          console.error('Error opening phone dialer:', error);
+        });
+    } else {
+      console.log('Phone number not available for this mechanic');
+    }
   };
 
   const onVideoCall = () => {
