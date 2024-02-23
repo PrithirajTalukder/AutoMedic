@@ -121,7 +121,7 @@ const Account = () => {
             style={{ width: 60, height: 60 }} />
           <Text style={{ color: "black", fontWeight: 700, fontSize: 14, marginTop: 8 }}>My Cars</Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate("MyCar")}
+        <Pressable onPress={() => navigation.navigate("Help")}
           style={{
             padding: 10,
             paddingLeft: 36,
