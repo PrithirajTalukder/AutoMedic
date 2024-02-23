@@ -122,15 +122,22 @@ const Home = () => {
             categoryScreen = "Carspa"; // Replace with the actual screen name for scheduled services
             break;
           case "S7":
-            categoryScreen = "Detailing"; // Replace with the actual screen name for scheduled services
+            categoryScreen = "Detailing";
+            break; // Replace with the actual screen name for scheduled services
           case "S8":
-          
+            categoryScreen = "Inspection";
             break;
           case "S9":
+            categoryScreen = "Clutchs";
+            break;
           case "S10":
+            categoryScreen = "Lightss";
+            break;
           case "S11":
+            categoryScreen = "Suspensions";
+            break;
           case "S12":
-            categoryScreen = "Mechanical"; // Replace with the actual screen name for mechanical repairs
+            categoryScreen = "Insurance"; // Replace with the actual screen name for mechanical repairs
             break;
           default:
             categoryScreen = "Periodic"; // Default to "Periodic" screen
