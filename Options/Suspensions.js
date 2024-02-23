@@ -7,56 +7,35 @@ import { addProductToMyCart } from '../redux/MyCartSlice';
 import { addMyProduct } from '../redux/MyProductSlice';
 import createClient, { urlFor } from '../sanity';
 
-const AllSearch = () => {
+const Suspensions = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const myCart = useSelector((state) => state.cart);
 
-  const [items, setItems] = useState([]);
+  const [Items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [search, setSearch] = useState('');
   const [isFilterModalVisible, setFilterModalVisible] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
 
-  // Define UUID to Screen mapping
-  const uuidToScreenMapping = {
-    '20db7992-529a-49ea-bdc2-077213d5613d': 'Batteries',
-    'fc165e9d-877f-412b-a065-65f46f3f0089' : 'Batteries',
-    '0560635f-fbba-4ed4-aaea-0bf3478b1f76' : 'Lightss',
-    '08b8dc97-192c-4009-8adc-9a372136219a' : 'Tyres',
-    '09fbbf8f-1746-47f9-b675-5931ebb114f2' : 'Clutch',
-    '0d99a271-3826-4a40-a524-35fe6a2a80ec' : 'Lights',
-    '17eaa779-1d81-455b-b789-0d102bd23414' : 'Seat',
-    '17f3cc3f-db2a-42db-8b07-9365004673af' : 'Periodic',
-    '19bdd7d1-7b35-4278-9a8c-91a05b47928c' : 'Suspensions',
-    '1d10b5fc-8f5a-4cfd-a2a5-5f4d3fd0c705' : 'Carspa',
-    '1e811ba0-3c8c-4636-ac1f-453958599493' : 'Steering',
-    '2a09e1e3-0c15-45cb-865b-f3c940b11ae9' : 'Detailing',
-    '2e8f7870-24e7-4d18-92e0-823e534825bd' : 'Insurance',
-    '2f2c1b75-8eec-4f2b-8301-0464faae402a' : 'Carspa',
-    '31d668b2-39bf-4329-80ad-0509a4dab348' : 'Batteriesservice',
-    '324fd1d8-5493-43fb-a984-3933b4d80e65' : 'Detailing',
-    '4a47306b-db11-437a-b424-2d61ed54da37' : 'Detailing',
-    '4ebd5513-878c-4ceb-8e53-e00f1a565c1e' : 'Wheel',
-    '57142b51-2e7b-46d1-bbd4-d03b947cd36e' : 'Periodic',
-    '4a47306b-db11-437a-b424-2d61ed54da37' : 'Detailing',
-    '4a47306b-db11-437a-b424-2d61ed54da37' : 'Detailing',
-    '4a47306b-db11-437a-b424-2d61ed54da37' : 'Detailing',
-
-
-
-    
-  };
-
   useEffect(() => {
-    const fetchProducts = async () => {
+    // Display initial alert when the component mounts
+    Alert.alert(
+      'Appointment Recommendation',
+      'It is recommended to schedule an appointment with Auto Medic to get the desired services.',
+      [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ]
+    );
+  }, []);
+
+  
+  useEffect(() => {
+    const fetchPeriodicProducts = async () => {
       try {
-        const groqQuery = `
-          *[
-            _type in ['product','servicesproduct'] &&
-            name match $query
-          ] {
+        const query = `
+          *[_type == 'servicesproduct' && type->name == 'Suspension & Fitments'] {
             _id,
             name,
             image,
@@ -66,46 +45,48 @@ const AllSearch = () => {
             warranty,
             services,
             rating,
-            reviews,
-            stock 
+            reviews
           }
         `;
-
-        const data = await createClient.fetch(groqQuery, { query: `*${search.toLowerCase()}*` });
-
-        const itemsData = data.map((product) => ({
-          id: product._id,
-          name: product.name,
-          image: { uri: urlFor(product.image).url() },
-          price: product.price,
+    
+        const data = await createClient.fetch(query);
+    
+        const itemsData = data.map((servicesproduct) => ({
+          id: servicesproduct._id,
+          name: servicesproduct.name,
+          image: { uri: urlFor(servicesproduct.image).url() },
+          price: servicesproduct.price,
           qty: 0,
-          frequency: product.frequency,
-          duration: product.duration,
-          warranty: product.warranty,
-          services: product.services,
-          stock: product.stock,
+          frequency: servicesproduct.frequency,
+          duration: servicesproduct.duration,
+          warranty: servicesproduct.warranty,
+          services: servicesproduct.services,
         }));
-
+    
         setItems(itemsData);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching service products:', error);
       }
     };
 
-    fetchProducts();
-  }, [search]);
+    fetchPeriodicProducts();
+  }, []);
 
   useEffect(() => {
-    setFilteredItems(items);
-  }, [items]);
+    setFilteredItems(Items);
+  }, [Items]);
+
+  useEffect(() => {
+    setFilteredItems(Items);
+  }, [Items]);
 
   const onSearch = (text) => {
     setSearch(text);
 
     if (text === '') {
-      setFilteredItems(items);
+      setFilteredItems(Items);
     } else {
-      const filteredItemsData = items.filter((item) =>
+      const filteredItemsData = Items.filter((item) =>
         item.name.toLowerCase().includes(text.toLowerCase())
       );
       setFilteredItems(filteredItemsData);
@@ -115,7 +96,7 @@ const AllSearch = () => {
   const clearFilters = () => {
     setSelectedFilter(null);
     setSearch('');
-    setFilteredItems(items);
+    setFilteredItems(Items);
     closeModal();
   };
 
@@ -144,37 +125,38 @@ const AllSearch = () => {
       //setFilteredItems([...filteredItems].sort((a, b) => /* Sort logic for rating */));
       //break;
       default:
-        setFilteredItems(items);
+        setFilteredItems(Items);
         break;
     }
 
     closeModal();
   };
 
-  const handleViewDetailsPress = (productId) => {
-    // Dynamically determine the screen based on product ID and navigate
-    const screenName = determineScreenBasedOnProductId(productId);
-    console.log('Product ID:', productId);
-    console.log('Screen Name:', screenName);
-    if (screenName) {
-      navigation.navigate(screenName, { productId });
-    } else {
-      console.error('No matching screen found for Product ID:', productId);
+  const handleAddToCartPress = (index) => {
+    const updatedItems = [...filteredItems];
+    const existingProductIndex = myCart.findIndex(cartItem => cartItem.id === updatedItems[index].id);
+
+    if (existingProductIndex === -1 || myCart[existingProductIndex].qty === 0) {
+      updatedItems[index] = { ...updatedItems[index], qty: 1 };
+      setFilteredItems(updatedItems);
+
+      // Dispatch addMyProduct to the product slice
+      dispatch(addMyProduct(updatedItems[index]));
+
+      // Dispatch addProductToMyCart to the cart slice
+      dispatch(addProductToMyCart(updatedItems[index]));
+
+      // Show the alert
+      setShowAlert(true);
+
+      // Hide the alert after 2 seconds
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 2000);
     }
   };
 
-  const determineScreenBasedOnProductId = (productId) => {
-    // Check if the provided ID is a valid UUID
-    const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(productId);
-    
-    if (isUUID) {
-      return uuidToScreenMapping[productId] || null;
-    }
-    // Add more conditions as needed
-  
-    // If no matching screen found, return null
-    return null;
-  };
+
 
   const totalProducts = myCart.length;
   const totalPrice = myCart.reduce((total, item) => total + item.qty * item.price, 0);
@@ -182,7 +164,7 @@ const AllSearch = () => {
   return (
     <View style={{ flex: 1 }}>
       {/* Header */}
-      <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: '#fff', elevation: 1 }}>
+      <View style={{ width: '100%', height: 100, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, paddingTop: 30, backgroundColor: 'white', elevation: 1 }}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
           <AntDesign name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
@@ -193,20 +175,20 @@ const AllSearch = () => {
       <View style={{
         flexDirection: "row",
         alignItems: "center",
-        paddingBottom: 7,
-        backgroundColor: 'white',
+        paddingBottom: 13,
+        backgroundColor:'white',
       }}>
         <View style={{
           padding: 10,
           marginLeft: 18,
-          marginTop: 1,
+          marginTop: 10,
           flexDirection: "row",
           width: 330,
           backgroundColor: "#bad6e3",
           borderRadius: 20,
           alignItems: "center",
-          borderWidth: 1,
-          borderColor: 'gray'
+          borderWidth:1,
+          borderColor:'gray'
         }}>
           {search.length === 0 && (
             <TouchableOpacity>
@@ -229,22 +211,28 @@ const AllSearch = () => {
           )}
         </View>
 
-        <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginBottom:10 }}>
+        <TouchableOpacity onPress={handleFilterPress} style={{ marginLeft: 10, marginTop: 5 }}>
           <FontAwesome name="sort-down" size={28} color="black" />
         </TouchableOpacity>
       </View>
 
-      <View style={{ borderBottomWidth: 1, borderColor: 'white', backgroundColor: 'white' }}>
-        <Text style={{ marginLeft: 25, marginBottom: 2, color: "black", fontSize: 24, fontWeight: 800, }}>
-        Our Services & Products
+      <View style={{ borderBottomWidth:1, borderColor:'white',backgroundColor:'white' }}>
+        <Text style={{marginLeft: 25,marginBottom: 2, color: "black", fontSize: 24, fontWeight: 800, }}>
+          Services
         </Text>
       </View>
+
+
+
+
+      
 
       {/* Product List */}
       <FlatList
         data={filteredItems}
+        
         renderItem={({ item, index }) => (
-          <View style={{ width: '95%', alignSelf: 'center', height: 209, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, justifyContent: 'space-between' }}>
+          <View style={{ width: '95%', alignSelf: 'center', height: 190, backgroundColor: '#bad6e3', marginTop: 10, borderRadius: 10, borderWidth: 1, borderColor: 'white', elevation: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 20, justifyContent: 'space-between' }}>
             <View>
               <Text style={{ color: "black", fontWeight: 700, fontSize: 17, marginTop: -20 }}>{item.name}</Text>
               <Text style={{ color: "#088704", fontWeight: 600, fontSize: 15, marginTop: 5 }}>{'৳' + item.price}</Text>
@@ -252,31 +240,51 @@ const AllSearch = () => {
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.duration}</Text>
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.warranty}</Text>
               <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>{item.services}</Text>
-              {item.stock > 0 && (
-                <Text style={{ color: "#404042", fontWeight: 600, fontSize: 12, marginTop: 5 }}>
-                  {`In Stock: ${item.stock} product${item.stock > 1 ? 's' : ''} available`}
-                </Text>
-              )}
             </View>
             <View>
-              <Image source={item.image} style={{ width: 80, height: 80, marginLeft: 10, marginRight: 30, borderRadius: 5, borderWidth: 1, borderColor: 'white' }} />
-              <TouchableOpacity
-                onPress={() => handleViewDetailsPress(item.id)}
-                style={{
-                  backgroundColor: '#15174f',
-                  borderRadius: 7,
-                  height: 27,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  paddingLeft: 5,
-                  paddingRight: 5,
-                  marginRight: 20,
-                  marginLeft: 0,
-                  marginTop: 10
-                }}
-              >
-                <Text style={{ color: 'white', fontWeight: 600 }}>View Details</Text>
-              </TouchableOpacity>
+              <Image source={item.image} style={{ width: 80, height: 80, marginLeft: 10,marginRight:30, borderRadius: 5, borderWidth:1, borderColor:'white' }} />
+              {!myCart.find(cartItem => cartItem.id === item.id) || myCart.find(cartItem => cartItem.id === item.id).qty === 0 ? (
+                <TouchableOpacity
+                  onPress={() => handleAddToCartPress(index)}
+                  style={{
+                    backgroundColor: '#15174f',
+                    borderRadius: 7,
+                    height: 27,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingLeft: 5,
+                    paddingRight: 5,
+                    marginRight: 20,
+                    marginLeft: 0,
+                    marginTop: 10
+                  }}
+                >
+                  <Text style={{ color: 'white', fontWeight: 600 }}>Add To Cart</Text>
+                </TouchableOpacity>
+              ) : (
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3 }}>
+                  <TouchableOpacity
+                    
+                    style={{
+                      backgroundColor: '#bad6e3',
+                      borderWidth: 1,
+                      borderColor: '#15174f',
+                      borderRadius: 7,
+                      height: 27,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                      marginRight: 5,
+                      marginLeft:-10,
+                      marginTop:10,
+                    }}>
+                    <Text style={{ color: '#15174f', fontWeight: 600 }}>Already Added!</Text>
+                  </TouchableOpacity>
+                  
+                   
+                </View>
+              )}
             </View>
           </View>
         )}
@@ -284,12 +292,13 @@ const AllSearch = () => {
 
       {/* Message for no search results */}
       {filteredItems.length === 0 && (
-        <View style={{ alignItems: 'center', marginTop: -200, justifyContent: 'center' }}>
+        <View style={{ alignItems: 'center', marginTop: -200,justifyContent:'center' }}>
           <Text style={{ color: 'red', fontSize: 16 }}>This Product is not available right now.</Text>
         </View>
       )}
 
       {/* Cart Summary */}
+      <View style={{borderTopWidth:1, borderColor:'white' }}>
       <TouchableOpacity
         style={{
           flexDirection: 'row',
@@ -300,6 +309,7 @@ const AllSearch = () => {
           borderWidth: 2,
           height: 60,
           margin: 10,
+          
         }}
         onPress={() => {
           navigation.navigate("MyCart");
@@ -314,6 +324,8 @@ const AllSearch = () => {
         </View>
       </TouchableOpacity>
 
+      </View>
+      
       {/* Filter Modal */}
       <Modal
         animationType="slide"
@@ -351,13 +363,13 @@ const AllSearch = () => {
 
       {/* Alert for Product Added */}
       {showAlert && (
-        <View style={styles.alertContainer}>
-          <View style={styles.alertBox}>
-            <Text style={styles.alertText}>Product added to the cart</Text>
-          </View>
-        </View>
-      )}
+  <View style={styles.alertContainer}>
+    <View style={styles.alertBox}>
+      <Text style={styles.alertText}>Product added to the cart</Text>
     </View>
+  </View>
+)}
+</View>
   );
 };
 
@@ -372,43 +384,50 @@ const styles = StyleSheet.create({
     backgroundColor: '#bad6e3',
     borderRadius: 15,
     marginLeft: 10,
-    marginRight: 10,
-    padding: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    width: '95%',
-    marginTop: 150,
+    paddingTop: 20,
+    paddingLeft: 10,
+    paddingRight: 5,
+    paddingBottom: 30,
+    marginTop: 78,
+    width: '80%',
+    height: '54%', // adjust the width as needed
   },
   modalTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: 'black',
-    alignSelf: 'center',
-  },
-  modalOptions: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  alertContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  alertBox: {
-    backgroundColor: '#bad6e3',
-    borderRadius: 15,
-    padding: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-    width: '70%',
-  },
-  alertText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'black',
-    alignSelf: 'center',
+    marginBottom: 10,
+    marginLeft: 95,
+  },
+  modalOptions: {
+    marginTop: 10,
+    backgroundColor: 'lightblue',
+    width: '90%',
+    height: '80%',
+    borderRadius: 15,
+    alignItems: 'center',
+    marginLeft: 12,
+  },
+  alertContainer: {
+    position: 'absolute',
+    top: '20%',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+   
+  },
+  alertBox: {
+    backgroundColor:'black', 
+    padding: 14,
+    borderRadius: 10,
+    elevation: 5, // Shadow
+  },
+  alertText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
-export default AllSearch;
+export default Suspensions;

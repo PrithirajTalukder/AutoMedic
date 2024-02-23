@@ -92,7 +92,13 @@ const Myorder = () => {
             <AntDesign name="arrowleft" size={24} color="black" />
           </TouchableOpacity>
           <Text style={{ fontSize: 18, fontWeight: '600' }}>Back</Text>
+          
         </View>
+        <View style={{ borderBottomWidth: 1, borderColor: 'white', backgroundColor: 'white' }}>
+        <Text style={{ marginLeft: 15, marginBottom: 2, color: "black", fontSize: 24, fontWeight: 800, }}>
+          My Order History
+        </Text>
+      </View>
         <ScrollView>
         <View>
           {orderIds.map((orderId) => (
