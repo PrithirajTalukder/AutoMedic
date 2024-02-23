@@ -245,9 +245,7 @@ const Schedule = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <ScrollView>
-        <View style={{ flex: 1, paddingHorizontal: 5, paddingBottom: 5 }}>
-          <View
+      <View
             style={{
               width: '100%',
               height: 100,
@@ -264,6 +262,11 @@ const Schedule = () => {
             </TouchableOpacity>
             <Text style={{ paddingLeft: 15, fontSize: 18, fontWeight: 600 }}>Back</Text>
           </View>
+          <FlatList
+    data={[{ key: 'content' }]} // Replace with your actual data if needed
+    renderItem={({ item }) => (
+        <View style={{ flex: 1, paddingHorizontal: 5, paddingBottom: 105 }}>
+          
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}
@@ -336,30 +339,31 @@ const Schedule = () => {
               </TouchableOpacity>
 
             {/* My Appointments Section */}
-<View style={styles.myAppointmentsContainer}>
-  <Text style={styles.subtitle}>My Appointments</Text>
-  {noAppointments ? (
-    <Text>No Appointments booked</Text>
-  ) : (
-    <FlatList
-      data={userAppointments}
-      keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item }) => (
-        <View style={styles.appointmentItem}>
-          <Text>Date: {item.date}</Text>
-          <Text>Time: {item.time}</Text>
-          <TouchableOpacity onPress={() => cancelAppointment(item)}>
-            <Text style={styles.cancelButton}>Cancel Appointment</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    />
-  )}
-</View>
+            <View style={styles.myAppointmentsContainer}>
+            <Text style={styles.subtitle}>My Appointments</Text>
+                {noAppointments ? (
+            <Text>No Appointments booked</Text>
+              ) : (
+                  <FlatList
+              data={userAppointments}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+              <View style={styles.appointmentItem}>
+              <Text>Date: {item.date}</Text>
+              <Text>Time: {item.time}</Text>
+              <TouchableOpacity onPress={() => cancelAppointment(item)}>
+              <Text style={styles.cancelButton}>Cancel Appointment</Text>
+              </TouchableOpacity>
+              </View>
+            )}
+          />
+        )}
+      </View>
             </View>
           </KeyboardAvoidingView>
         </View>
-      </ScrollView>
+      )}
+      />
     </SafeAreaView>
   );
 };
@@ -436,7 +440,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 99,
     paddingVertical: 15,
-    marginBottom: 75,
+    marginBottom: 25,
   },
   confirmButtonText: {
     fontSize: 17,
@@ -444,7 +448,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   myAppointmentsContainer: {
-    marginBottom: 20,
+    marginBottom: 30,
+    padding:10,
   },
   appointmentItem: {
     borderWidth: 3,

@@ -54,9 +54,10 @@ import Insurance from './Options/Insurance';
 import Lightss from './Options/Lightss';
 import Suspensions from './Options/Suspensions';
 import Help from './Screen/Help';
-
+import Refer from './Screen/Refer';
 
 import { StripeProvider } from '@stripe/stripe-react-native';
+
 
 
 
@@ -77,7 +78,7 @@ const App = () => {
 
         
 
-        <Stack.Navigator initialRouteName="Mylocation">
+        <Stack.Navigator initialRouteName="Main">
 
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
@@ -129,6 +130,7 @@ const App = () => {
           <Stack.Screen name="Lightss" options={{ headerShown: false }} component={Lightss} />
           <Stack.Screen name="Suspensions" options={{ headerShown: false }} component={Suspensions} />
           <Stack.Screen name="Help" options={{ headerShown: false }} component={Help} />
+          <Stack.Screen name="Refer" options={{ headerShown: false }} component={Refer} />
 
 
         </Stack.Navigator>

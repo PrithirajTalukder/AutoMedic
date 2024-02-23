@@ -151,7 +151,7 @@ const Account = () => {
             <View style={{ marginLeft: 130, marginTop: 8 }}><MaterialIcons name="navigate-next" size={24} color="black" /></View>
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate("Periodic")}>
+        <Pressable onPress={() => navigation.navigate("Refer")}>
           <View style={{ flexDirection: "row", paddingTop: 50, paddingLeft: 20 }}>
             <AntDesign name="gift" size={36} color="black" />
             <Text style={{ marginLeft: 30, marginTop: 8, fontSize: 16, fontWeight: 800 }}>Refer and Earn</Text>

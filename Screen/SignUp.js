@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 
-import { Text, View, StyleSheet, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable, Platform, ScrollView } from 'react-native';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { sendEmailVerification } from 'firebase/auth';
 import { auth } from '../config/firebase';
@@ -114,7 +114,8 @@ export default function SignUp() {
   return (
     <BottomSheetModalProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: "lightblue", alignItems: "center", padding: 10 }}>
-      <View style={{backgroundColor:"white",
+      
+      <ScrollView style={{
             borderRadius:20,
             top:60,
             width:380,
@@ -127,7 +128,8 @@ export default function SignUp() {
             backgroundColor:"black",
             elevation:6,
               }}>
-        <KeyboardAvoidingView>
+          <KeyboardAvoidingView enabled behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
+        
           <View style={{ justifyContent: "center", alignItems: "center", marginTop: 60 }}>
             <Text style={{ fontSize: 20, color: "lightblue", fontWeight: "bold" }}>
               Sign Up
@@ -298,11 +300,11 @@ export default function SignUp() {
             </Pressable>
           </View>
           
+        
         </KeyboardAvoidingView>
+      </ScrollView>
 
-      </View>
-
-
+      
 
 
 
