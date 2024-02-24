@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { ActivityIndicator, StyleSheet, View, Text, Alert } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text, Alert, Pressable } from 'react-native';
 
 const MyLocation = ({ navigation }) => {
   const [location, setLocation] = useState(null);
+  const [buttonColor, setButtonColor] = useState('white');
 
   useEffect(() => {
     (async () => {
@@ -80,10 +81,26 @@ const MyLocation = ({ navigation }) => {
           pinColor="blue" // Customize the user location marker color
         />
       </MapView>
-      <View style={styles.confirmButtonContainer}>
-        <Text onPress={confirmLocation} style={styles.confirmButton}>
-          Confirm Location
-        </Text>
+      <View style>
+        <Pressable
+          onPressIn={() => {
+            setButtonColor('lightblue');
+          }}
+          onPressOut={() => {
+            setButtonColor('white');
+            confirmLocation();
+          }}
+          style={({ pressed }) => [
+            styles.confirmButtonContainer,
+            {
+              backgroundColor: pressed ? 'lightblue' : 'white',
+            },
+          ]}
+        >
+          <Text style={styles.confirmButton}>
+            Confirm Location
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
