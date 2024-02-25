@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, Text } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const refer = () => {
+const Refer = () => {
     const navigation = useNavigation();
     const handleBackPress = () => {
         navigation.navigate("Main");
@@ -25,4 +25,4 @@ const refer = () => {
   )
 }
 
-export default refer
+export default Refer

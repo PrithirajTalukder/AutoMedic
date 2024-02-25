@@ -49,7 +49,7 @@ const CarType = () => {
             </TouchableOpacity>
           </View>
           <View style={styles.modalContainer}>
-            <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => handleConfirmPress("BMQ", "Crysta")}>
+            <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => handleConfirmPress("BMW", "Crysta")}>
               <Image style={{ width: 90, height: 61, marginRight: 10 }} source={require('../images/Cars/crysta.png')} />
               <Text style={{ fontWeight: '700' }}>Crysta</Text>
             </TouchableOpacity>
@@ -71,10 +71,10 @@ const CarType = () => {
         </View>
         {confirmPressed && (
           <TouchableOpacity
-            style={[styles.confirmButton, { backgroundColor: 'blue' }]}
+            style={[styles.confirmButton, { backgroundColor: 'white' }]}
             onPress={() => navigation.navigate("Main")}
           >
-            <Text style={{ color: 'white', fontWeight: '700' }}>Confirm</Text>
+            <Text style={{ color: 'black', fontWeight: '700' }}>Confirm</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -102,7 +102,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   confirmButton: {
-    marginTop: 10,
+    width:150,
+    marginTop:10,
+    marginLeft:110,
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 10,

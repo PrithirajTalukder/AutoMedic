@@ -78,7 +78,11 @@ const App = () => {
 
         
 
+<<<<<<< HEAD
         <Stack.Navigator initialRouteName="Welcome">
+=======
+        <Stack.Navigator initialRouteName="SignIn">
+>>>>>>> ef6b66be718b1ceda0112774770d2862ab24cb1f
 
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
