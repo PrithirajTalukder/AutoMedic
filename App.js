@@ -78,7 +78,7 @@ const App = () => {
 
         
 
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator initialRouteName="Welcome">
 
         
           <Stack.Screen name="Main" options={{ headerShown: false }} component={MainContainer} />
